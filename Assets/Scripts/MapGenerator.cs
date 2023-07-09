@@ -1,64 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerator : MonoBehaviour
 {
-    public static MapGenerator instance = null;
+    public GameObject[] have_UL;
+    public GameObject[] have_UR;
+    public GameObject[] have_DL;
+    public GameObject[] have_DR;
+    public GameObject wall;
+    Transform pos;
 
-    [Header("Prefabs")]
-    public GameObject[] Rooms;
-    List<GameObject> selectedRoom = new List<GameObject>();
+    public int count = 0;
 
-    public Queue<GameObject> Q_SpawnPoint = new Queue<GameObject>();
+    public int[,] startpoint = { { 0, 0 }, { 28,0},{56,0 },
+                                    {14 ,10},{42,10},{72,10},
+                                    { 0,20},{ 28,20},{ 56,20},
+                                     { 14,30},{ 28,30},{56, 30} };
 
-    void Start()
-    {
-        if(instance == null) {
-            instance = this;
-        }
-        else {
-            Destroy(gameObject);
+    public void Start() {
+        int rand = Random.Range(0, startpoint.GetLength(0));
+        int x = startpoint[rand, 0];
+        int y= startpoint[rand, 1];
+        GameObject startpos = Instantiate(have_UL[Random.Range(0, have_UL.Length)]);
+        startpos.transform.position = new Vector3(x, y, 0);
+
+    }
+
+    public void Update() {
+        if(Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene("test");
         }
     }
 
-    void Update()
-    {
-        if (Q_SpawnPoint.Count > 0) {
-            SpawnPointProperty spawnPointProperty = Q_SpawnPoint.Dequeue().GetComponent<SpawnPointProperty>();
-
-            switch (spawnPointProperty.dir) {
-                case Direction.UpLeft:
-                    GetRooms(Direction.DownRight);
-                    break;
-                case Direction.UpRight:
-                    GetRooms(Direction.DownLeft);
-                    break;
-                case Direction.DownLeft:
-                    GetRooms(Direction.UpRight);
-                    break;
-                case Direction.DownRight:
-                    GetRooms(Direction.UpLeft);
-                    break;
-            }
-
-            GameObject newRoom = Instantiate(Rooms[Random.Range(0, Rooms.Length)]);
-            newRoom.transform.position = spawnPointProperty.transform.position;
-            newRoom.name = nameof(spawnPointProperty.dir);
-            
-            print(newRoom.name);
-        }
-    }
-
-    void GetRooms(Direction direction) {
-        selectedRoom.Clear();
-
-        foreach(var room in Rooms) {
-            if(room.GetComponent<SpawnPointProperty>().dir == direction) {
-                selectedRoom.Add(room);
-            }
-        }
-        
-    }
 }
