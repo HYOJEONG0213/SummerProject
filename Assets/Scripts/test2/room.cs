@@ -12,6 +12,6 @@ public class room : MonoBehaviour
 
     public bool oneway;
 
-    public enum RoomType { start, boss, end, box, _event, normal, secret}
+    public enum RoomType { start, boss, end, box, _event, normal, secret, wall}
     public RoomType roomType;
 }

@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 public class RoomClick : MonoBehaviour
 {
 
-    public TMP_Text text_roomName;
     [Header("Cam Pos")]
     public Camera maincamera;
     public Transform Map;
-    public Transform Room;
+    public GameObject Room;
 
 
     void Update()
@@ -20,14 +19,15 @@ public class RoomClick : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(maincamera.ScreenPointToRay(Input.mousePosition), out hit)) {
                 print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
-                maincamera.transform.position = Room.position;
-                text_roomName.gameObject.SetActive(true);
-                text_roomName.text = $"{hit.collider.name}\n({hit.collider.GetComponent<room>().roomType})";
+                if (hit.transform.GetComponent<room>().roomType == room.RoomType.wall) return;
+                Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
+                maincamera.transform.position = Room.transform.position;
+                maincamera.transform.rotation = Room.transform.rotation;
             }
         }
         if(Input.GetKeyDown(KeyCode.Escape)) {
-            text_roomName.gameObject.SetActive(false);
             maincamera.transform.position = Map.position;
+            maincamera.transform.rotation = Map.rotation;
         }
     }
 }

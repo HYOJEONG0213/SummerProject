@@ -11,6 +11,7 @@ public class Generator : MonoBehaviour
     public static Generator Instance;
 
     public Transform parent;
+    public Transform parent_detail;
     [Header("Stage Size")]
     public int min;
     public int max;
@@ -20,6 +21,9 @@ public class Generator : MonoBehaviour
     public int _event;
     [Header("Secret Rooms")]
     public int secret;
+    [Header("Detail")]
+    public GameObject Detail;
+    public List<GameObject> Details = new List<GameObject>();
 
     public GameObject wall;
     public List<GameObject> rooms = new List<GameObject>();
@@ -91,6 +95,16 @@ public class Generator : MonoBehaviour
         done_roomtype = true;
 
 
+        //방 내부 만들기
+        foreach(var room in generatedrooms) {
+            Vector3 pos = new Vector3(0, 0, 200 * (1 + generatedrooms.IndexOf(room)));
+            GameObject detail = Instantiate(Detail, pos, Detail.transform.rotation);
+            detail.GetComponent<room_Detail>().roomType = room.GetComponent<room>().roomType;
+            detail.transform.parent = parent_detail;
+            Details.Add(detail);
+        }
+
+
         //카메라 피봇 조정
         Vector3 camPos = Vector3.zero;
         foreach(GameObject room in generatedrooms) {
@@ -117,6 +131,7 @@ public class Generator : MonoBehaviour
             else if (tar.needwall) {
                 GameObject _wall = Instantiate(wall, tar.transform.position, tar.transform.rotation);
                 _wall.transform.parent = parent;
+                _wall.GetComponent<room>().roomType = room.RoomType.wall;
                 return;
             }
             GetTargets(tar.needDir);

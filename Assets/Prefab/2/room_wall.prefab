@@ -1036,6 +1036,7 @@ MonoBehaviour:
   has_DOWN: 0
   has_LEFT: 0
   has_RIGHT: 0
+  oneway: 0
   roomType: 5
 --- !u!65 &3237431513479236639
 BoxCollider:
