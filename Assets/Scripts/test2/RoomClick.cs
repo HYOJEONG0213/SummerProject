@@ -21,8 +21,8 @@ public class RoomClick : MonoBehaviour
                 print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
                 if (hit.transform.GetComponent<room>().roomType == room.RoomType.wall) return;
                 Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
-                maincamera.transform.position = Room.transform.position;
-                maincamera.transform.rotation = Room.transform.rotation;
+                maincamera.transform.position = Room.transform.GetChild(0).position;
+                maincamera.transform.rotation = Room.transform.GetChild(0).rotation;
             }
         }
         if(Input.GetKeyDown(KeyCode.Escape)) {
