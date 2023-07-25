@@ -115,7 +115,8 @@ public class Generator : MonoBehaviour
                 return;
             }
             else if (tar.needwall) {
-                Instantiate(wall, tar.transform.position, tar.transform.rotation);
+                GameObject _wall = Instantiate(wall, tar.transform.position, tar.transform.rotation);
+                _wall.transform.parent = parent;
                 return;
             }
             GetTargets(tar.needDir);
