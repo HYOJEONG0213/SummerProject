@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 443977672}
   - component: {fileID: 443977671}
   - component: {fileID: 443977673}
+  - component: {fileID: 443977674}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -387,6 +388,18 @@ MonoBehaviour:
   maincamera: {fileID: 472153767}
   Map: {fileID: 770006181}
   Room: {fileID: 0}
+--- !u!114 &443977674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443977670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63866ff678e2c6429dc1efd3d63dd95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &472153765
 GameObject:
   m_ObjectHideFlags: 0

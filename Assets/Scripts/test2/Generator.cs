@@ -116,6 +116,7 @@ public class Generator : MonoBehaviour {
         //보스방 선택하기 
         //generatedrooms.Last().GetComponent<room>().roomType = room.RoomType.boss;
 
+        //미니맵에 방 속성 표시용
         foreach (GameObject r in generatedrooms) {
             switch (r.GetComponent<room>().roomType) {
                 case room.RoomType.start:

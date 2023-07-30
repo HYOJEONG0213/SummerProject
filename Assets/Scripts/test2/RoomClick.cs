@@ -16,7 +16,8 @@ public class RoomClick : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)) {
+        GetMapCamPos();
+        if (Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
             if(Physics.Raycast(maincamera.ScreenPointToRay(Input.mousePosition), out hit)) {
                 switch (hit.transform.tag) {
@@ -41,6 +42,10 @@ public class RoomClick : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) {
             MoveCam(Map);
         }
+    }
+
+    public void GetMapCamPos() {
+        Map.transform.position = new Vector3(player.transform.position.x, 45, player.transform.position.z);
     }
 
     public void MoveCam(Transform target) {
