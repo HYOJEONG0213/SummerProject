@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,16 +19,31 @@ public class RoomClick : MonoBehaviour
         if(Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
             if(Physics.Raycast(maincamera.ScreenPointToRay(Input.mousePosition), out hit)) {
-                print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
-                if (hit.transform.GetComponent<room>().roomType == room.RoomType.wall) return;
-                Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
-                maincamera.transform.position = Room.transform.GetChild(0).position;
-                maincamera.transform.rotation = Room.transform.GetChild(0).rotation;
+                switch (hit.transform.tag) {
+                    case "clearpoint":
+                        print($"Click Clear Point : {hit.transform.parent.GetComponent<room_Detail>().room.name}");
+                        hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().clear = true;
+                        foreach(var i in hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().connected) {
+                            GetComponent<Generator>().ShowConnect(i);
+                        }
+                        MoveCam(Map);
+                        break;
+                    default:
+                        print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
+                        if (hit.transform.GetComponent<room>().roomType == room.RoomType.wall) return;
+                        Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
+                        MoveCam(Room.transform.GetChild(0));
+                        break;
+                }
             }
         }
         if(Input.GetKeyDown(KeyCode.Escape)) {
-            maincamera.transform.position = Map.position;
-            maincamera.transform.rotation = Map.rotation;
+            MoveCam(Map);
         }
+    }
+
+    public void MoveCam(Transform target) {
+        maincamera.transform.position = target.position;
+        maincamera.transform.rotation = target.rotation;
     }
 }

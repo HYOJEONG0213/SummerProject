@@ -6,8 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Generator : MonoBehaviour
-{
+public class Generator : MonoBehaviour {
     public static Generator Instance;
 
     public Transform parent;
@@ -35,7 +34,7 @@ public class Generator : MonoBehaviour
     public bool done_roomtype;
 
     private void Awake() {
-        if(Instance != null) Destroy(Instance);
+        if (Instance != null) Destroy(Instance);
 
         Instance = this;
     }
@@ -44,7 +43,7 @@ public class Generator : MonoBehaviour
         GameObject start = Instantiate(rooms[Random.Range(0, rooms.Count)], transform.position, transform.rotation);
         start.transform.parent = parent;
         generatedrooms.Add(start);
-        InvokeRepeating(nameof(CreateRoom), 0, 0.05f);
+        InvokeRepeating(nameof(CreateRoom), 0, 0.02f);
     }
 
     public void Update() {
@@ -62,6 +61,31 @@ public class Generator : MonoBehaviour
             Destroy(room.GetComponent<Rigidbody>());
         }
 
+        //방 타입 설정하기
+        SetRoomType();
+
+        //방 내부 만들기
+        CreateRoomDetail();
+
+        //카메라 피봇 조정
+        SetCamPos();
+
+        //탐색하지 않은 방 숨기기
+        foreach (GameObject r in generatedrooms) {
+            if(r.GetComponent<room>().roomType != room.RoomType.start)
+                r.SetActive(false);
+        }
+
+        //start방으로 이동
+        GetComponent<RoomClick>().MoveCam(Details[0].transform.GetChild(0));
+
+    }
+
+    public void ShowConnect(GameObject target) {
+        target.SetActive(true);
+    }
+
+    void SetRoomType() {
         //비밀방 선택하기
         targets.Clear();
         foreach (GameObject room in generatedrooms) {
@@ -92,22 +116,43 @@ public class Generator : MonoBehaviour
         //보스방 선택하기 
         //generatedrooms.Last().GetComponent<room>().roomType = room.RoomType.boss;
 
+        foreach (GameObject r in generatedrooms) {
+            switch (r.GetComponent<room>().roomType) {
+                case room.RoomType.start:
+                    r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.green;
+                    break;
+                case room.RoomType.end: 
+                    r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.blue;
+                    break;
+                case room.RoomType.secret:
+                    r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.white;
+                    break;
+                case room.RoomType.box: 
+                    r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    break;
+                case room.RoomType.boss:
+                    r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.red;
+                    break;
+            }
+        }
+
         done_roomtype = true;
+    }
 
-
-        //방 내부 만들기
-        foreach(var room in generatedrooms) {
+    void CreateRoomDetail() {
+        foreach (var room in generatedrooms) {
             Vector3 pos = new Vector3(0, 0, 200 * (1 + generatedrooms.IndexOf(room)));
             GameObject detail = Instantiate(Detail, pos, Detail.transform.rotation);
             detail.GetComponent<room_Detail>().roomType = room.GetComponent<room>().roomType;
             detail.transform.parent = parent_detail;
+            detail.GetComponent<room_Detail>().room = room;
             Details.Add(detail);
         }
+    }
 
-
-        //카메라 피봇 조정
+    void SetCamPos() {
         Vector3 camPos = Vector3.zero;
-        foreach(GameObject room in generatedrooms) {
+        foreach (GameObject room in generatedrooms) {
             camPos.x += room.transform.position.x;
             camPos.z += room.transform.position.z;
         }
@@ -117,7 +162,6 @@ public class Generator : MonoBehaviour
 
         GetComponent<RoomClick>().Map.transform.position = camPos;
         GetComponent<RoomClick>().maincamera.transform.position = camPos;
-
     }
 
     void CreateRoom() {
@@ -130,12 +174,14 @@ public class Generator : MonoBehaviour
             }
             else if (tar.needwall) {
                 GameObject _wall = Instantiate(wall, tar.transform.position, tar.transform.rotation);
+                generatedrooms.Add(_wall);
                 _wall.transform.parent = parent;
                 _wall.GetComponent<room>().roomType = room.RoomType.wall;
                 return;
             }
             GetTargets(tar.needDir);
             GameObject newroom = Instantiate(targets[Random.Range(0, targets.Count)], tar.transform.position, tar.transform.rotation);
+            tar.GetComponentInParent<room>().connected.Add(newroom);
             generatedrooms.Add(newroom);
             newroom.transform.parent = parent;
             tar.used = true;
