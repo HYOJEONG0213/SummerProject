@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class RoomClick : MonoBehaviour
 {
-
+    public GameObject player;
     [Header("Cam Pos")]
     public Camera maincamera;
     public Transform Map;
@@ -32,6 +32,7 @@ public class RoomClick : MonoBehaviour
                         print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
                         if (hit.transform.GetComponent<room>().roomType == room.RoomType.wall) return;
                         Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
+                        player.transform.position = hit.transform.position;
                         MoveCam(Room.transform.GetChild(0));
                         break;
                 }
