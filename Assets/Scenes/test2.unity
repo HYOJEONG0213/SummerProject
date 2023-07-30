@@ -204,7 +204,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &365287523
 GameObject:
@@ -334,7 +334,7 @@ MonoBehaviour:
   parent: {fileID: 1295930560}
   parent_detail: {fileID: 1329379737}
   min: 4
-  max: 20
+  max: 10
   box: 2
   _event: 1
   secret: 1
@@ -654,6 +654,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1897007806}
+  - component: {fileID: 1897007807}
   m_Layer: 0
   m_Name: GameDataContainer
   m_TagString: Untagged
@@ -674,8 +675,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1897007807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897007805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8cb851f32b6e94d950add8a0984b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage: 1
 --- !u!1 &2116044767
 GameObject:
   m_ObjectHideFlags: 0

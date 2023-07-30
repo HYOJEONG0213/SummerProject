@@ -23,11 +23,19 @@ public class RoomClick : MonoBehaviour
                 switch (hit.transform.tag) {
                     case "clearpoint":
                         print($"Click Clear Point : {hit.transform.parent.GetComponent<room_Detail>().room.name}");
-                        hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().clear = true;
-                        foreach(var i in hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().connected) {
-                            GetComponent<Generator>().ShowConnect(i);
+                        if(hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == room.RoomType.end ||
+                            hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == room.RoomType.boss) {
+                            print("To Next Stage");
+                            GameDataContainer.instance.stage++;
+                            SceneManager.LoadScene("test2");
                         }
-                        MoveCam(Map);
+                        else {
+                            hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().clear = true;
+                            foreach (var i in hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().connected) {
+                                GetComponent<Generator>().ShowConnect(i);
+                            }
+                            MoveCam(Map);
+                        }
                         break;
                     default:
                         print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");

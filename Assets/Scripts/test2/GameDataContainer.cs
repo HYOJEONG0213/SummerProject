@@ -5,9 +5,17 @@ using UnityEngine;
 
 public class GameDataContainer : MonoBehaviour
 {
-    public int stage = 0;
+    public static GameDataContainer instance;
+
+    public int stage = 1;
 
     private void Awake() {
-        DontDestroyOnLoad(gameObject);
+        if (instance != null) {
+            Destroy(gameObject);
+        }
+        else {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

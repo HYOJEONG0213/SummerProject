@@ -111,7 +111,12 @@ public class Generator : MonoBehaviour {
         generatedrooms.First().GetComponent<room>().roomType = room.RoomType.start;
 
         //마지막방 선택하기
-        generatedrooms.Last().GetComponent<room>().roomType = room.RoomType.end;
+        for(int i=generatedrooms.Count-1; i>=0; i--) {
+            if (generatedrooms[i].GetComponent<room>().roomType != room.RoomType.wall) {
+                generatedrooms[i].GetComponent<room>().roomType = room.RoomType.end;
+                break;
+            }
+        }
 
         //보스방 선택하기 
         //generatedrooms.Last().GetComponent<room>().roomType = room.RoomType.boss;
@@ -178,6 +183,7 @@ public class Generator : MonoBehaviour {
                 generatedrooms.Add(_wall);
                 _wall.transform.parent = parent;
                 _wall.GetComponent<room>().roomType = room.RoomType.wall;
+                tar.GetComponentInParent<room>().connected.Add(_wall);
                 return;
             }
             GetTargets(tar.needDir);
