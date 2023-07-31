@@ -14,4 +14,7 @@ public class room : MonoBehaviour
 
     public enum RoomType { start, boss, end, box, _event, normal, secret, wall}
     public RoomType roomType;
+
+    public List<GameObject> connected = new List<GameObject>();
+    public bool clear = false;
 }
