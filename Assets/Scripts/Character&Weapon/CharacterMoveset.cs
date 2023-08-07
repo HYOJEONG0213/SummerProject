@@ -140,19 +140,7 @@ public class CharacterMoveset : MonoBehaviour
         controller.Move(new Vector3(0, velocityY, 0));
     }
 
-    public GameObject interaction(Collider collider)
-    {
-        switch (collider.gameObject.tag)
-        {
-            case "consumable":
-                return collider.gameObject;
-                break;
-            case "weapon":
-                
-                break;
-        }
-
-    }
+   
     public float isGrounded()
     {
         RaycastHit hit;

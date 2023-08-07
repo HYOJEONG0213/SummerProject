@@ -63,7 +63,13 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        characterMoveset.interaction(other);
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            switch (other.gameObject.tag) { 
+
+            }
+
+        }
     }
 
 
