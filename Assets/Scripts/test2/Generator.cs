@@ -21,7 +21,7 @@ public class Generator : MonoBehaviour {
     [Header("Secret Rooms")]
     public int secret;
     [Header("Detail")]
-    public GameObject Detail;
+    GameObject Detail;
     public List<GameObject> Details = new List<GameObject>();
 
     public GameObject wall;
@@ -139,19 +139,26 @@ public class Generator : MonoBehaviour {
                 case room.RoomType.boss:
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.red;
                     break;
+                case room.RoomType._event:
+                    r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.magenta;
+                    break;
             }
         }
 
         done_roomtype = true;
     }
-
+    
     void CreateRoomDetail() {
-        foreach (var room in generatedrooms) {
-            Vector3 pos = new Vector3(0, 0, 200 * (1 + generatedrooms.IndexOf(room)));
+        foreach (var r in generatedrooms) {
+            Vector3 pos = new Vector3(0, 0, 200 * (1 + generatedrooms.IndexOf(r)));
+            if(r.GetComponent<room>().roomType == room.RoomType.wall) {
+                continue;
+            }
+            Detail = RoomDetailContainer.instance.GetRoom(GameDataContainer.instance.stage, r.GetComponent<room>().roomType);
             GameObject detail = Instantiate(Detail, pos, Detail.transform.rotation);
-            detail.GetComponent<room_Detail>().roomType = room.GetComponent<room>().roomType;
+            detail.GetComponent<room_Detail>().roomType = r.GetComponent<room>().roomType;
             detail.transform.parent = parent_detail;
-            detail.GetComponent<room_Detail>().room = room;
+            detail.GetComponent<room_Detail>().room = r;
             Details.Add(detail);
         }
     }

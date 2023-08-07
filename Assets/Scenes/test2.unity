@@ -338,7 +338,6 @@ MonoBehaviour:
   box: 2
   _event: 1
   secret: 1
-  Detail: {fileID: 6539718942601275140, guid: fba177688eee3e44b937b241e358ab52, type: 3}
   Details: []
   wall: {fileID: 3176573013415793478, guid: 9b302ee8d248e1046a92becb7fec5f9d, type: 3}
   rooms:
@@ -400,6 +399,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63866ff678e2c6429dc1efd3d63dd95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stage1_start:
+  - {fileID: 142701853189812227, guid: 6f1246badb07b05438af84d92c810662, type: 3}
+  stage1_normal:
+  - {fileID: 5669769608496308612, guid: cb75471387e96b3439a2cea39395b5c3, type: 3}
+  - {fileID: 8671825586626111035, guid: 31658f29b23e28c41b679ff7d9b334cf, type: 3}
+  - {fileID: 5156640983941501857, guid: 88747e5833e0b79478f79fe419111359, type: 3}
+  stage1_box:
+  - {fileID: 5621877991038858405, guid: eb34399b6ff39214cb98e449d6f0764e, type: 3}
+  stage1_event:
+  - {fileID: 7082512212539840480, guid: 49a1a55cc9faa5545a3df8f50370e523, type: 3}
+  stage1_secret:
+  - {fileID: 5669769608496308612, guid: 32b8ae21fd539bd4ea6bf1d2765b7eed, type: 3}
+  stage1_end:
+  - {fileID: 6585902751078910505, guid: 782f8ba827382c04fb757feca922d5b4, type: 3}
+  stage2_start:
+  - {fileID: 4207989695291624275, guid: 6e7258b3d82d1bc4b8f1589abd7b502f, type: 3}
+  stage2_normal:
+  - {fileID: 1927352008418580704, guid: 5a0495c9aa96f154391298a73a964616, type: 3}
+  - {fileID: 1769661750645464692, guid: 7cc5da4aaee47554d9041d751e150f80, type: 3}
+  - {fileID: 1185370683194143750, guid: feaefb0aa58566a449a891a7a6f2dd79, type: 3}
+  stage2_box:
+  - {fileID: 6694571975813569754, guid: 9508dda0388c1f443917d0a522244cfa, type: 3}
+  stage2_event:
+  - {fileID: 1587209245115215562, guid: 2f0fd6f261c6801458d8c1ebf6e56ad0, type: 3}
+  stage2_secret:
+  - {fileID: 1927352008418580704, guid: 3b0b3f7758ee136488bcf1589f602ba7, type: 3}
+  stage2_end:
+  - {fileID: 1160965716065871699, guid: bc30e53cad414cf49bddba0fed46345d, type: 3}
+  stage3_start:
+  - {fileID: 5111117799361115941, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
+  stage3_normal:
+  - {fileID: 5483827400787919039, guid: b639a9a562c1efd4f926dc43e5ce2783, type: 3}
+  - {fileID: 1822389805610124216, guid: a0ff21b66c99c2a43a623f531f44e517, type: 3}
+  - {fileID: 8048608620773263764, guid: dba68a81f9388de4fa769c3195d47dd1, type: 3}
+  stage3_box:
+  - {fileID: 8843816515310085743, guid: 1e45a4e89f66421418d1ce71c62fc17a, type: 3}
+  stage3_event:
+  - {fileID: 3639627545819556245, guid: 7d04dbc7666ceb0449a467131f7ad48b, type: 3}
+  stage3_secret:
+  - {fileID: 5483827400787919039, guid: eafaabf319bcab24c86a571344234ac9, type: 3}
+  stage3_end:
+  - {fileID: 4555603089830912755, guid: 8bf01d473b3eba842ad2724e4572275d, type: 3}
+  stage4_start:
+  - {fileID: 996259892256627050, guid: a6f601d8fcfa6ab48a662941c3018190, type: 3}
+  stage4_normal:
+  - {fileID: 8829470584309491132, guid: 66b3569a86e2fc443ac45f237e8ee855, type: 3}
+  - {fileID: 9136831388316119503, guid: 67dc66fbd0faa1846b3138acf90c0fcf, type: 3}
+  - {fileID: 8831151432610611328, guid: adbc6459e296ea04dab59cc66f200a07, type: 3}
+  stage4_box:
+  - {fileID: 6972135114500481390, guid: 9c7e47332b2c5444289a36e6a031ea3e, type: 3}
+  stage4_event:
+  - {fileID: 7308053991217629339, guid: 1f764562ab4eaca44a5e5a5353476463, type: 3}
+  stage4_secret:
+  - {fileID: 8829470584309491132, guid: 82a34eaab94971a49866a0e21da58e6e, type: 3}
+  stage4_end:
+  - {fileID: 7988932489086371202, guid: 7b4f618d74cadb7418ec34e4053a7a67, type: 3}
+  stage5_start:
+  - {fileID: 5965572885312168287, guid: c58b87f7477e0ac4883ce25a502c7ebb, type: 3}
+  stage5_normal:
+  - {fileID: 7330638517808859773, guid: cec5532f12c1fb945b0fd3d0601cf6bf, type: 3}
+  - {fileID: 709414260256676766, guid: 1160d4397bbfc1e4e8d19e8d1648517b, type: 3}
+  - {fileID: 5043630256522246320, guid: 923addbec73b586489c97f9ca2c176cc, type: 3}
+  stage5_box:
+  - {fileID: 7931477070032903684, guid: 4421b99e9ffd90b4797bddf26481acf8, type: 3}
+  stage5_event:
+  - {fileID: 2591182505543355929, guid: ff58961db5793204183da23f7ea6e4fd, type: 3}
+  stage5_secret:
+  - {fileID: 7330638517808859773, guid: fbbe3a0361175334797bb5eff9508ab3, type: 3}
+  stage5_end:
+  - {fileID: 7304357852743777002, guid: e903f37cd710d0a4f8925ff4503a82c6, type: 3}
 --- !u!1 &472153765
 GameObject:
   m_ObjectHideFlags: 0
