@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
     void Awake()
     {
         // √ ±‚»≠
-        rb = GetComponent<Rigidbody2D>();
+
         animator = GetComponent<Animator>();
         characterMoveset = GetComponent<CharacterMoveset>();
         
@@ -50,21 +50,20 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        characterMoveset.jumpWithGravity();
+        characterMoveset.move();
        
-      
-
     }
 
     private void FixedUpdate()
     {
-        characterMoveset.jump();
-        characterMoveset.move();
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            characterMoveset.dash();
+       
 
-        }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        characterMoveset.interaction(other);
     }
 
 
