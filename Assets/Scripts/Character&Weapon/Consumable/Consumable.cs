@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Consumable : MonoBehaviour
 {
-    protected string name;
+    protected new string name;
     public abstract void effect();
 
 }
