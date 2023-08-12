@@ -164,14 +164,24 @@ public class CharacterMoveset : MonoBehaviour
         {
             return 100f;
         }
+        //충돌한 콜라이더가 consumable 또는 weapon 이면 => 점프로 인식
+        else if ( hit.collider.gameObject.tag == "consumable" || hit.collider.gameObject.tag == "weapon") 
+        {
+            return 100f;
+        }
         else // 충돌한 콜라이더가 있다면 => 콜라이더와의 거리 리턴
         {
+            
             return hit.distance;
         }
          
 
     }
 
+    public float getJumpForce()
+    {
+        return jumpForce;
+    }
     
    
 

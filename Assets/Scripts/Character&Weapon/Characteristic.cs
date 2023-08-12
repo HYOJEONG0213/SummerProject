@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Characteristic : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected new string name;
+    public void constantEffect()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void temporaryEffect()
     {
-        
+
+    }
+
+    public void buffEffect()
+    {
+
     }
 }
