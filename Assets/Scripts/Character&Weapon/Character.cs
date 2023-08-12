@@ -61,10 +61,10 @@ public class Character : MonoBehaviour
 
     }
 
-    /*private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         characterMoveset.interaction(other);
-    }*/
+    }
 
 
 

@@ -140,7 +140,7 @@ public class CharacterMoveset : MonoBehaviour
         controller.Move(new Vector3(0, velocityY, 0));
     }
 
-    /*public GameObject interaction(Collider collider)
+    public GameObject interaction(Collider collider)
     {
         switch (collider.gameObject.tag)
         {
@@ -152,7 +152,7 @@ public class CharacterMoveset : MonoBehaviour
                 break;
         }
 
-    }*/
+    }
     public float isGrounded()
     {
         RaycastHit hit;
