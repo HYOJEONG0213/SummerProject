@@ -50,6 +50,11 @@ public class RoomClick : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) {
             MoveCam(Map);
         }
+        if(Input.GetKeyDown(KeyCode.S)) {
+            foreach (GameObject r in Generator.Instance.generatedrooms) {
+                r.SetActive(true);
+            }
+        }
     }
 
     public void GetMapCamPos() {
