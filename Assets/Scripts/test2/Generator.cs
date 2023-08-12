@@ -43,7 +43,7 @@ public class Generator : MonoBehaviour {
         GameObject start = Instantiate(rooms[Random.Range(0, rooms.Count)], transform.position, transform.rotation);
         start.transform.parent = parent;
         generatedrooms.Add(start);
-        InvokeRepeating(nameof(CreateRoom), 0, 0.02f);
+        InvokeRepeating(nameof(CreateRoom), 0, 0.033f);
     }
 
     public void Update() {
