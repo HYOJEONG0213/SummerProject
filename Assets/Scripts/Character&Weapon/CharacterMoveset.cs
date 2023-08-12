@@ -12,20 +12,20 @@ public class CharacterMoveset : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float jumpForce; // Á¡ÇÁ·Â
-    private float velocityY; // YÃà ¼Óµµ
-    private float velocityX; // XÃà ¼Óµµ
+    [SerializeField] private float jumpForce; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private float velocityY; // Yï¿½ï¿½ ï¿½Óµï¿½
+    private float velocityX; // Xï¿½ï¿½ ï¿½Óµï¿½
 
 
-    [SerializeField] private float dashSpeed; // ´ë½Ã ¼Óµµ
-    [SerializeField] private float dashCooltime; // ´ë½Ã ÄðÅ¸ÀÓ
-    private bool isDash; // ´ë½Ã¸¦ ÇÏ°í ÀÖ´ÂÁö º¸¿©ÁÖ´Â ¼öÄ¡
-    [SerializeField] private float dashDuration; // ´ë½Ã Áö¼Ó½Ã°£
-    private float dashTimer; // ´ë½Ã°¡ Áö±Ý±îÁö ¾ó¸¶³ª Áö¼ÓµÇ¾ú´ÂÁö º¸¿©ÁÖ´Â ½Ã°£
-    private float leftDashTime; // ´ë½Ã°¡ °¡´ÉÇÑ ¶§±îÁö ³²Àº ½Ã°£
+    [SerializeField] private float dashSpeed; // ï¿½ï¿½ï¿½ ï¿½Óµï¿½
+    [SerializeField] private float dashCooltime; // ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
+    private bool isDash; // ï¿½ï¿½Ã¸ï¿½ ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Ä¡
+    [SerializeField] private float dashDuration; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
+    private float dashTimer; // ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ï¿½ÓµÇ¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ã°ï¿½
+    private float leftDashTime; // ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    private const float gravitationalAcceleration = 9.81f; // Áß·Â°¡¼Óµµ
-    private Vector3 cubeSize; // ¹Ù´Ú°úÀÇ Ãæµ¹À» °¨ÁöÇÏ´Â Å¥ºêÀÇ Å©±â
+    private const float gravitationalAcceleration = 9.81f; // ï¿½ß·Â°ï¿½ï¿½Óµï¿½
+    private Vector3 cubeSize; // ï¿½Ù´Ú°ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¥ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
     
 
     private void Awake()
@@ -45,28 +45,28 @@ public class CharacterMoveset : MonoBehaviour
     public void move()
     {
         //Debug.Log(leftDashTime);
-        // ´ë½Ã ÄðÅ¸ÀÓÀ» °Ô¼Ó ÁÙÀÓ
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         leftDashTime -= Time.deltaTime;
 
-        // ÀÔ·Â
+        // ï¿½Ô·ï¿½
         float inputX = Input.GetAxis("Horizontal");
 
-        //±×³É ¿òÁ÷ÀÓ
+        //ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         velocityX = inputX * movementSpeed;
       
        
-        // ´ë½Ã±â´É
+        // ï¿½ï¿½Ã±ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && leftDashTime <= 0)
         {
             isDash = true;
             dashTimer = 0f;
         }
 
-        if (isDash) //´ë½Ã¸¦ ÇÏ°í ÀÖÀ½
+        if (isDash) //ï¿½ï¿½Ã¸ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
-            // ´ë½ÃÇÏ´Â µ¿¾È °è¼Ó ½Ã°£À» Àë => ÀÌ ½Ã°£ÀÌ dashDurationÀ» ³ÑÀ¸¸é ´õÀÌ»ó ´ë½Ã¸¦ ¾ÈÇÔ
+            // ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ => ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ dashDurationï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             dashTimer += Time.deltaTime;
-            // ¹Ù¶óº¸´Â ¹æÇâ¿¡ µû¶ó ´ë½ÃÀÇ ¹æÇâ ¹Ù²Þ
+            // ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
             if(transform.right == Vector3.right)
             {
                 velocityX = dashSpeed;
@@ -75,7 +75,7 @@ public class CharacterMoveset : MonoBehaviour
             {
                 velocityX = -dashSpeed;
             }
-            // À§¿¡¼­ ¸»ÇßµíÀÌ ´ë½Ã¸¦ Áö¼ÓÇÏ°í ÀÖ´Â ½Ã°£ÀÌ dashDurationÀ» ³ÑÀ¸¸é dash¸¦ ³¡³¿. ±×¸®°í ÄðÅ¸ÀÓÀ» µ¹¸²
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ dashDurationï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dashï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if(dashTimer >= dashDuration)
             {
                 isDash = false;
@@ -83,7 +83,7 @@ public class CharacterMoveset : MonoBehaviour
             }
         }
 
-        // Ä³¸¯ÅÍÀÇ ¼Óµµ¸¦ inputX·Î Á¤ÇÏ°í ±× ¼Óµµ¸¦ Ä³¸¯ÅÍ¿¡°Ô Àû¿ë 
+        // Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ inputXï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         controller.Move(new Vector3(velocityX * Time.deltaTime, 0, 0));
 
         if (Mathf.Abs(velocityX) > 0.2)
@@ -109,7 +109,7 @@ public class CharacterMoveset : MonoBehaviour
     {
         //Debug.Log(velocityY);
         
-        // ¹Ú½º Ä³½ºÆ®¿Í Ãæµ¹ÇÑ ÄÝ¶óÀÌ´õ±îÁöÀÇ °Å¸®°¡ 0.2º¸´Ù Å©¸é Á¡ÇÁ·Î ÀÎ½Ä
+        // ï¿½Ú½ï¿½ Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ 0.2ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½
         if (isGrounded() > 0.2f)
         {
             animator.SetBool("isJump", true);
@@ -119,7 +119,7 @@ public class CharacterMoveset : MonoBehaviour
         {
             animator.SetBool("isJump", false);
            
-            // Á¡ÇÁÇÏ°í ÂøÁöÇÏ¸é velocityY°¡ À½¼ö·Î µÇÀÖÀ½ -> À½¼ö¸é 0À¸·Î ¸¸µé±â
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ velocityYï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
             if(velocityY < 0)
             {
                 velocityY = 0;
@@ -131,7 +131,7 @@ public class CharacterMoveset : MonoBehaviour
 
         }
 
-        // ´ë½Ã¸¦ ÇÏ°í ÀÖ´Ù¸é Áß·ÂÀÇ ¿µÇâÀ» ¾È¹ÞÀ½
+        // ï¿½ï¿½Ã¸ï¿½ ï¿½Ï°ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ß·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¹ï¿½ï¿½ï¿½
         if (isDash)
         {
             velocityY = 0;
@@ -146,24 +146,23 @@ public class CharacterMoveset : MonoBehaviour
         {
             case "consumable":
                 return collider.gameObject;
-                break;
             case "weapon":
-                
+
                 break;
         }
-
+        return null;
     }
     public float isGrounded()
     {
         RaycastHit hit;
         Physics.BoxCast(transform.position, cubeSize / 2, Vector3.down, out hit, transform.rotation, 10f );
         
-        // Ãæµ¹ÇÑ ÄÝ¶óÀÌ´õ°¡ ¾ø´Ù¸é => Á¡ÇÁ·Î ÀÎ½Ä (100ÀÌ¸é À§¿¡ ÀÖ´Â Á¶°Ç¹® ¶§¹®¿¡ Á¡ÇÁ·Î ÀÎ½ÄÇÔ)
+        // ï¿½æµ¹ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ (100ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½ï¿½)
         if(hit.collider == null)
         {
             return 100f;
         }
-        else // Ãæµ¹ÇÑ ÄÝ¶óÀÌ´õ°¡ ÀÖ´Ù¸é => ÄÝ¶óÀÌ´õ¿ÍÀÇ °Å¸® ¸®ÅÏ
+        else // ï¿½æµ¹ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ => ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             return hit.distance;
         }

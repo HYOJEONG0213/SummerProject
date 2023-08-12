@@ -29,7 +29,7 @@ public class Character : MonoBehaviour
 
     }
 
-    // ¹«±â ¹Ù²Ù´Â ÇÔ¼ö. flag¹øÂ° ¹«±â¸¦ weapon°ú ¹Ù²Û´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù´ï¿½ ï¿½Ô¼ï¿½. flagï¿½ï¿½Â° ï¿½ï¿½ï¿½â¸¦ weaponï¿½ï¿½ ï¿½Ù²Û´ï¿½.
     public void changeWeapon(int flag, Weapon weapon)
     {
 
@@ -38,7 +38,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        // ÃÊ±âÈ­
+        // ï¿½Ê±ï¿½È­
 
         animator = GetComponent<Animator>();
         characterMoveset = GetComponent<CharacterMoveset>();

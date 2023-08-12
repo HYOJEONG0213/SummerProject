@@ -43,7 +43,7 @@ public class Generator : MonoBehaviour {
         GameObject start = Instantiate(rooms[Random.Range(0, rooms.Count)], transform.position, transform.rotation);
         start.transform.parent = parent;
         generatedrooms.Add(start);
-        InvokeRepeating(nameof(CreateRoom), 0, 0.02f);
+        InvokeRepeating(nameof(CreateRoom), 0, 0.033f);
     }
 
     public void Update() {
@@ -72,7 +72,7 @@ public class Generator : MonoBehaviour {
 
         //탐색하지 않은 방 숨기기
         foreach (GameObject r in generatedrooms) {
-            if(r.GetComponent<room>().roomType != room.RoomType.start)
+            if(r.GetComponent<room>().roomType != RoomType.start)
                 r.SetActive(false);
         }
 
@@ -94,26 +94,26 @@ public class Generator : MonoBehaviour {
             }
         }
         for (int i = 0; i < secret; i++) {
-            targets[Random.Range(0, targets.Count)].GetComponent<room>().roomType = room.RoomType.secret;
+            targets[Random.Range(0, targets.Count)].GetComponent<room>().roomType = RoomType.secret;
         }
 
         //상자방 선택하기
         for (int i = 0; i < box; i++) {
-            generatedrooms[Random.Range(1, generatedrooms.Count - 1)].GetComponent<room>().roomType = room.RoomType.box;
+            generatedrooms[Random.Range(1, generatedrooms.Count - 1)].GetComponent<room>().roomType = RoomType.box;
         }
 
         //이벤트방 선택하기
         for (int i = 0; i < _event; i++) {
-            generatedrooms[Random.Range(1, generatedrooms.Count - 1)].GetComponent<room>().roomType = room.RoomType._event;
+            generatedrooms[Random.Range(1, generatedrooms.Count - 1)].GetComponent<room>().roomType = RoomType._event;
         }
 
         //시작방 선택하기
-        generatedrooms.First().GetComponent<room>().roomType = room.RoomType.start;
+        generatedrooms.First().GetComponent<room>().roomType = RoomType.start;
 
         //마지막방 선택하기
         for(int i=generatedrooms.Count-1; i>=0; i--) {
-            if (generatedrooms[i].GetComponent<room>().roomType != room.RoomType.wall) {
-                generatedrooms[i].GetComponent<room>().roomType = room.RoomType.end;
+            if (generatedrooms[i].GetComponent<room>().roomType != RoomType.wall) {
+                generatedrooms[i].GetComponent<room>().roomType = RoomType.end;
                 break;
             }
         }
@@ -124,22 +124,22 @@ public class Generator : MonoBehaviour {
         //미니맵에 방 속성 표시용
         foreach (GameObject r in generatedrooms) {
             switch (r.GetComponent<room>().roomType) {
-                case room.RoomType.start:
+                case RoomType.start:
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.green;
                     break;
-                case room.RoomType.end: 
+                case RoomType.end: 
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.blue;
                     break;
-                case room.RoomType.secret:
+                case RoomType.secret:
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.white;
                     break;
-                case room.RoomType.box: 
+                case RoomType.box: 
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.yellow;
                     break;
-                case room.RoomType.boss:
+                case RoomType.boss:
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.red;
                     break;
-                case room.RoomType._event:
+                case RoomType._event:
                     r.transform.Find("Plane").GetComponent<MeshRenderer>().material.color = Color.magenta;
                     break;
             }
@@ -151,7 +151,7 @@ public class Generator : MonoBehaviour {
     void CreateRoomDetail() {
         foreach (var r in generatedrooms) {
             Vector3 pos = new Vector3(0, 0, 200 * (1 + generatedrooms.IndexOf(r)));
-            if(r.GetComponent<room>().roomType == room.RoomType.wall) {
+            if(r.GetComponent<room>().roomType == RoomType.wall) {
                 continue;
             }
             Detail = RoomDetailContainer.instance.GetRoom(GameDataContainer.instance.stage, r.GetComponent<room>().roomType);
@@ -189,7 +189,7 @@ public class Generator : MonoBehaviour {
                 GameObject _wall = Instantiate(wall, tar.transform.position, tar.transform.rotation);
                 generatedrooms.Add(_wall);
                 _wall.transform.parent = parent;
-                _wall.GetComponent<room>().roomType = room.RoomType.wall;
+                _wall.GetComponent<room>().roomType = RoomType.wall;
                 tar.GetComponentInParent<room>().connected.Add(_wall);
                 return;
             }
