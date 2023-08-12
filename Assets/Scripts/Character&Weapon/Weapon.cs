@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterEffect : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
-    
+
 }
