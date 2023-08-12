@@ -48,9 +48,9 @@ public class RoomDetailContainer : MonoBehaviour
         instance = this;
     }
 
-    public GameObject GetRoom(int stage ,room.RoomType type) {
+    public GameObject GetRoom(int stage, RoomType type) {
         switch (type) {
-            case room.RoomType.start:
+            case RoomType.start:
                 switch (stage) {
                     case 1:
                         return stage1_start[GetRandomInt(ref stage1_start)];
@@ -64,8 +64,8 @@ public class RoomDetailContainer : MonoBehaviour
                         return stage5_start[GetRandomInt(ref stage5_start)];
                 }
                 break;
-            case room.RoomType.end:
-            case room.RoomType.boss:
+            case RoomType.end:
+            case RoomType.boss:
                 switch (stage) {
                     case 1:
                         return stage1_end[GetRandomInt(ref stage1_end)];
@@ -79,7 +79,7 @@ public class RoomDetailContainer : MonoBehaviour
                         return stage5_end[GetRandomInt(ref stage5_end)];
                 }
                 break;
-            case room.RoomType.secret:
+            case RoomType.secret:
                 switch (stage) {
                     case 1:
                         return stage1_secret[GetRandomInt(ref stage1_secret)];
@@ -93,7 +93,7 @@ public class RoomDetailContainer : MonoBehaviour
                         return stage5_secret[GetRandomInt(ref stage5_secret)];
                 }
                 break;
-            case room.RoomType.box:
+            case RoomType.box:
                 switch (stage) {
                     case 1:
                         return stage1_box[GetRandomInt(ref stage1_box)];
@@ -107,7 +107,7 @@ public class RoomDetailContainer : MonoBehaviour
                         return stage5_box[GetRandomInt(ref stage5_box)];
                 }
                 break;
-            case room.RoomType.normal:
+            case RoomType.normal:
                 switch (stage) {
                     case 1:
                         return stage1_normal[GetRandomInt(ref stage1_normal)];
@@ -121,7 +121,7 @@ public class RoomDetailContainer : MonoBehaviour
                         return stage5_normal[GetRandomInt(ref stage1_normal)];
                 }
                 break;
-            case room.RoomType._event:
+            case RoomType._event:
                 switch (stage) {
                     case 1:
                         return stage1_event[GetRandomInt(ref stage1_event)];

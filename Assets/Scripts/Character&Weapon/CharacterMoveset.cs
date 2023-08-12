@@ -146,12 +146,11 @@ public class CharacterMoveset : MonoBehaviour
         {
             case "consumable":
                 return collider.gameObject;
-                break;
             case "weapon":
-                
+
                 break;
         }
-
+        return null;
     }
     public float isGrounded()
     {
