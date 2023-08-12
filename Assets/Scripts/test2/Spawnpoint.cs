@@ -25,4 +25,12 @@ public class Spawnpoint : MonoBehaviour
             needwall = true;
         }
     }
+    private void OnTrigger(Collider other) {
+        if (other.CompareTag("room")) {
+            crash = true;
+        }
+        if (other.CompareTag("spawnpoint")) {
+            needwall = true;
+        }
+    }
 }

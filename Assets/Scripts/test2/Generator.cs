@@ -47,11 +47,11 @@ public class Generator : MonoBehaviour {
     }
 
     public void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene("test2");
+        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene("InGame");
         if (!done_roomgenerate) return;
 
         if (generatedrooms.Count < min || generatedrooms.Count > max) {
-            SceneManager.LoadScene("test2");
+            SceneManager.LoadScene("InGame");
             return;
         }
 
@@ -201,7 +201,7 @@ public class Generator : MonoBehaviour {
             tar.used = true;
 
             if(generatedrooms.Count > max) {
-                SceneManager.LoadScene("test2");
+                SceneManager.LoadScene("InGame");
             }
         }
         else {
