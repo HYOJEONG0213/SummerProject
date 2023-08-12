@@ -23,8 +23,8 @@ public class RoomClick : MonoBehaviour
                 switch (hit.transform.tag) {
                     case "clearpoint":
                         print($"Click Clear Point : {hit.transform.parent.GetComponent<room_Detail>().room.name}");
-                        if(hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == room.RoomType.end ||
-                            hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == room.RoomType.boss) {
+                        if(hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.end ||
+                            hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.boss) {
                             print("To Next Stage");
                             GameDataContainer.instance.stage++;
                             SceneManager.LoadScene("test2");
@@ -39,7 +39,7 @@ public class RoomClick : MonoBehaviour
                         break;
                     default:
                         print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
-                        if (hit.transform.GetComponent<room>().roomType == room.RoomType.wall) return;
+                        if (hit.transform.GetComponent<room>().roomType == RoomType.wall) return;
                         Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
                         player.transform.position = hit.transform.position;
                         MoveCam(Room.transform.GetChild(0));
