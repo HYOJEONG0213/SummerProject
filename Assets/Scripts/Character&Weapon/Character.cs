@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,22 +15,22 @@ public class Character : MonoBehaviour
     private float defensivePower;
     private float attackPower;
 
-    private List<Weapon> weapons = new List<Weapon>(); // ÀåÂøÇÏ°í ÀÖ´Â ¹«±âµé. ÃÖ´ë 3°³
-    private int usingWeapon; // ÇöÀç ¾²°í ÀÖ´Â ¹«±âÀÇ ÀÎµ¦½º
+    private List<Weapon> weapons = new List<Weapon>(); // ì¥ì°©í•˜ê³  ìˆëŠ” ë¬´ê¸°ë“¤. ìµœëŒ€ 3ê°œ
+    private int usingWeapon; // í˜„ì¬ ì“°ê³  ìˆëŠ” ë¬´ê¸°ì˜ ì¸ë±ìŠ¤
 
     private List<Consumable> consumables = new List<Consumable>();
-    private int usingConsumable; // ÇöÀç µé°í ÀÖ´Â ¼Ò¸ğÇ°ÀÇ ÀÎµ¦½º
+    private int usingConsumable; // í˜„ì¬ ë“¤ê³  ìˆëŠ” ì†Œëª¨í’ˆì˜ ì¸ë±ìŠ¤
 
     private List<Characteristic> characteristics = new List<Characteristic>();
 
     private CharacterEffect characterEffect;
 
-    private List<Weapon> inventory = new List<Weapon>(); // ÀåÂøÇÏÁö ¾Ê°í ÀÖ´Â ¹«±âµé. ÀÌ°ÍµéÀº °¥¾Æ¼­ ¹«±âÁ¶°¢À¸·Î ¸¸µé°Å³ª, ÀåÂøÇÒ ¼ö ÀÖ´Ù.
+    private List<Weapon> inventory = new List<Weapon>(); // ì¥ì°©í•˜ì§€ ì•Šê³  ìˆëŠ” ë¬´ê¸°ë“¤. ì´ê²ƒë“¤ì€ ê°ˆì•„ì„œ ë¬´ê¸°ì¡°ê°ìœ¼ë¡œ ë§Œë“¤ê±°ë‚˜, ì¥ì°©í•  ìˆ˜ ìˆë‹¤.
 
-    private bool isAttackSuccess; // ¼­ºê °ø°İÀÌ ¸ÂÀ¸¸é true ¾Æ´Ï¸é false.
+    private bool isAttackSuccess; // ì„œë¸Œ ê³µê²©ì´ ë§ìœ¼ë©´ true ì•„ë‹ˆë©´ false.
 
-    private bool isTrigger; // isTrigger°¡ ÀÖ´Â ¿ÀºêÁ§Æ®°¡ Ä³¸¯ÅÍ¿Í Äİ¶óÀÌ´õ¸¦ ¸Â´ê¾Ò´Ù¸é true ¾Æ´Ï¸é  false
-    private Collider activatedCollider; // ÇöÀç Ä³¸¯ÅÍ¿Í Ãæµ¹ÇÏ°í isTrigger¸¦ °¡Áö´Â ¿ÀºêÁ§Æ®ÀÇ Äİ¶óÀÌ´õ
+    private bool isTrigger; // isTriggerê°€ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ìºë¦­í„°ì™€ ì½œë¼ì´ë”ë¥¼ ë§ë‹¿ì•˜ë‹¤ë©´ true ì•„ë‹ˆë©´  false
+    private Collider activatedCollider; // í˜„ì¬ ìºë¦­í„°ì™€ ì¶©ëŒí•˜ê³  isTriggerë¥¼ ê°€ì§€ëŠ” ì˜¤ë¸Œì íŠ¸ì˜ ì½œë¼ì´ë”
 
 
 
@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         characterMoveset = GetComponent<CharacterMoveset>();
         animator = GetComponent<Animator>();
         usingWeapon = 0;
@@ -84,7 +84,7 @@ public class Character : MonoBehaviour
         }
         else
         {
-            Debug.Log("Consumables is full!!"); // ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : ¼Ò¸ğÇ°ÀÌ ´Ù Ã¡´Ù´Â ¸Ş½ÃÁö¸¦ ¶ç¿ì´Â °É·Î ¹Ù²Ù±â
+            Debug.Log("Consumables is full!!"); // ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ì†Œëª¨í’ˆì´ ë‹¤ ì°¼ë‹¤ëŠ” ë©”ì‹œì§€ë¥¼ ë„ìš°ëŠ” ê±¸ë¡œ ë°”ê¾¸ê¸°
         }
     }
     public void useConsumable()
@@ -97,10 +97,10 @@ public class Character : MonoBehaviour
     public void getWeapon(Weapon weapon)
     {
         weapons.Add(weapon);
-        // ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : À§ ÄÚµå¸¦ ÀÎº¥Åä¸®¿¡ ¹«±â¸¦ ³Ö´Â °É·Î ¹Ù²ã¾ß ÇÔ
+        // ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ìœ„ ì½”ë“œë¥¼ ì¸ë²¤í† ë¦¬ì— ë¬´ê¸°ë¥¼ ë„£ëŠ” ê±¸ë¡œ ë°”ê¿”ì•¼ í•¨
     }
 
-    // ¹«±â ¹Ù²Ù´Â ÇÔ¼ö. flag¹øÂ° ¹«±â¸¦ weapon°ú ¹Ù²Û´Ù.
+    // ë¬´ê¸° ë°”ê¾¸ëŠ” í•¨ìˆ˜. flagë²ˆì§¸ ë¬´ê¸°ë¥¼ weaponê³¼ ë°”ê¾¼ë‹¤.
     public void changeWeapon(int flag, Weapon weapon)
     {
 
@@ -115,7 +115,7 @@ public class Character : MonoBehaviour
                 switch (weapons[usingWeapon].attack(animator))
                 {
                     case "attackSuccess":
-                        // ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : °ø°İ ¼º°ø°ú ¿¬°üµÈ Æ¯¼º Àû¿ë
+                        // ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ê³µê²© ì„±ê³µê³¼ ì—°ê´€ëœ íŠ¹ì„± ì ìš©
                         Debug.Log(weapons[usingWeapon].getName());
                         break;
                     case "attackFail":
@@ -129,7 +129,7 @@ public class Character : MonoBehaviour
                             usingWeapon = 0;
                         }
                         Debug.Log(weapons[usingWeapon].getName());
-                        // ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : ¹Ù²ï ¹«±â ´ö¿¡ Á¶°ÇÀ» ¸¸Á·ÇÏ´Â Æ¯¼º Àû¿ë
+                        // ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ë°”ë€ ë¬´ê¸° ë•ì— ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ” íŠ¹ì„± ì ìš©
                         break;
                     case null:
 
@@ -144,13 +144,13 @@ public class Character : MonoBehaviour
     }
     private void interaction()
     {
-        // »óÈ£ÀÛ¿ëÅ°(e)°¡ ´­¸®°í, isTrigger°¡ È°¼ºÈ­µÈ ¾î¶² ¿ÀºêÁ§Æ®¿Í ´ê¾ÒÀ» ¶§ ÀÛµ¿
+        // ìƒí˜¸ì‘ìš©í‚¤(e)ê°€ ëˆŒë¦¬ê³ , isTriggerê°€ í™œì„±í™”ëœ ì–´ë–¤ ì˜¤ë¸Œì íŠ¸ì™€ ë‹¿ì•˜ì„ ë•Œ ì‘ë™
         if (Input.GetKeyDown(KeyCode.E) && isTrigger)
         {
-            // ¿ÀºêÁ§Æ®ÀÇ ÅÂ±×°¡ consumableÀÎÁö, weaponÀÎÁö¿¡ µû¶ó ÀÛµ¿ÀÌ ´Ù¸§
+            // ì˜¤ë¸Œì íŠ¸ì˜ íƒœê·¸ê°€ consumableì¸ì§€, weaponì¸ì§€ì— ë”°ë¼ ì‘ë™ì´ ë‹¤ë¦„
             switch (activatedCollider.gameObject.tag)
             {
-                // consumable => ±× ¿ÀºêÁ§Æ®ÀÇ Consumable ½ºÅ©¸³Æ®¸¦ °¡Á®¿À°í ±× ¿ÀºêÁ§Æ®´Â »èÁ¦. ¿ÀºêÁ§Æ®°¡ ¾øÀ¸´Ï isTrigger´Â false
+                // consumable => ê·¸ ì˜¤ë¸Œì íŠ¸ì˜ Consumable ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì ¸ì˜¤ê³  ê·¸ ì˜¤ë¸Œì íŠ¸ëŠ” ì‚­ì œ. ì˜¤ë¸Œì íŠ¸ê°€ ì—†ìœ¼ë‹ˆ isTriggerëŠ” false
                 case "consumable":
                     getConsumable(activatedCollider.gameObject.GetComponent<Consumable>());
                     // Debug.Log(other.gameObject.name);
@@ -158,7 +158,7 @@ public class Character : MonoBehaviour
                     isTrigger = false;
 
                     break;
-                // weapon => ±× ¿ÀºêÁ§Æ®ÀÇ Weapon ½ºÅ©¸³Æ®¸¦ °¡Á®¿À°í ±× ¿ÀºêÁ§Æ®´Â »èÁ¦. ¿ÀºêÁ§Æ®°¡ ¾øÀ¸´Ï isTrigger´Â false
+                // weapon => ê·¸ ì˜¤ë¸Œì íŠ¸ì˜ Weapon ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì ¸ì˜¤ê³  ê·¸ ì˜¤ë¸Œì íŠ¸ëŠ” ì‚­ì œ. ì˜¤ë¸Œì íŠ¸ê°€ ì—†ìœ¼ë‹ˆ isTriggerëŠ” false
                 case "weapon":
                     getWeapon(activatedCollider.gameObject.GetComponent<Weapon>());
                     Destroy(activatedCollider.gameObject);

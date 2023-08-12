@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class testWeapon2 : Weapon
 {
-    private void Awake() // 무기 스탯 초기화
+    private void Awake() 
     {
         name = "test weapon 2";
         attackSpeed = 1.5f;

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -12,20 +12,20 @@ public class CharacterMoveset : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float jumpForce; // Á¡ÇÁ·Â
-    private float velocityY; // YÃà ¼Óµµ
-    private float velocityX; // XÃà ¼Óµµ
+    [SerializeField] private float jumpForce; // ì í”„ë ¥
+    private float velocityY; // Yì¶• ì†ë„
+    private float velocityX; // Xì¶• ì†ë„
 
 
-    [SerializeField] private float dashSpeed; // ´ë½Ã ¼Óµµ
-    [SerializeField] private float dashCooltime; // ´ë½Ã ÄğÅ¸ÀÓ
-    private bool isDash; // ´ë½Ã¸¦ ÇÏ°í ÀÖ´ÂÁö º¸¿©ÁÖ´Â ¼öÄ¡
-    [SerializeField] private float dashDuration; // ´ë½Ã Áö¼Ó½Ã°£
-    private float dashTimer; // ´ë½Ã°¡ Áö±İ±îÁö ¾ó¸¶³ª Áö¼ÓµÇ¾ú´ÂÁö º¸¿©ÁÖ´Â ½Ã°£
-    private float leftDashTime; // ´ë½Ã°¡ °¡´ÉÇÑ ¶§±îÁö ³²Àº ½Ã°£
+    [SerializeField] private float dashSpeed; // ëŒ€ì‹œ ì†ë„
+    [SerializeField] private float dashCooltime; // ëŒ€ì‹œ ì¿¨íƒ€ì„
+    private bool isDash; // ëŒ€ì‹œë¥¼ í•˜ê³  ìˆëŠ”ì§€ ë³´ì—¬ì£¼ëŠ” ìˆ˜ì¹˜
+    [SerializeField] private float dashDuration; // ëŒ€ì‹œ ì§€ì†ì‹œê°„
+    private float dashTimer; // ëŒ€ì‹œê°€ ì§€ê¸ˆê¹Œì§€ ì–¼ë§ˆë‚˜ ì§€ì†ë˜ì—ˆëŠ”ì§€ ë³´ì—¬ì£¼ëŠ” ì‹œê°„
+    private float leftDashTime; // ëŒ€ì‹œê°€ ê°€ëŠ¥í•œ ë•Œê¹Œì§€ ë‚¨ì€ ì‹œê°„
 
-    private const float gravitationalAcceleration = 9.81f; // Áß·Â°¡¼Óµµ
-    private Vector3 cubeSize; // ¹Ù´Ú°úÀÇ Ãæµ¹À» °¨ÁöÇÏ´Â Å¥ºêÀÇ Å©±â
+    private const float gravitationalAcceleration = 9.81f; // ì¤‘ë ¥ê°€ì†ë„
+    private Vector3 cubeSize; // ë°”ë‹¥ê³¼ì˜ ì¶©ëŒì„ ê°ì§€í•˜ëŠ” íë¸Œì˜ í¬ê¸°
     
 
     private void Awake()
@@ -45,28 +45,28 @@ public class CharacterMoveset : MonoBehaviour
     public void move()
     {
         //Debug.Log(leftDashTime);
-        // ´ë½Ã ÄğÅ¸ÀÓÀ» °Ô¼Ó ÁÙÀÓ
+        // ëŒ€ì‹œ ì¿¨íƒ€ì„ì„ ê²Œì† ì¤„ì„
         leftDashTime -= Time.deltaTime;
 
-        // ÀÔ·Â
+        // ì…ë ¥
         float inputX = Input.GetAxis("Horizontal");
 
-        //±×³É ¿òÁ÷ÀÓ
+        //ê·¸ëƒ¥ ì›€ì§ì„
         velocityX = inputX * movementSpeed;
       
        
-        // ´ë½Ã±â´É
+        // ëŒ€ì‹œê¸°ëŠ¥
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && leftDashTime <= 0)
         {
             isDash = true;
             dashTimer = 0f;
         }
 
-        if (isDash) //´ë½Ã¸¦ ÇÏ°í ÀÖÀ½
+        if (isDash) //ëŒ€ì‹œë¥¼ í•˜ê³  ìˆìŒ
         {
-            // ´ë½ÃÇÏ´Â µ¿¾È °è¼Ó ½Ã°£À» Àë => ÀÌ ½Ã°£ÀÌ dashDurationÀ» ³ÑÀ¸¸é ´õÀÌ»ó ´ë½Ã¸¦ ¾ÈÇÔ
+            // ëŒ€ì‹œí•˜ëŠ” ë™ì•ˆ ê³„ì† ì‹œê°„ì„ ì¼ => ì´ ì‹œê°„ì´ dashDurationì„ ë„˜ìœ¼ë©´ ë”ì´ìƒ ëŒ€ì‹œë¥¼ ì•ˆí•¨
             dashTimer += Time.deltaTime;
-            // ¹Ù¶óº¸´Â ¹æÇâ¿¡ µû¶ó ´ë½ÃÀÇ ¹æÇâ ¹Ù²Ş
+            // ë°”ë¼ë³´ëŠ” ë°©í–¥ì— ë”°ë¼ ëŒ€ì‹œì˜ ë°©í–¥ ë°”ê¿ˆ
             if(transform.right == Vector3.right)
             {
                 velocityX = dashSpeed;
@@ -75,7 +75,7 @@ public class CharacterMoveset : MonoBehaviour
             {
                 velocityX = -dashSpeed;
             }
-            // À§¿¡¼­ ¸»ÇßµíÀÌ ´ë½Ã¸¦ Áö¼ÓÇÏ°í ÀÖ´Â ½Ã°£ÀÌ dashDurationÀ» ³ÑÀ¸¸é dash¸¦ ³¡³¿. ±×¸®°í ÄğÅ¸ÀÓÀ» µ¹¸²
+            // ìœ„ì—ì„œ ë§í–ˆë“¯ì´ ëŒ€ì‹œë¥¼ ì§€ì†í•˜ê³  ìˆëŠ” ì‹œê°„ì´ dashDurationì„ ë„˜ìœ¼ë©´ dashë¥¼ ëëƒ„. ê·¸ë¦¬ê³  ì¿¨íƒ€ì„ì„ ëŒë¦¼
             if(dashTimer >= dashDuration)
             {
                 isDash = false;
@@ -83,7 +83,7 @@ public class CharacterMoveset : MonoBehaviour
             }
         }
 
-        // Ä³¸¯ÅÍÀÇ ¼Óµµ¸¦ inputX·Î Á¤ÇÏ°í ±× ¼Óµµ¸¦ Ä³¸¯ÅÍ¿¡°Ô Àû¿ë 
+        // ìºë¦­í„°ì˜ ì†ë„ë¥¼ inputXë¡œ ì •í•˜ê³  ê·¸ ì†ë„ë¥¼ ìºë¦­í„°ì—ê²Œ ì ìš© 
         controller.Move(new Vector3(velocityX * Time.deltaTime, 0, 0));
 
         if (Mathf.Abs(velocityX) > 0.2)
@@ -109,7 +109,7 @@ public class CharacterMoveset : MonoBehaviour
     {
         //Debug.Log(velocityY);
         
-        // ¹Ú½º Ä³½ºÆ®¿Í Ãæµ¹ÇÑ Äİ¶óÀÌ´õ±îÁöÀÇ °Å¸®°¡ 0.2º¸´Ù Å©¸é Á¡ÇÁ·Î ÀÎ½Ä
+        // ë°•ìŠ¤ ìºìŠ¤íŠ¸ì™€ ì¶©ëŒí•œ ì½œë¼ì´ë”ê¹Œì§€ì˜ ê±°ë¦¬ê°€ 0.2ë³´ë‹¤ í¬ë©´ ì í”„ë¡œ ì¸ì‹
         if (isGrounded() > 0.2f)
         {
             animator.SetBool("isJump", true);
@@ -119,7 +119,7 @@ public class CharacterMoveset : MonoBehaviour
         {
             animator.SetBool("isJump", false);
            
-            // Á¡ÇÁÇÏ°í ÂøÁöÇÏ¸é velocityY°¡ À½¼ö·Î µÇÀÖÀ½ -> À½¼ö¸é 0À¸·Î ¸¸µé±â
+            // ì í”„í•˜ê³  ì°©ì§€í•˜ë©´ velocityYê°€ ìŒìˆ˜ë¡œ ë˜ìˆìŒ -> ìŒìˆ˜ë©´ 0ìœ¼ë¡œ ë§Œë“¤ê¸°
             if(velocityY < 0)
             {
                 velocityY = 0;
@@ -131,7 +131,7 @@ public class CharacterMoveset : MonoBehaviour
 
         }
 
-        // ´ë½Ã¸¦ ÇÏ°í ÀÖ´Ù¸é Áß·ÂÀÇ ¿µÇâÀ» ¾È¹ŞÀ½
+        // ëŒ€ì‹œë¥¼ í•˜ê³  ìˆë‹¤ë©´ ì¤‘ë ¥ì˜ ì˜í–¥ì„ ì•ˆë°›ìŒ
         if (isDash)
         {
             velocityY = 0;
@@ -159,17 +159,17 @@ public class CharacterMoveset : MonoBehaviour
         RaycastHit hit;
         Physics.BoxCast(transform.position, cubeSize / 2, Vector3.down, out hit, transform.rotation, 10f );
         
-        // Ãæµ¹ÇÑ Äİ¶óÀÌ´õ°¡ ¾ø´Ù¸é => Á¡ÇÁ·Î ÀÎ½Ä (100ÀÌ¸é À§¿¡ ÀÖ´Â Á¶°Ç¹® ¶§¹®¿¡ Á¡ÇÁ·Î ÀÎ½ÄÇÔ)
+        // ì¶©ëŒí•œ ì½œë¼ì´ë”ê°€ ì—†ë‹¤ë©´ => ì í”„ë¡œ ì¸ì‹ (100ì´ë©´ ìœ„ì— ìˆëŠ” ì¡°ê±´ë¬¸ ë•Œë¬¸ì— ì í”„ë¡œ ì¸ì‹í•¨)
         if(hit.collider == null)
         {
             return 100f;
         }
-        //Ãæµ¹ÇÑ Äİ¶óÀÌ´õ°¡ consumable ¶Ç´Â weapon ÀÌ¸é => Á¡ÇÁ·Î ÀÎ½Ä
+        //ì¶©ëŒí•œ ì½œë¼ì´ë”ê°€ consumable ë˜ëŠ” weapon ì´ë©´ => ì í”„ë¡œ ì¸ì‹
         else if ( hit.collider.gameObject.tag == "consumable" || hit.collider.gameObject.tag == "weapon") 
         {
             return 100f;
         }
-        else // Ãæµ¹ÇÑ Äİ¶óÀÌ´õ°¡ ÀÖ´Ù¸é => Äİ¶óÀÌ´õ¿ÍÀÇ °Å¸® ¸®ÅÏ
+        else // ì¶©ëŒí•œ ì½œë¼ì´ë”ê°€ ìˆë‹¤ë©´ => ì½œë¼ì´ë”ì™€ì˜ ê±°ë¦¬ ë¦¬í„´
         {
             
             return hit.distance;

@@ -1,4 +1,4 @@
-using Mono.CompilerServices.SymbolWriter;
+ï»¿using Mono.CompilerServices.SymbolWriter;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -14,13 +14,13 @@ public class Weapon : MonoBehaviour
 
     protected int attackSpeedPoint;
     protected float attackSpeedWeight;
-    protected float attackSpeed; // °ø°Ý ÄðÅ¸ÀÓ
-    protected float curAttackSpeed; // °ø°Ý°¡´É±îÁö ³²Àº ½Ã°£
+    protected float attackSpeed; // ê³µê²© ì¿¨íƒ€ìž„
+    protected float curAttackSpeed; // ê³µê²©ê°€ëŠ¥ê¹Œì§€ ë‚¨ì€ ì‹œê°„
 
     protected int attackNumPoint;
     protected int attackNumWeight;
-    protected int attackNum; // ÃÖ´ë °ø°ÝÈ½¼ö
-    protected int curAttackNum;// ³²Àº °ø°ÝÈ½¼ö
+    protected int attackNum; // ìµœëŒ€ ê³µê²©íšŸìˆ˜
+    protected int curAttackNum;// ë‚¨ì€ ê³µê²©íšŸìˆ˜
 
     protected int rangePoint;
     protected float rangeWeight;
@@ -33,11 +33,11 @@ public class Weapon : MonoBehaviour
     protected string tag1;
     protected string tag2;
 
-    protected string isAttackSuccess = "attackFail"; // °ø°ÝÀÌ ¼º°øÇß´ÂÁö, ½ÇÆÐÇß´ÂÁö, ¹«±â¸¦ ¹Ù²ã¾ßÇÏ´ÂÁö ¾Ë·ÁÁÖ´Â °ª
+    protected string isAttackSuccess = "attackFail"; // ê³µê²©ì´ ì„±ê³µí–ˆëŠ”ì§€, ì‹¤íŒ¨í–ˆëŠ”ì§€, ë¬´ê¸°ë¥¼ ë°”ê¿”ì•¼í•˜ëŠ”ì§€ ì•Œë ¤ì£¼ëŠ” ê°’
 
     protected int reinforceLevel;
 
-    protected void OnEnable() // ÀÌ ¹«±â°¡ È°¼ºÈ­µÉ¶§¸¶´Ù curAttackSpeed¸¦ 0À¸·Î ÃÊ±âÈ­ => ¹Ù·Î °ø°Ý
+    protected void OnEnable() // ì´ ë¬´ê¸°ê°€ í™œì„±í™”ë ë•Œë§ˆë‹¤ curAttackSpeedë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™” => ë°”ë¡œ ê³µê²©
     {
         curAttackSpeed = 0;
     }
@@ -54,10 +54,10 @@ public class Weapon : MonoBehaviour
             if(curAttackNum > 0)
             {
                 animator.SetBool("isAttack", true);
-                if(true) /* ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : ¹«±âÀÇ È÷Æ®¹Ú½º°¡ Àû¿¡°Ô ´ê¾ÒÀ» ¶§, ÀÓ½Ã·Î true·Î ¼³Á¤*/
+                if(true) /* ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ë¬´ê¸°ì˜ ížˆíŠ¸ë°•ìŠ¤ê°€ ì ì—ê²Œ ë‹¿ì•˜ì„ ë•Œ, ìž„ì‹œë¡œ trueë¡œ ì„¤ì •*/
                 {
-                    //ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : µ¥¹ÌÁö °è»êÇØ¼­ Àû¿¡°Ô ÁÜ
-                    //ÀÌÁÙ¿¡ ÇÊ¿äÇÑ ÄÚµå : ¹«±â¿¡ ÀÖ´Â µð¹öÇÁ ºÎ¿©
+                    //ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ë°ë¯¸ì§€ ê³„ì‚°í•´ì„œ ì ì—ê²Œ ì¤Œ
+                    //ì´ì¤„ì— í•„ìš”í•œ ì½”ë“œ : ë¬´ê¸°ì— ìžˆëŠ” ë””ë²„í”„ ë¶€ì—¬
                     isAttackSuccess = "attackSuccess";
                 }
                 curAttackNum--;
