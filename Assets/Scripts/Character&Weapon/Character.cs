@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
 
   
     private CharacterMoveset characterMoveset;
+    private Animator animator;
  
     private string characterName;
 
@@ -26,7 +27,7 @@ public class Character : MonoBehaviour
 
     private List<Weapon> inventory = new List<Weapon>(); // 장착하지 않고 있는 무기들. 이것들은 갈아서 무기조각으로 만들거나, 장착할 수 있다.
 
- 
+    private bool isAttackSuccess; // 서브 공격이 맞으면 true 아니면 false.
 
 
 
@@ -86,7 +87,8 @@ public class Character : MonoBehaviour
     {
         // 초기화
         characterMoveset = GetComponent<CharacterMoveset>();
-              
+        animator = GetComponent<Animator>();
+        usingWeapon = 0;
 
     }
 
@@ -95,8 +97,33 @@ public class Character : MonoBehaviour
     {
         characterMoveset.jumpWithGravity();
         characterMoveset.move();
-       
-       
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            switch (weapons[usingWeapon].attack(animator)) {
+                case "attackSuccess":
+                    // 공격 성공과 연관된 특성 적용
+                    break;
+                case "attackFail":
+
+                    break;
+                case "weaponChange":
+                    usingWeapon++;
+                    if(usingWeapon >= 3)
+                    {
+                        usingWeapon = 0;
+                    }
+                    break;
+                case null:
+
+                    break;
+
+            }
+
+
+        }
+
+
     }
 
     private void FixedUpdate()
