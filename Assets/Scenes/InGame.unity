@@ -419,19 +419,24 @@ MonoBehaviour:
   stage1_end:
   - {fileID: 6113781682276299732, guid: 782f8ba827382c04fb757feca922d5b4, type: 3}
   stage2_start:
-  - {fileID: 4207989695291624275, guid: 6e7258b3d82d1bc4b8f1589abd7b502f, type: 3}
+  - {fileID: 4922259564924061943, guid: 6e7258b3d82d1bc4b8f1589abd7b502f, type: 3}
   stage2_normal:
-  - {fileID: 1927352008418580704, guid: 5a0495c9aa96f154391298a73a964616, type: 3}
-  - {fileID: 1769661750645464692, guid: 7cc5da4aaee47554d9041d751e150f80, type: 3}
-  - {fileID: 1185370683194143750, guid: feaefb0aa58566a449a891a7a6f2dd79, type: 3}
+  - {fileID: 240354128891564460, guid: f380b153cc4f71c4e9b1f3002db26f68, type: 3}
+  - {fileID: 4836656913195462469, guid: 6a4a2e68638d71741b4959f6a6fa0e2b, type: 3}
+  - {fileID: 1771683243867755860, guid: c5ecaa94af8126444ad7671410fb8f36, type: 3}
+  - {fileID: 3325822907284351082, guid: b5d746df2fabf03448f34e3ac0192300, type: 3}
+  - {fileID: 9190159537224028742, guid: 6293f1ee15a963d468e51bce69e3daed, type: 3}
+  - {fileID: 6888260054374288706, guid: 569c112ed1947a948bf1f2915a7b24ee, type: 3}
+  - {fileID: 5194035657931603405, guid: 3f274d811ca1cde48b3c26cf8b143fed, type: 3}
+  - {fileID: 1422641526305717035, guid: f7f3cb1102da63c46a14935cc6e7cb4e, type: 3}
   stage2_box:
-  - {fileID: 6694571975813569754, guid: 9508dda0388c1f443917d0a522244cfa, type: 3}
+  - {fileID: 7410903335659314211, guid: 9508dda0388c1f443917d0a522244cfa, type: 3}
   stage2_event:
-  - {fileID: 1587209245115215562, guid: 2f0fd6f261c6801458d8c1ebf6e56ad0, type: 3}
+  - {fileID: 5798860645601477579, guid: 2f0fd6f261c6801458d8c1ebf6e56ad0, type: 3}
   stage2_secret:
-  - {fileID: 1927352008418580704, guid: 3b0b3f7758ee136488bcf1589f602ba7, type: 3}
+  - {fileID: 7654699203536774299, guid: 3b0b3f7758ee136488bcf1589f602ba7, type: 3}
   stage2_end:
-  - {fileID: 1160965716065871699, guid: bc30e53cad414cf49bddba0fed46345d, type: 3}
+  - {fileID: 4218134861748862635, guid: bc30e53cad414cf49bddba0fed46345d, type: 3}
   stage3_start:
   - {fileID: 5111117799361115941, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage3_normal:
