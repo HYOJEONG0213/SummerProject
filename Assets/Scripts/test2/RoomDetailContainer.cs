@@ -39,6 +39,14 @@ public class RoomDetailContainer : MonoBehaviour
     public List<GameObject> stage5_event = new List<GameObject>();
     public List<GameObject> stage5_secret = new List<GameObject>();
     public List<GameObject> stage5_end = new List<GameObject>();
+    [Header("Stage 6")]
+    public List<GameObject> stage6_start = new List<GameObject>();
+    public List<GameObject> stage6_normal = new List<GameObject>();
+    public List<GameObject> stage6_box = new List<GameObject>();
+    public List<GameObject> stage6_event = new List<GameObject>();
+    public List<GameObject> stage6_secret = new List<GameObject>();
+    public List<GameObject> stage6_end = new List<GameObject>();
+
 
     public static RoomDetailContainer instance;
 

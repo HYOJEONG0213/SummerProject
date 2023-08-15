@@ -25,7 +25,8 @@ public class Spawnpoint : MonoBehaviour
             needwall = true;
         }
     }
-    private void OnTrigger(Collider other) {
+
+    private void OnTriggerStay(Collider other) {
         if (other.CompareTag("room")) {
             crash = true;
         }
@@ -33,4 +34,5 @@ public class Spawnpoint : MonoBehaviour
             needwall = true;
         }
     }
+
 }

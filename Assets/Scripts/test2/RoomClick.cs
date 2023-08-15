@@ -27,7 +27,7 @@ public class RoomClick : MonoBehaviour
                             hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.boss) {
                             print("To Next Stage");
                             GameDataContainer.instance.stage++;
-                            SceneManager.LoadScene("test2");
+                            SceneManager.LoadScene("InGame");
                         }
                         else {
                             hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().clear = true;

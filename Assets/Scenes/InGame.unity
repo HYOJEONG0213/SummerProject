@@ -466,19 +466,37 @@ MonoBehaviour:
   stage4_end:
   - {fileID: 7988932489086371202, guid: 7b4f618d74cadb7418ec34e4053a7a67, type: 3}
   stage5_start:
-  - {fileID: 5965572885312168287, guid: c58b87f7477e0ac4883ce25a502c7ebb, type: 3}
+  - {fileID: 4432785218799891801, guid: c58b87f7477e0ac4883ce25a502c7ebb, type: 3}
   stage5_normal:
-  - {fileID: 7330638517808859773, guid: cec5532f12c1fb945b0fd3d0601cf6bf, type: 3}
-  - {fileID: 709414260256676766, guid: 1160d4397bbfc1e4e8d19e8d1648517b, type: 3}
-  - {fileID: 5043630256522246320, guid: 923addbec73b586489c97f9ca2c176cc, type: 3}
+  - {fileID: 5587352311035552872, guid: 9a23268c84f00dd4ea391620a342923f, type: 3}
+  - {fileID: 7164725334866842205, guid: 1160d4397bbfc1e4e8d19e8d1648517b, type: 3}
+  - {fileID: 8644842554402838967, guid: 923addbec73b586489c97f9ca2c176cc, type: 3}
+  - {fileID: 1610652523835141525, guid: 995f626e19144594c87012a251d1e25f, type: 3}
+  - {fileID: 1027932151843577165, guid: 020e4d4f635f13049ae50de41f7fec4c, type: 3}
   stage5_box:
-  - {fileID: 7931477070032903684, guid: 4421b99e9ffd90b4797bddf26481acf8, type: 3}
+  - {fileID: 5615052306430985407, guid: 4421b99e9ffd90b4797bddf26481acf8, type: 3}
   stage5_event:
-  - {fileID: 2591182505543355929, guid: ff58961db5793204183da23f7ea6e4fd, type: 3}
+  - {fileID: 786670365475417615, guid: ff58961db5793204183da23f7ea6e4fd, type: 3}
   stage5_secret:
-  - {fileID: 7330638517808859773, guid: fbbe3a0361175334797bb5eff9508ab3, type: 3}
+  - {fileID: 3222286155184088798, guid: fbbe3a0361175334797bb5eff9508ab3, type: 3}
   stage5_end:
-  - {fileID: 7304357852743777002, guid: e903f37cd710d0a4f8925ff4503a82c6, type: 3}
+  - {fileID: 5278013076207082436, guid: e903f37cd710d0a4f8925ff4503a82c6, type: 3}
+  stage6_start:
+  - {fileID: 4480094017664078499, guid: 5c7b815ce216bc34f9973090c4cd95b1, type: 3}
+  stage6_normal:
+  - {fileID: 9209688060923955389, guid: f6550f1d9a79d9b4b8d4874fab525cbf, type: 3}
+  - {fileID: 7621799064114461193, guid: 3300aa8f548e88d4d92a4044794e761d, type: 3}
+  - {fileID: 8885052108370023876, guid: 8a3887d7ed812bd40a91e1cd43438f9d, type: 3}
+  - {fileID: 4229494630760256161, guid: 387eedd831d6b8b48a9984a5c6cdb8de, type: 3}
+  - {fileID: 5890344824783718022, guid: 3f83884b63c3de14687282632a7afc4e, type: 3}
+  stage6_box:
+  - {fileID: 1046724074484231750, guid: 6474515e36615c6478f1d2c84bd208e6, type: 3}
+  stage6_event:
+  - {fileID: 4232088693065818219, guid: a116933a3ad764c4c8dbeb0deba77689, type: 3}
+  stage6_secret:
+  - {fileID: 6058094944971711140, guid: 4e43bf7b55b14a040a956b1bb71dc8fb, type: 3}
+  stage6_end:
+  - {fileID: 7443906064205098924, guid: 6c7c76b63b4ee0f4794d090b2d69e7b1, type: 3}
 --- !u!1 &472153765
 GameObject:
   m_ObjectHideFlags: 0
