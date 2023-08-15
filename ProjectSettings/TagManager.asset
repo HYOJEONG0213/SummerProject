@@ -9,6 +9,13 @@ TagManager:
   - spawnpoint
   - characterspawnpoint
   - enemyspawnpoint
+  - boundary
+  - consumable
+  - weapon
+  - Monster
+  - MonsterHitBox
+  - Platform
+  - PlayerHitBox
   layers:
   - Default
   - TransparentFX
@@ -16,10 +23,10 @@ TagManager:
   - player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Monster
+  - MonsterHitBox
+  - PlayerHitBox
+  - Platform
   - 
   - 
   - 
