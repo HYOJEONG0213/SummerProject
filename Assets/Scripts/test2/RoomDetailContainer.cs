@@ -39,6 +39,14 @@ public class RoomDetailContainer : MonoBehaviour
     public List<GameObject> stage5_event = new List<GameObject>();
     public List<GameObject> stage5_secret = new List<GameObject>();
     public List<GameObject> stage5_end = new List<GameObject>();
+    [Header("Stage 6")]
+    public List<GameObject> stage6_start = new List<GameObject>();
+    public List<GameObject> stage6_normal = new List<GameObject>();
+    public List<GameObject> stage6_box = new List<GameObject>();
+    public List<GameObject> stage6_event = new List<GameObject>();
+    public List<GameObject> stage6_secret = new List<GameObject>();
+    public List<GameObject> stage6_end = new List<GameObject>();
+
 
     public static RoomDetailContainer instance;
 
@@ -112,13 +120,13 @@ public class RoomDetailContainer : MonoBehaviour
                     case 1:
                         return stage1_normal[GetRandomInt(ref stage1_normal)];
                     case 2:          
-                        return stage2_normal[GetRandomInt(ref stage1_normal)];
+                        return stage2_normal[GetRandomInt(ref stage2_normal)];
                     case 3:          
-                        return stage3_normal[GetRandomInt(ref stage1_normal)];
+                        return stage3_normal[GetRandomInt(ref stage3_normal)];
                     case 4:         
-                        return stage4_normal[GetRandomInt(ref stage1_normal)];
+                        return stage4_normal[GetRandomInt(ref stage4_normal)];
                     case 5:         
-                        return stage5_normal[GetRandomInt(ref stage1_normal)];
+                        return stage5_normal[GetRandomInt(ref stage5_normal)];
                 }
                 break;
             case RoomType._event:
