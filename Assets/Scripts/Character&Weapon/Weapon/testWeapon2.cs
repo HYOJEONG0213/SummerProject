@@ -6,7 +6,7 @@ public class testWeapon2 : Weapon
 {
     private void Awake() 
     {
-        name = "test weapon 2";
+        name = "testWeapon2";
         attackSpeed = 1.5f;
         attackNum = 3;
 

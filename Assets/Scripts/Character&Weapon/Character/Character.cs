@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
     private bool isTrigger; // isTrigger가 있는 오브젝트가 캐릭터와 콜라이더를 맞닿았다면 true 아니면  false
     private Collider activatedCollider; // 현재 캐릭터와 충돌하고 isTrigger를 가지는 오브젝트의 콜라이더
 
-
+    private Transform hand; // 무기가 장착되는 손 오브젝트의 트랜스폼
 
 
 
@@ -40,8 +40,10 @@ public class Character : MonoBehaviour
     void Awake()
     {
         // 초기화
+        animator = GetComponent<Animator>();
         characterMoveset = GetComponent<CharacterMoveset>();
         animator = GetComponent<Animator>();
+        hand = gameObject.transform.Find("Skeletal/bone_1/bone_2/bone_3/bone_7/bone_8/bone_20");
         usingWeapon = 0;
         isTrigger = false;
     }
@@ -53,7 +55,7 @@ public class Character : MonoBehaviour
         characterMoveset.move();
         interaction();
         weaponAttack();
-
+        weaponPosition();
 
     }
 
@@ -75,12 +77,13 @@ public class Character : MonoBehaviour
 
 
 
-
+    // consumable => 그 오브젝트의 Consumable 스크립트를 가져오고 그 오브젝트는 삭제. 오브젝트가 없으니 isTrigger는 false
     public void getConsumable(Consumable consumable)
     {
         if (consumables.Count < 3)
         {
             consumables.Add(consumable);
+            Destroy(activatedCollider.gameObject);
         }
         else
         {
@@ -94,10 +97,17 @@ public class Character : MonoBehaviour
 
     }
 
+    //weapon => 그 오브젝트의 Weapon 스크립트를 가져오고 그 오브젝트는 비활성화 + 캐릭터를 부모로 함.오브젝트가 없으니 isTrigger는 false
     public void getWeapon(Weapon weapon)
     {
         weapons.Add(weapon);
-        // 이줄에 필요한 코드 : 위 코드를 인벤토리에 무기를 넣는 걸로 바꿔야 함
+        activatedCollider.gameObject.SetActive(false);
+        activatedCollider.gameObject.transform.SetParent(gameObject.transform, false); // 임시코드 | 부모를 나중엔 인벤토리 오브젝트로 설정하는게 좋을 듯
+        
+        activatedCollider.gameObject.GetComponent<BoxCollider>().enabled = false;
+        activatedCollider.gameObject.transform.SetSiblingIndex(0); //임시 코드
+        activatedCollider.gameObject.SetActive(true); //임시 코드
+        // 이 함수의 내용을 인벤토리에 무기를 넣는 걸로 바꿔야 함
     }
 
     // 무기 바꾸는 함수. flag번째 무기를 weapon과 바꾼다.
@@ -110,24 +120,30 @@ public class Character : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (weapons.Count != 0)
+            if (weapons.Count != 0) // 임시 코드 => 나중에 캐릭터는 기본적으로 맨주먹을 무기로 가지게 할 것
             {
                 switch (weapons[usingWeapon].attack(animator))
                 {
                     case "attackSuccess":
                         // 이줄에 필요한 코드 : 공격 성공과 연관된 특성 적용
-                        Debug.Log(weapons[usingWeapon].getName());
+                      
                         break;
                     case "attackFail":
 
                         break;
                     case "weaponChange":
-                        usingWeapon++;
+                        GameObject preWeapon = gameObject.transform.GetChild(usingWeapon).gameObject;
+                        preWeapon.SetActive(false);
 
-                        if (usingWeapon >= 3)
+                        usingWeapon++;                      
+                        if (usingWeapon == weapons.Count)
                         {
                             usingWeapon = 0;
                         }
+
+                        GameObject curWeapon = gameObject.transform.GetChild(usingWeapon).gameObject;
+                        curWeapon.SetActive(true);
+
                         Debug.Log(weapons[usingWeapon].getName());
                         // 이줄에 필요한 코드 : 바뀐 무기 덕에 조건을 만족하는 특성 적용
                         break;
@@ -142,6 +158,17 @@ public class Character : MonoBehaviour
 
         }
     }
+
+    private void weaponPosition()
+    {
+        if(weapons.Count != 0) // 임시 조건문 => 맨주먹을 기본으로 가지므로 나중엔 필요없음
+        {
+            Transform holdingWeapon = gameObject.transform.GetChild(usingWeapon); //지금 쓰고있는 무기의 트랜스폼
+            holdingWeapon.position = hand.position;
+            holdingWeapon.rotation = hand.rotation;
+        }
+        
+    }
     private void interaction()
     {
         // 상호작용키(e)가 눌리고, isTrigger가 활성화된 어떤 오브젝트와 닿았을 때 작동
@@ -150,18 +177,17 @@ public class Character : MonoBehaviour
             // 오브젝트의 태그가 consumable인지, weapon인지에 따라 작동이 다름
             switch (activatedCollider.gameObject.tag)
             {
-                // consumable => 그 오브젝트의 Consumable 스크립트를 가져오고 그 오브젝트는 삭제. 오브젝트가 없으니 isTrigger는 false
                 case "consumable":
                     getConsumable(activatedCollider.gameObject.GetComponent<Consumable>());
-                    // Debug.Log(other.gameObject.name);
-                    Destroy(activatedCollider.gameObject);
+                
+                    
                     isTrigger = false;
 
                     break;
-                // weapon => 그 오브젝트의 Weapon 스크립트를 가져오고 그 오브젝트는 삭제. 오브젝트가 없으니 isTrigger는 false
                 case "weapon":
                     getWeapon(activatedCollider.gameObject.GetComponent<Weapon>());
-                    Destroy(activatedCollider.gameObject);
+                    
+
                     isTrigger = false;
 
                     break;

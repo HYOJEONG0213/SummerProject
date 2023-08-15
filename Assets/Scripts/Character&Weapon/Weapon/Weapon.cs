@@ -40,11 +40,14 @@ public class Weapon : MonoBehaviour
     protected void OnEnable() // 이 무기가 활성화될때마다 curAttackSpeed를 0으로 초기화 => 바로 공격
     {
         curAttackSpeed = 0;
+        curAttackNum = attackNum;
+        Debug.Log("enable" + attackNum);
     }
   
     protected void Update()
     {
         curAttackSpeed -= Time.deltaTime;
+        statUpdate();
     }
 
     public string attack(Animator animator) 
@@ -53,7 +56,8 @@ public class Weapon : MonoBehaviour
         {
             if(curAttackNum > 0)
             {
-                animator.SetBool("isAttack", true);
+                animator.SetTrigger("isAttack");
+             
                 if(true) /* 이줄에 필요한 코드 : 무기의 히트박스가 적에게 닿았을 때, 임시로 true로 설정*/
                 {
                     //이줄에 필요한 코드 : 데미지 계산해서 적에게 줌
@@ -63,8 +67,7 @@ public class Weapon : MonoBehaviour
                 curAttackNum--;
                 curAttackSpeed = attackSpeed;
 
-                
-                animator.SetBool("isAttack", false); 
+           
                 return isAttackSuccess;
                    
 
@@ -81,6 +84,14 @@ public class Weapon : MonoBehaviour
             return null;
         }
         
+    }
+
+    private void statUpdate()
+    {
+        attackPower = attackPowerPoint * attackPowerWeight;
+        attackNum = attackNumPoint * attackNumWeight;
+        attackSpeed = attackSpeedPoint * attackSpeedWeight;
+        range = rangePoint * rangeWeight;
     }
 
     public void setStatPercent(string stat, int percent)
@@ -102,6 +113,8 @@ public class Weapon : MonoBehaviour
     {
 
     }
+
+    
 
     public string getTag0()
     {
@@ -126,4 +139,5 @@ public class Weapon : MonoBehaviour
     {
 
     }
+
 }
