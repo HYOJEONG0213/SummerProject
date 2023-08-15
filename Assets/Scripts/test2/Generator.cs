@@ -93,8 +93,10 @@ public class Generator : MonoBehaviour {
                 targets.Add(room);
             }
         }
-        for (int i = 0; i < secret; i++) {
-            targets[Random.Range(0, targets.Count)].GetComponent<room>().roomType = RoomType.secret;
+        if (targets.Count > 0) {
+            for (int i = 0; i < secret; i++) {
+                targets[Random.Range(0, targets.Count)].GetComponent<room>().roomType = RoomType.secret;
+            }
         }
 
         //상자방 선택하기
