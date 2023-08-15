@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum NeedDir { up, down, left, right }
+
 public class Spawnpoint : MonoBehaviour
 {
-    public enum NeedDir { up, down, left, right }
     public NeedDir needDir;
 
     public bool used = false;

@@ -78,7 +78,7 @@ public class Generator : MonoBehaviour {
 
         //start방으로 이동
         GetComponent<RoomClick>().MoveCam(Details[0].transform.GetChild(0));
-
+        GetComponent<RoomClick>().lastRoom = Details[0].transform.GetChild(0);
     }
 
     public void ShowConnect(GameObject target) {
@@ -99,12 +99,18 @@ public class Generator : MonoBehaviour {
 
         //상자방 선택하기
         for (int i = 0; i < box; i++) {
-            generatedrooms[Random.Range(1, generatedrooms.Count - 1)].GetComponent<room>().roomType = RoomType.box;
+            int idx = Random.Range(1, generatedrooms.Count - 1);
+            if (generatedrooms[idx].GetComponent<room>().roomType != RoomType.wall) {
+                generatedrooms[idx].GetComponent<room>().roomType = RoomType.box;
+            }
         }
 
         //이벤트방 선택하기
         for (int i = 0; i < _event; i++) {
-            generatedrooms[Random.Range(1, generatedrooms.Count - 1)].GetComponent<room>().roomType = RoomType._event;
+            int idx = Random.Range(1, generatedrooms.Count - 1);
+            if (generatedrooms[idx].GetComponent<room>().roomType != RoomType.wall) {
+                generatedrooms[idx].GetComponent<room>().roomType = RoomType._event;
+            }
         }
 
         //시작방 선택하기
@@ -180,11 +186,13 @@ public class Generator : MonoBehaviour {
     void CreateRoom() {
         if (points.Count > 0) {
             Spawnpoint tar = points[0].GetComponent<Spawnpoint>();
+            //부딫히면 해당 지점은 생성x
             if (tar.used || tar.crash) {
                 points.Remove(tar.gameObject);
                 Destroy(tar.gameObject);
                 return;
             }
+            //벽 생성
             else if (tar.needwall) {
                 GameObject _wall = Instantiate(wall, tar.transform.position, tar.transform.rotation);
                 generatedrooms.Add(_wall);
@@ -193,8 +201,10 @@ public class Generator : MonoBehaviour {
                 tar.GetComponentInParent<room>().connected.Add(_wall);
                 return;
             }
+            //방 생성
             GetTargets(tar.needDir);
             GameObject newroom = Instantiate(targets[Random.Range(0, targets.Count)], tar.transform.position, tar.transform.rotation);
+            newroom.GetComponent<room>().RemoveSpawnPoint(tar.needDir);
             tar.GetComponentInParent<room>().connected.Add(newroom);
             generatedrooms.Add(newroom);
             newroom.transform.parent = parent;
@@ -210,20 +220,20 @@ public class Generator : MonoBehaviour {
 
     }
 
-    public void GetTargets(Spawnpoint.NeedDir needdir) {
+    public void GetTargets(NeedDir needdir) {
         targets.Clear();
         foreach (var target in rooms) {
             switch (needdir) {
-                case Spawnpoint.NeedDir.up:
+                case NeedDir.up:
                     if (target.GetComponent<room>().has_UP) targets.Add(target);
                     break;
-                case Spawnpoint.NeedDir.down:
+                case NeedDir.down:
                     if (target.GetComponent<room>().has_DOWN) targets.Add(target);
                     break;
-                case Spawnpoint.NeedDir.left:
+                case NeedDir.left:
                     if (target.GetComponent<room>().has_LEFT) targets.Add(target);
                     break;
-                case Spawnpoint.NeedDir.right:
+                case NeedDir.right:
                     if (target.GetComponent<room>().has_RIGHT) targets.Add(target);
                     break;
             }
