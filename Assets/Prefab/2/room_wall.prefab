@@ -1038,7 +1038,7 @@ MonoBehaviour:
   has_LEFT: 0
   has_RIGHT: 0
   oneway: 0
-  roomType: 5
+  roomType: 7
   connected: []
   clear: 0
 --- !u!65 &3237431513479236639
