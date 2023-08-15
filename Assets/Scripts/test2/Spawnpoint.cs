@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum NeedDir { up, down, left, right }
+
 public class Spawnpoint : MonoBehaviour
 {
-    public enum NeedDir { up, down, left, right }
     public NeedDir needDir;
 
     public bool used = false;
@@ -25,7 +26,8 @@ public class Spawnpoint : MonoBehaviour
             needwall = true;
         }
     }
-    private void OnTrigger(Collider other) {
+
+    private void OnTriggerStay(Collider other) {
         if (other.CompareTag("room")) {
             crash = true;
         }
@@ -33,4 +35,5 @@ public class Spawnpoint : MonoBehaviour
             needwall = true;
         }
     }
+
 }

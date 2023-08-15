@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    Rigidbody2D rigid;
+    Rigidbody rigid;
     public int nextMove;    // 행동 지표를 결정할 변수
 
     public int level = 1;
@@ -25,7 +25,7 @@ public class EnemyMove : MonoBehaviour
 
     void Awake()    // 초기화
     {
-        rigid = GetComponent <Rigidbody2D> ();
+        rigid = GetComponent <Rigidbody> ();
         currenthp = maxhp;
         player = GameObject.FindGameObjectWithTag("Player").transform;  //플레이어 찾기
         Think();
