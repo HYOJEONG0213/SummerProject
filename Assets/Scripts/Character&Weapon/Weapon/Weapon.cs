@@ -37,6 +37,27 @@ public class Weapon : MonoBehaviour
 
     protected int reinforceLevel;
 
+    [SerializeField]
+    protected GameObject hitbox;
+    protected Collider monsterCollider;
+
+    protected void Awake()
+    {
+     
+        Instantiate(hitbox, gameObject.transform);
+        hitbox.transform.position = gameObject.transform.position;
+        hitbox.SetActive(false);
+
+        attackNumPoint = 3;
+        attackNumWeight = 1;
+        attackSpeedPoint = 1;
+        attackSpeedWeight = 1.5f;
+
+
+        // 이 아래부터 이 함수의 끝까지는 일시적 코드임. 무기의 종류를 더 늘릴때 없앨 것
+
+    }
+
     protected void OnEnable() // 이 무기가 활성화될때마다 curAttackSpeed를 0으로 초기화 => 바로 공격
     {
         curAttackSpeed = 0;
@@ -57,8 +78,8 @@ public class Weapon : MonoBehaviour
             if(curAttackNum > 0)
             {
                 animator.SetTrigger("isAttack");
-             
-                if(true) /* 이줄에 필요한 코드 : 무기의 히트박스가 적에게 닿았을 때, 임시로 true로 설정*/
+                callHItbox();
+                if(monsterCollider != null) 
                 {
                     //이줄에 필요한 코드 : 데미지 계산해서 적에게 줌
                     //이줄에 필요한 코드 : 무기에 있는 디버프 부여
@@ -86,12 +107,18 @@ public class Weapon : MonoBehaviour
         
     }
 
-    private void statUpdate()
+    protected void statUpdate()
     {
         attackPower = attackPowerPoint * attackPowerWeight;
         attackNum = attackNumPoint * attackNumWeight;
         attackSpeed = attackSpeedPoint * attackSpeedWeight;
         range = rangePoint * rangeWeight;
+    }
+
+    protected void callHItbox()
+    {
+        hitbox.SetActive(true);
+        monsterCollider = hitbox.GetComponent<HitboxManager>().getMonsterCollider();
     }
 
     public void setStatPercent(string stat, int percent)
