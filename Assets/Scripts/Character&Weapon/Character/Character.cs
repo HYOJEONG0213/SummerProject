@@ -166,7 +166,7 @@ public class Character : MonoBehaviour
 
     private void weaponPosition()
     {
-        if(weapons.Count != 0) // 임시 조건문 => 맨주먹을 기본으로 가지므로 나중엔 필요없음
+        if(usingWeapons.Count != 0) // 임시 조건문 => 맨주먹을 기본으로 가지므로 나중엔 필요없음
         {
             Transform holdingWeapon = gameObject.transform.GetChild(usingWeapon); //지금 쓰고있는 무기의 트랜스폼
             holdingWeapon.position = hand.position;
