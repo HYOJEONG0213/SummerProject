@@ -26,6 +26,8 @@ public class Weapon : MonoBehaviour
     protected float rangeWeight;
     protected float range;
 
+    protected float attackDuration;
+
     protected List<bool> debuff = new List<bool>();
 
     protected string element;
@@ -38,23 +40,30 @@ public class Weapon : MonoBehaviour
     protected int reinforceLevel;
 
     [SerializeField]
-    protected GameObject hitbox;
-    protected Collider monsterCollider;
+    protected GameObject hitboxPrefab; // 무기가 가지고있는 히트박스 프리팹 (원본)
+    protected GameObject hitbox; // 무기가 생성해서 자식으로 두는 히트박스 (복사본)
+    protected Collider monsterCollider; // 히트박스에 닿은 몬스터의 콜라이더
+
+    protected Character character; // 무기를 장착하고 있는 캐릭터의 "Character" 스크립트
 
     protected void Awake()
     {
      
-        Instantiate(hitbox, gameObject.transform);
-        hitbox.transform.position = gameObject.transform.position;
+        hitbox = Instantiate(hitboxPrefab);
+        hitbox.transform.SetParent(gameObject.transform, false);
         hitbox.SetActive(false);
+        
 
+        // 이 아래부터 이 함수의 끝까지는 일시적 코드임. 단검같이 실제 무기를 구현할때 그 무기의 클래스 awake에 스탯 초기화를 넣을 것. 부모인 weapon클래스에서는 필요없다.
         attackNumPoint = 3;
         attackNumWeight = 1;
         attackSpeedPoint = 1;
         attackSpeedWeight = 1.5f;
-
-
-        // 이 아래부터 이 함수의 끝까지는 일시적 코드임. 무기의 종류를 더 늘릴때 없앨 것
+        rangePoint = 5;
+        rangeWeight = 2;
+        attackPowerPoint = 1;
+        attackPowerWeight = 1;
+        attackDuration = attackSpeed / 2;
 
     }
 
@@ -62,7 +71,8 @@ public class Weapon : MonoBehaviour
     {
         curAttackSpeed = 0;
         curAttackNum = attackNum;
-        Debug.Log("enable" + attackNum);
+        isAttackSuccess = "null";
+        Debug.Log("enable" + curAttackNum);
     }
   
     protected void Update()
@@ -71,17 +81,23 @@ public class Weapon : MonoBehaviour
         statUpdate();
     }
 
-    public string attack(Animator animator) 
+    public string attack(Animator animator)
     {
+    
         if(curAttackSpeed <= 0)
         {
+            Debug.Log("curAttackNum is " + curAttackNum);
             if(curAttackNum > 0)
             {
                 animator.SetTrigger("isAttack");
-                callHItbox();
+                callHitbox();
                 if(monsterCollider != null) 
                 {
-                    //이줄에 필요한 코드 : 데미지 계산해서 적에게 줌
+                    
+                    //Monster monster = monsterCollider.gameObject.GetComponent<Monster>();
+                    //float damage = (attackPower + character.getAttackPower()) * (1 - (40 / (100 + 40))); //40부분 몬스터 방어력으로 바꾸기
+                    //monster.TakeDamage((int)damage); //TakeDamage()의 파라미터를 float로 고쳐야 함 , int 캐스팅 나중에 빼기
+                    
                     //이줄에 필요한 코드 : 무기에 있는 디버프 부여
                     isAttackSuccess = "attackSuccess";
                 }
@@ -102,7 +118,9 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            return null;
+           
+            isAttackSuccess = "null";
+            return isAttackSuccess;
         }
         
     }
@@ -115,10 +133,12 @@ public class Weapon : MonoBehaviour
         range = rangePoint * rangeWeight;
     }
 
-    protected void callHItbox()
+    protected void callHitbox()
     {
         hitbox.SetActive(true);
-        monsterCollider = hitbox.GetComponent<HitboxManager>().getMonsterCollider();
+       
+
+        monsterCollider = hitbox.GetComponent<Hitbox>().getMonsterCollider();
     }
 
     public void setStatPercent(string stat, int percent)
@@ -141,6 +161,10 @@ public class Weapon : MonoBehaviour
 
     }
 
+    public void setCharacter(Character givenCharacter)
+    {
+        character = givenCharacter;
+    }
     
 
     public string getTag0()
