@@ -414,7 +414,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827407863}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.22, y: 6.3, z: 0}
+  m_LocalPosition: {x: 4.25, y: 5.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19fa9da7c235fd41b354b9b697b3fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 3365374165341926592, guid: a0456c8b942f4554bb983037fed94cfb, type: 3}
+  hitboxPrefab: {fileID: 8690393299658708820, guid: f585a80d7a40f9342b236da2a7bdaa3a, type: 3}
 --- !u!1 &1034242778
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +822,7 @@ Camera:
   far clip plane: 1000
   field of view: 108
   orthographic: 1
-  orthographic size: 12.641452
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1005,6 +1005,10 @@ PrefabInstance:
     - target: {fileID: 1859147670251535847, guid: 5659be97b2e6f544ab5af8df60d1f05e, type: 3}
       propertyPath: m_Name
       value: Wizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 2392582578404147397, guid: 5659be97b2e6f544ab5af8df60d1f05e, type: 3}
+      propertyPath: jumpForce
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5659be97b2e6f544ab5af8df60d1f05e, type: 3}

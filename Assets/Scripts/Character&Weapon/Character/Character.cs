@@ -29,10 +29,10 @@ public class Character : MonoBehaviour
 
     private bool isAttackSuccess; // 서브 공격이 맞으면 true 아니면 false.
 
-    private bool isTrigger; // isTrigger가 있는 오브젝트가 캐릭터와 콜라이더를 맞닿았다면 true 아니면  false
-    private Collider activatedCollider; // 현재 캐릭터와 충돌하고 isTrigger를 가지는 오브젝트의 콜라이더
+    private bool isTrigger; // isTrigger가 있는 오브젝트가 캐릭터와 콜라이더를 맞닿았다면 true 아니면  false | 소모품 , 무기 상호작용 관련
+    private Collider activatedCollider; // 현재 캐릭터와 충돌하고 isTrigger를 가지는 오브젝트의 콜라이더 | 소모품 , 무기 상호작용 관련
 
-    private Transform hand; // 무기가 장착되는 손 오브젝트의 트랜스폼
+    private Transform hand; // 무기가 장착되는 손 오브젝트의 트랜스폼 | 사용하는 무기가 있어야 할 위치를 지정해준다.
 
 
 
@@ -90,7 +90,7 @@ public class Character : MonoBehaviour
             Debug.Log("Consumables is full!!"); // 이줄에 필요한 코드 : 소모품이 다 찼다는 메시지를 띄우는 걸로 바꾸기
         }
     }
-    public void useConsumable()
+    public void useConsumable() // 임시
     {
         consumables[usingConsumable].effect();
         consumables.RemoveAt(usingConsumable);
@@ -138,16 +138,17 @@ public class Character : MonoBehaviour
                         usingWeapon++;                      
                         if (usingWeapon == weapons.Count)
                         {
+                           
                             usingWeapon = 0;
                         }
 
                         GameObject curWeapon = gameObject.transform.GetChild(usingWeapon).gameObject;
                         curWeapon.SetActive(true);
 
-                        Debug.Log(weapons[usingWeapon].getName());
+                        Debug.Log("this weapon name is " + curWeapon.name);
                         // 이줄에 필요한 코드 : 바뀐 무기 덕에 조건을 만족하는 특성 적용
                         break;
-                    case null:
+                    case "null":
 
                         break;
 
