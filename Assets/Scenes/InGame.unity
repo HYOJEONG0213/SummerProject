@@ -440,33 +440,37 @@ MonoBehaviour:
   stage2_end:
   - {fileID: 4218134861748862635, guid: bc30e53cad414cf49bddba0fed46345d, type: 3}
   stage3_start:
-  - {fileID: 5111117799361115941, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage3_normal:
-  - {fileID: 5483827400787919039, guid: b639a9a562c1efd4f926dc43e5ce2783, type: 3}
-  - {fileID: 1822389805610124216, guid: a0ff21b66c99c2a43a623f531f44e517, type: 3}
-  - {fileID: 8048608620773263764, guid: dba68a81f9388de4fa769c3195d47dd1, type: 3}
+  - {fileID: 2710243883032046830, guid: b639a9a562c1efd4f926dc43e5ce2783, type: 3}
+  - {fileID: 4945090159092369179, guid: a8ca89003e49f154c811d9bb089b3b28, type: 3}
+  - {fileID: 6745781367840182020, guid: 48741f885f4304941828b9c000e12d46, type: 3}
+  - {fileID: 6766014535397268802, guid: a0ff21b66c99c2a43a623f531f44e517, type: 3}
+  - {fileID: 1544054618965252957, guid: dba68a81f9388de4fa769c3195d47dd1, type: 3}
   stage3_box:
-  - {fileID: 8843816515310085743, guid: 1e45a4e89f66421418d1ce71c62fc17a, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage3_event:
-  - {fileID: 3639627545819556245, guid: 7d04dbc7666ceb0449a467131f7ad48b, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage3_secret:
-  - {fileID: 5483827400787919039, guid: eafaabf319bcab24c86a571344234ac9, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage3_end:
-  - {fileID: 4555603089830912755, guid: 8bf01d473b3eba842ad2724e4572275d, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage4_start:
-  - {fileID: 996259892256627050, guid: a6f601d8fcfa6ab48a662941c3018190, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage4_normal:
-  - {fileID: 8829470584309491132, guid: 66b3569a86e2fc443ac45f237e8ee855, type: 3}
-  - {fileID: 9136831388316119503, guid: 67dc66fbd0faa1846b3138acf90c0fcf, type: 3}
-  - {fileID: 8831151432610611328, guid: adbc6459e296ea04dab59cc66f200a07, type: 3}
+  - {fileID: 2710243883032046830, guid: b639a9a562c1efd4f926dc43e5ce2783, type: 3}
+  - {fileID: 4945090159092369179, guid: a8ca89003e49f154c811d9bb089b3b28, type: 3}
+  - {fileID: 6745781367840182020, guid: 48741f885f4304941828b9c000e12d46, type: 3}
+  - {fileID: 6766014535397268802, guid: a0ff21b66c99c2a43a623f531f44e517, type: 3}
+  - {fileID: 1544054618965252957, guid: dba68a81f9388de4fa769c3195d47dd1, type: 3}
   stage4_box:
-  - {fileID: 6972135114500481390, guid: 9c7e47332b2c5444289a36e6a031ea3e, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage4_event:
-  - {fileID: 7308053991217629339, guid: 1f764562ab4eaca44a5e5a5353476463, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage4_secret:
-  - {fileID: 8829470584309491132, guid: 82a34eaab94971a49866a0e21da58e6e, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage4_end:
-  - {fileID: 7988932489086371202, guid: 7b4f618d74cadb7418ec34e4053a7a67, type: 3}
+  - {fileID: 4865644940020942449, guid: 56acaffa0b6712e4790741cbd7c6e0d9, type: 3}
   stage5_start:
   - {fileID: 4432785218799891801, guid: c58b87f7477e0ac4883ce25a502c7ebb, type: 3}
   stage5_normal:
