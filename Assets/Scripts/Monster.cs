@@ -8,6 +8,7 @@ public class Monster : MonoBehaviour
 {
     public int currentHp = 1;
     public float moveSpeed = 5f;    //몬스터 이동 속도
+    public bool moveDirection = true;
     public float jumpPower = 10;
     public float atkCoolTime = 3f;
     public float atkCoolTimeCalc = 3f;
@@ -95,10 +96,12 @@ public class Monster : MonoBehaviour
         if (MonsterDirRight)
         {
             thisScale.x = -Mathf.Abs(thisScale.x);
+            moveDirection = false;
         }
         else
         {
             thisScale.x = Mathf.Abs(thisScale.x);
+            moveDirection = true;
         }
         transform.localScale = thisScale;
         rb.velocity = Vector2.zero;

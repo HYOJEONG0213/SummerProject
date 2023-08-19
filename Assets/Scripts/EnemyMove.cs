@@ -61,7 +61,7 @@ public class EnemyMove : MonoBehaviour
 
 
         //플레이어 무기에 맞았을 때
-        if (rayHit.collider != null && rayHit.collider.CompareTag("PlayerWeapon"))
+        if (rayHit.collider != null && rayHit.collider.CompareTag("weapon"))
             TakeDamage(30);
 
 
