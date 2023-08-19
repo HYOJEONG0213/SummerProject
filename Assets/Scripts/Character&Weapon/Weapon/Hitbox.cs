@@ -13,10 +13,13 @@ public class Hitbox : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "monster")
+        if(other.gameObject.tag == "Monster")
         {
+            Debug.Log(other.gameObject.name);
             monsterCollider = other;
         }
+    
+
 
     }
 
