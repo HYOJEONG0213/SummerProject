@@ -54,7 +54,7 @@ public class Monster : MonoBehaviour
             }
         }
     }
-    IEnumerator CalcCoolTime()
+    IEnumerator CalcCoolTime()  //공격 가능한 쿨타임 계산
     {
         while (true)
         {
@@ -72,7 +72,7 @@ public class Monster : MonoBehaviour
     }
 
 
-    public bool IsPlayingAnim(string AnimName)
+    public bool IsPlayingAnim(string AnimName)      //애니메이션 관련 함수
     {
         if (Anim.GetCurrentAnimatorStateInfo(0).IsName(AnimName))
         {
@@ -107,16 +107,16 @@ public class Monster : MonoBehaviour
         rb.velocity = Vector2.zero;
     }
 
-    protected bool IsPlayerDir()
+    protected bool IsPlayerDir()    //몬스터가 플레이어 방향으로 향하고 있는지 체크하는 함수
     {
         if (transform.position.x < PlayerData.Instance.Player.transform.position.x ? MonsterDirRight : !MonsterDirRight)
         {
-            return true;
+            return true;    
         }
         return false;
     }
 
-    protected void GroundCheck()
+    protected void GroundCheck()    //플레이어가 바닥을 체크하는 함수
     {
         float capsuleHeight = capsuleCollider.height * 0.5f - capsuleCollider.radius; // 캡슐 높이의 반
         Vector3 capsuleBottomCenter = transform.position - Vector3.up * capsuleHeight;
@@ -133,11 +133,11 @@ public class Monster : MonoBehaviour
     }
 
 
-    public void TakeDamage(int dam) // 몬스터가 플레이어에게 히트될 때 히트박스를 off시키기
+    public void TakeDamage(int dam)     //플레이어가 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
     {
         currentHp -= dam;
         isHit = true;
-        hitBoxCollider.SetActive(false); 
+        hitBoxCollider.SetActive(false);    // 몬스터가 플레이어에게 히트될 때 히트박스를 off시키기
     }
 
     protected void OnTriggerEnter(Collider collision)
