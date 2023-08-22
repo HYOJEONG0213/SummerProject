@@ -58,6 +58,15 @@ public class Goast : Monster
             MonsterFlip();
             Debug.Log("몬스터가 플레이어와 부딪쳤습니다!");
         }
+        if (collision.transform.CompareTag("Monster"))
+        {
+            Goast monsterComponent = collision.GetComponent<Goast>();
+            if (monsterComponent != null)
+            {
+                MonsterFlip();
+                Debug.Log("몬스터끼리 부딪쳤습니다!");
+            }
+        }
     }
 
     void FixedUpdate()
