@@ -35,8 +35,8 @@ public class Character : MonoBehaviour
     private Collider activatedCollider; // 현재 캐릭터와 충돌하고 isTrigger를 가지는 오브젝트의 콜라이더 | 소모품 , 무기 상호작용 관련
 
     private Transform hand; // 무기가 장착되는 손 오브젝트의 트랜스폼 | 사용하는 무기가 있어야 할 위치를 지정해준다.
-    
-   
+
+    private bool testVari; // 시험용 변수 , 인벤토리가 완성이 되어 굳이 이 변수와 testFunc 없이 공격과 changeWeapon이 가능하다면 지울 것
 
 
     // Start is called before the first frame update
@@ -49,10 +49,11 @@ public class Character : MonoBehaviour
         hand = gameObject.transform.Find("Skeletal/bone_1/bone_2/bone_3/bone_7/bone_8/bone_20"); // 캐릭터 손위치 입력 | 다른캐릭터 추가되면 바꿔야 할듯
         usingWeapon = 0;
         isTrigger = false;
-        for(int i = 0; i <5; i++)
-        {
-            characteristics[i] = new Characteristic();  
-        }
+        testVari = false; 
+        //for(int i = 0; i <5; i++)
+        //{
+        //    characteristics[i] = new Characteristic();  
+        //}
 
     }
 
@@ -64,7 +65,7 @@ public class Character : MonoBehaviour
         interaction();
         weaponAttack();
         weaponPosition();
-
+        testFunc();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -108,10 +109,21 @@ public class Character : MonoBehaviour
     
     public void getWeapon(GameObject weapon)
     {
-        inventory.Add(weapon); // 무기를 인벤토리에 추가
-        weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
-        Destroy(weapon); 
-        Debug.Log(inventory[0].name); 
+        if(testVari == false) // 테스트용 이프문. 나중에 if-else와 114,115,116 지울 것
+        {
+            usingWeapons.Add(weapon); 
+            weapon.transform.SetParent(gameObject.transform.GetChild(0), false);
+            weapon.GetComponent<BoxCollider>().enabled = false;
+            testVari = true;
+        }
+        else
+        {
+            inventory.Add(weapon); // 무기를 인벤토리에 추가
+            weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+            Destroy(weapon);
+            Debug.Log(inventory[0].name);
+        }
+    
         
     }
 
@@ -123,9 +135,9 @@ public class Character : MonoBehaviour
         inventory[inventoryFlag] = tempWeapon;
         // inventory의 inventoryFlag번째 무기와 usingWeapons의 usingWeaponsFlag번째 무기를 바꿈
 
-        Instantiate(usingWeapons[usingWeaponsFlag], gameObject.transform.GetChild(0)).transform.SetSiblingIndex(usingWeaponsFlag);
-        // inventory에서 usingWeapons로 가져온 무기 오브젝트를 생성하고
-        // 생성한 객체를 캐릭터의 하위 오브젝트인 usingWeapons의 자식으로 만들고
+        tempWeapon = Instantiate(usingWeapons[usingWeaponsFlag], gameObject.transform.GetChild(0));     
+        tempWeapon.transform.SetSiblingIndex(usingWeaponsFlag);
+        // inventory에서 usingWeapons로 가져온 무기 오브젝트를 생성하고, 생성한 객체를 캐릭터의 하위 오브젝트인 usingWeapons의 자식으로 만들다.
         // 생성한 객체의 순서가 usingWeaponsFlag가 되게 한다.
 
         Weapon[] curWeaponScript = new Weapon[3];
@@ -171,11 +183,11 @@ public class Character : MonoBehaviour
                         curWeapon.SetActive(true);
 
                         Weapon curWeaponScript = curWeapon.GetComponent<Weapon>();  
-                        Debug.Log("this weapon name is " + curWeapon.name);
-                        for(int i = 0; i < 5; i++)
-                        {
-                            characteristics[i].temporaryEffect(curWeaponScript);
-                        }
+                        //Debug.Log("this weapon name is " + curWeapon.name);
+                        //for(int i = 0; i < 5; i++)
+                        //{
+                        //    characteristics[i].temporaryEffect(curWeaponScript);
+                        //}
                         // 이줄에 필요한 코드 : 바뀐 무기 덕에 조건을 만족하는 일시 특성 적용
                         break;
                     case "null":
@@ -194,7 +206,7 @@ public class Character : MonoBehaviour
     {
         if(usingWeapons.Count != 0) // 임시 조건문 => 맨주먹을 기본으로 가지므로 나중엔 필요없음
         {
-            Transform holdingWeapon = gameObject.transform.GetChild(usingWeapon); //지금 쓰고있는 무기의 트랜스폼
+            Transform holdingWeapon = gameObject.transform.GetChild(0).GetChild(usingWeapon); //지금 쓰고있는 무기의 트랜스폼
             holdingWeapon.position = hand.position;
             holdingWeapon.rotation = hand.rotation;
         }
@@ -225,6 +237,14 @@ public class Character : MonoBehaviour
             }
         }
 
+    }
+
+    private void testFunc()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            changeWeapon(0, 0);
+        }
     }
 
     public float getAttackPower()

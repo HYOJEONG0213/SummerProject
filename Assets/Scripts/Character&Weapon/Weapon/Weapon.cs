@@ -53,10 +53,10 @@ public class Weapon : MonoBehaviour
         hitbox.transform.SetParent(gameObject.transform, false);
         hitbox.SetActive(false);
         
-        for(int i = 0; i < 4; i++)
-        {
-            debuff[i] = false;
-        }
+        //for(int i = 0; i < 4; i++)
+        //{
+        //    debuff[i] = false;
+        //}
 
         // 이 아래부터 이 함수의 끝까지는 일시적 코드임. 단검같이 실제 무기를 구현할때 그 무기의 클래스 awake에 스탯 초기화를 넣을 것. 부모인 weapon클래스에서는 필요없다.
         attackNumPoint = 3;
