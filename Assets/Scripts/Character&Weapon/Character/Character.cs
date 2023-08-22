@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -19,7 +21,6 @@ public class Character : MonoBehaviour
     private int usingWeapon; // 현재 쓰고 있는 무기의 인덱스
     private List<GameObject> inventory = new List<GameObject>(); // 장착하지 않고 있는 무기들. 이것들은 갈아서 무기조각으로 만들거나, 장착할 수 있다.
 
-
     private List<Consumable> consumables = new List<Consumable>();
     private int usingConsumable; // 현재 들고 있는 소모품의 인덱스
 
@@ -34,7 +35,8 @@ public class Character : MonoBehaviour
     private Collider activatedCollider; // 현재 캐릭터와 충돌하고 isTrigger를 가지는 오브젝트의 콜라이더 | 소모품 , 무기 상호작용 관련
 
     private Transform hand; // 무기가 장착되는 손 오브젝트의 트랜스폼 | 사용하는 무기가 있어야 할 위치를 지정해준다.
-
+    
+   
 
 
     // Start is called before the first frame update
@@ -47,7 +49,10 @@ public class Character : MonoBehaviour
         hand = gameObject.transform.Find("Skeletal/bone_1/bone_2/bone_3/bone_7/bone_8/bone_20"); // 캐릭터 손위치 입력 | 다른캐릭터 추가되면 바꿔야 할듯
         usingWeapon = 0;
         isTrigger = false;
-        
+        for(int i = 0; i <5; i++)
+        {
+            characteristics[i] = new Characteristic();  
+        }
 
     }
 
@@ -100,24 +105,40 @@ public class Character : MonoBehaviour
 
     }
 
-    //weapon => 그 오브젝트의 Weapon 스크립트를 가져오고 그 오브젝트는 비활성화 + 캐릭터를 부모로 함.오브젝트가 없으니 isTrigger는 false
+    
     public void getWeapon(GameObject weapon)
     {
-        usingWeapons.Add(weapon);
-        activatedCollider.gameObject.SetActive(false);
-        activatedCollider.gameObject.transform.SetParent(gameObject.transform, false); // 임시코드 | 부모를 나중엔 인벤토리 오브젝트로 설정하는게 좋을 듯
-        activatedCollider.gameObject.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>());
-
-        activatedCollider.gameObject.GetComponent<BoxCollider>().enabled = false;
-        activatedCollider.gameObject.transform.SetSiblingIndex(0); //임시 코드
-        activatedCollider.gameObject.SetActive(true); //임시 코드
-        // 이 함수의 내용을 인벤토리에 무기를 넣는 걸로 바꿔야 함
+        inventory.Add(weapon); // 무기를 인벤토리에 추가
+        weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+        Destroy(weapon); 
+        Debug.Log(inventory[0].name); 
+        
     }
 
-    // 무기 바꾸는 함수. flag번째 무기를 weapon과 바꾼다.
-    public void changeWeapon(int flag, Weapon weapon)
+    // 무기 바꾸는 함수. usingWeapons에서 usingWeaponFlag번째 무기를 inventory에 있는 inventoryFlag번째 무기와 바꾼다.
+    public void changeWeapon(int usingWeaponsFlag, int inventoryFlag)
     {
+        GameObject tempWeapon = usingWeapons[usingWeaponsFlag];
+        usingWeapons[usingWeaponsFlag] = inventory[inventoryFlag];
+        inventory[inventoryFlag] = tempWeapon;
+        // inventory의 inventoryFlag번째 무기와 usingWeapons의 usingWeaponsFlag번째 무기를 바꿈
 
+        Instantiate(usingWeapons[usingWeaponsFlag], gameObject.transform.GetChild(0)).transform.SetSiblingIndex(usingWeaponsFlag);
+        // inventory에서 usingWeapons로 가져온 무기 오브젝트를 생성하고
+        // 생성한 객체를 캐릭터의 하위 오브젝트인 usingWeapons의 자식으로 만들고
+        // 생성한 객체의 순서가 usingWeaponsFlag가 되게 한다.
+
+        Weapon[] curWeaponScript = new Weapon[3];
+        for(int i = 0; i < 3; i++)
+        {
+            curWeaponScript[i] = usingWeapons[i].GetComponent<Weapon>();
+        }
+        for(int i = 0; i < 5; i++)
+        {
+
+            characteristics[i].constantEffect(curWeaponScript, usingWeaponsFlag);
+        }
+        // 추가할 것 : 상시특성 적용 코드 작성하기
     }
 
     private void weaponAttack()
@@ -149,8 +170,13 @@ public class Character : MonoBehaviour
                         GameObject curWeapon = gameObject.transform.GetChild(usingWeapon).gameObject;
                         curWeapon.SetActive(true);
 
+                        Weapon curWeaponScript = curWeapon.GetComponent<Weapon>();  
                         Debug.Log("this weapon name is " + curWeapon.name);
-                        // 이줄에 필요한 코드 : 바뀐 무기 덕에 조건을 만족하는 특성 적용
+                        for(int i = 0; i < 5; i++)
+                        {
+                            characteristics[i].temporaryEffect(curWeaponScript);
+                        }
+                        // 이줄에 필요한 코드 : 바뀐 무기 덕에 조건을 만족하는 일시 특성 적용
                         break;
                     case "null":
 
@@ -204,6 +230,15 @@ public class Character : MonoBehaviour
     public float getAttackPower()
     {
         return attackPower;
+    }
+
+    public void enableHitbox()
+    {
+        usingWeapons[usingWeapon].GetComponent<Weapon>().enableHitbox();
+    }
+    public void disableHitbox()
+    {
+        usingWeapons[usingWeapon].GetComponent<Weapon>().disableHitbox();
     }
 }
     

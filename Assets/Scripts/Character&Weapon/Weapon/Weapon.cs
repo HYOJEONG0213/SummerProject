@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
 
     protected float attackDuration;
 
-    protected List<bool> debuff = new List<bool>();
+    protected List<bool> debuff = new List<bool>();  // 0-slow / 1-break / 2-stop / 3-poison
 
     protected string element;
     protected string tag0;
@@ -53,6 +53,10 @@ public class Weapon : MonoBehaviour
         hitbox.transform.SetParent(gameObject.transform, false);
         hitbox.SetActive(false);
         
+        for(int i = 0; i < 4; i++)
+        {
+            debuff[i] = false;
+        }
 
         // 이 아래부터 이 함수의 끝까지는 일시적 코드임. 단검같이 실제 무기를 구현할때 그 무기의 클래스 awake에 스탯 초기화를 넣을 것. 부모인 weapon클래스에서는 필요없다.
         attackNumPoint = 3;
@@ -81,6 +85,8 @@ public class Weapon : MonoBehaviour
         statUpdate();
     }
 
+    //-------------------------------------------------------------------------------//
+
     public string attack(Animator animator)
     {
     
@@ -90,7 +96,7 @@ public class Weapon : MonoBehaviour
             if(curAttackNum > 0)
             {
                 animator.SetTrigger("isAttack");
-                callHitbox();
+               
                 if(monsterCollider != null) 
                 {
                     
@@ -133,13 +139,26 @@ public class Weapon : MonoBehaviour
         range = rangePoint * rangeWeight;
     }
 
-    protected void callHitbox()
+    public void enableHitbox()
     {
         hitbox.SetActive(true);
        
 
         monsterCollider = hitbox.GetComponent<Hitbox>().getMonsterCollider();
     }
+
+    public void disableHitbox()
+    {
+        hitbox.SetActive(false);
+
+    }
+
+    public void reinforceWeapon()
+    {
+
+    }
+
+    //----------------------------------------------------------------------//
 
     public void setStatPercent(string stat, int percent)
     {
@@ -151,9 +170,9 @@ public class Weapon : MonoBehaviour
 
     }
 
-    public void setDebuff()
+    public void setDebuffTrue(int debuffFlag)
     {
-
+        debuff[debuffFlag] = true;
     }
 
     public void setElement(string element)
@@ -166,17 +185,18 @@ public class Weapon : MonoBehaviour
         character = givenCharacter;
     }
     
+    //------------------------------------------------------------------//
 
-    public string getTag0()
+    public string getTag0() // tag0 = 베기, 찌르기, 투사체, 지역
     {
         return tag0;
     }
 
-    public string getTag1()
+    public string getTag1() // tag1 = 헤비 , 라이트, 밸런스
     {
         return tag1;
     }
-    public string getTag2()
+    public string getTag2() // tag2 = 무기종류(ex - 창, 검, 도끼 등등)
     {
         return tag2;
     }
@@ -186,9 +206,41 @@ public class Weapon : MonoBehaviour
         return name;
     }
 
-    public void reinforceWeapon()
+    public int getAttackPowerPoint()
     {
-
+        return attackPowerPoint;
     }
 
+    public float getAttackPowerWeight()
+    {
+        return attackPowerWeight;
+    }
+
+    public int getAttackSpeedPoint()
+    {
+        return attackSpeedPoint;
+    }
+    public float getAttackSpeedWeight()
+    {
+        return attackSpeedWeight;
+    }
+
+
+    public int getAttackNumPoint()
+    {
+        return attackNumPoint;
+    }
+    public int getAttackNumWeight()
+    {
+        return attackNumWeight;
+    }
+
+    public int getRangePoint()
+    {
+        return rangePoint;
+    }
+    public float getRangeWeight()
+    {
+        return rangeWeight;
+    }
 }
