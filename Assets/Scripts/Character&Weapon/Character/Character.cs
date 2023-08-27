@@ -65,7 +65,7 @@ public class Character : MonoBehaviour
         interaction();
         weaponAttack();
         weaponPosition();
-        testFunc();
+       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -120,23 +120,51 @@ public class Character : MonoBehaviour
         {
             inventory.Add(weapon); // 무기를 인벤토리에 추가
             weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
-            Destroy(weapon);
+            weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+            weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
+            weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
             Debug.Log(inventory[0].name);
         }
     
         
     }
 
-    // 무기 바꾸는 함수. usingWeapons에서 usingWeaponFlag번째 무기를 inventory에 있는 inventoryFlag번째 무기와 바꾼다.
-    public void changeWeapon(int usingWeaponsFlag, int inventoryFlag)
+    // 무기 바꾸는 함수. usingWeaponObject를 인벤토리에 넣고 inventoryObject를 착용한다. usingWeaponSlot번째에 있는 무기를 빼고 그 곳에 무기를 착용한다.
+    public void changeWeapon(GameObject usingWeaponObject, GameObject inventoryObject, int usingWeaponSlot)
     {
-        GameObject tempWeapon = usingWeapons[usingWeaponsFlag];
-        usingWeapons[usingWeaponsFlag] = inventory[inventoryFlag];
-        inventory[inventoryFlag] = tempWeapon;
-        // inventory의 inventoryFlag번째 무기와 usingWeapons의 usingWeaponsFlag번째 무기를 바꿈
+        if (usingWeaponObject != null && inventoryObject != null) // 바꿀 것
+        {
+            usingWeapons.Remove(usingWeaponObject);
+            usingWeapons.Add(inventoryObject);
 
-        tempWeapon = Instantiate(usingWeapons[usingWeaponsFlag], gameObject.transform.GetChild(0));     
-        tempWeapon.transform.SetSiblingIndex(usingWeaponsFlag);
+            usingWeaponObject.transform.SetParent(gameObject.transform.GetChild(1), false);
+
+            inventory.Remove(inventoryObject);
+            inventory.Add(usingWeaponObject);
+
+            inventoryObject.transform.SetParent(gameObject.transform.GetChild(0), false);
+            inventoryObject.transform.SetSiblingIndex(usingWeaponSlot);
+        }
+        else if (usingWeaponObject == null) // usingWeapon에 빈칸이 있고 inventory에서 무기를 꺼내와 그 빈칸에 넣을 때
+        {
+            inventory.Remove(inventoryObject);
+            usingWeapons.Add(inventoryObject);
+
+            inventoryObject.transform.SetParent(gameObject.transform.GetChild(0), false);
+            inventoryObject.transform.SetSiblingIndex(usingWeaponSlot);
+        }
+        else // inventory에 빈칸이 있고 usingWeapon에서 무기를 빼서 그 빈칸에 넣을 때
+        {
+            usingWeapons.Remove(usingWeaponObject);
+            inventory.Add(usingWeaponObject);
+
+            usingWeaponObject.transform.SetParent(gameObject.transform.GetChild(1), false);
+
+        }
+       
+        
+
+        
         // inventory에서 usingWeapons로 가져온 무기 오브젝트를 생성하고, 생성한 객체를 캐릭터의 하위 오브젝트인 usingWeapons의 자식으로 만들다.
         // 생성한 객체의 순서가 usingWeaponsFlag가 되게 한다.
 
@@ -148,10 +176,11 @@ public class Character : MonoBehaviour
         for(int i = 0; i < 5; i++)
         {
 
-            characteristics[i].constantEffect(curWeaponScript, usingWeaponsFlag);
+            characteristics[i].constantEffect(curWeaponScript, usingWeapon);
         }
         // 추가할 것 : 상시특성 적용 코드 작성하기
     }
+   
 
     private void weaponAttack()
     {
@@ -239,13 +268,7 @@ public class Character : MonoBehaviour
 
     }
 
-    private void testFunc()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            changeWeapon(0, 0);
-        }
-    }
+   
 
     public float getAttackPower()
     {
