@@ -3632,6 +3632,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomType: 5
   room: {fileID: 0}
+  center: {x: 0, y: 2}
+  size: {x: 102, y: 56}
 --- !u!1 &6888260054575193615
 GameObject:
   m_ObjectHideFlags: 0
