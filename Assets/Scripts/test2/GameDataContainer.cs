@@ -9,6 +9,8 @@ public class GameDataContainer : MonoBehaviour
 
     public int stage = 1;
 
+    public GameObject Character;
+
     private void Awake() {
         if (instance != null) {
             Destroy(gameObject);
@@ -18,4 +20,5 @@ public class GameDataContainer : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
 }
