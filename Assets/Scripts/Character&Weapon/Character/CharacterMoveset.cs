@@ -84,7 +84,7 @@ public class CharacterMoveset : MonoBehaviour
         }
 
         // 캐릭터의 속도를 inputX로 정하고 그 속도를 캐릭터에게 적용 
-        controller.Move(new Vector3(velocityX * Time.deltaTime, 0, 0));
+        controller.Move(new Vector3(velocityX * Time.deltaTime, 0, transform.position.z));
 
         if (Mathf.Abs(velocityX) > 0.2)
         {
