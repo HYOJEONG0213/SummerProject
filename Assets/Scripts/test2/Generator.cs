@@ -76,8 +76,14 @@ public class Generator : MonoBehaviour {
                 r.SetActive(false);
         }
 
+        //캐릭터 생성
+        Debug.LogWarning("캐릭터 생성 미구현");
+
         //start방으로 이동
-        GetComponent<RoomClick>().MoveCam(Details[0].transform.GetChild(0));
+        GetComponent<RoomClick>().MoveCam(Details[0].transform.GetChild(0)); //캐릭터를 해당 위치로 이동으로 구현
+        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().seeMap = false;
+        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().target = Details[0].GetComponentsInChildren<Transform>().Where(x => x.CompareTag("characterspawnpoint"))?.First().transform;
+        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().size = Details[0].GetComponent<room_Detail>().size;
         GetComponent<RoomClick>().lastRoom = Details[0].transform.GetChild(0);
     }
 
