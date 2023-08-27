@@ -31,12 +31,11 @@ public class Character : MonoBehaviour
 
     private bool isAttackSuccess; // 서브 공격이 맞으면 true 아니면 false.
 
-    private bool isTrigger; // isTrigger가 있는 오브젝트가 캐릭터와 콜라이더를 맞닿았다면 true 아니면  false | 소모품 , 무기 상호작용 관련
-    private Collider activatedCollider; // 현재 캐릭터와 충돌하고 isTrigger를 가지는 오브젝트의 콜라이더 | 소모품 , 무기 상호작용 관련
+    private bool isTrigger; // isTrigger가 있는 오브젝트(무기, 소모품)이 캐릭터의 콜라이더와 맞닿았다면 true 아니면  false | 소모품 , 무기 상호작용 관련
+    private Collider activatedCollider; // 현재 캐릭터와 충돌한 오브젝트(무기, 소모품)의 콜라이더 | 소모품 , 무기 상호작용 관련
 
     private Transform hand; // 무기가 장착되는 손 오브젝트의 트랜스폼 | 사용하는 무기가 있어야 할 위치를 지정해준다.
 
-    private bool testVari; // 시험용 변수 , 인벤토리가 완성이 되어 굳이 이 변수와 testFunc 없이 공격과 changeWeapon이 가능하다면 지울 것
 
 
     // Start is called before the first frame update
@@ -49,7 +48,6 @@ public class Character : MonoBehaviour
         hand = gameObject.transform.Find("Skeletal/bone_1/bone_2/bone_3/bone_7/bone_8/bone_20"); // 캐릭터 손위치 입력 | 다른캐릭터 추가되면 바꿔야 할듯
         usingWeapon = 0;
         isTrigger = false;
-        testVari = false; 
         //for(int i = 0; i <5; i++)
         //{
         //    characteristics[i] = new Characteristic();  
@@ -86,13 +84,14 @@ public class Character : MonoBehaviour
 
 
 
-    // consumable => 그 오브젝트의 Consumable 스크립트를 가져오고 그 오브젝트는 삭제. 오브젝트가 없으니 isTrigger는 false
+    // consumable => 그 오브젝트는 리스트 consumables과 캐릭터 하위 오브젝트 consumables로 보내기. 오브젝트가 없으니 isTrigger는 false
     public void getConsumable(Consumable consumable)
     {
         if (consumables.Count < 3)
         {
             consumables.Add(consumable);
-            Destroy(activatedCollider.gameObject);
+            Destroy(activatedCollider.gameObject); 
+            // 위 두 줄 바꾸기
         }
         else
         {
@@ -109,22 +108,16 @@ public class Character : MonoBehaviour
     
     public void getWeapon(GameObject weapon)
     {
-        if(testVari == false) // 테스트용 이프문. 나중에 if-else와 114,115,116 지울 것
-        {
-            usingWeapons.Add(weapon); 
-            weapon.transform.SetParent(gameObject.transform.GetChild(0), false);
-            weapon.GetComponent<BoxCollider>().enabled = false;
-            testVari = true;
-        }
-        else
-        {
-            inventory.Add(weapon); // 무기를 인벤토리에 추가
-            weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
-            weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
-            weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
-            weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
-            Debug.Log(inventory[0].name);
-        }
+        
+              
+          inventory.Add(weapon); // 무기를 인벤토리에 추가
+          weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+          weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+          weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
+          weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
+          Debug.Log(inventory[0].name);
+             
+
     
         
     }
