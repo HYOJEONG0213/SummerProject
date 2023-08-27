@@ -16,6 +16,7 @@ TagManager:
   - MonsterHitBox
   - Platform
   - PlayerHitBox
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - MonsterHitBox
   - PlayerHitBox
   - Platform
-  - 
+  - Projectile
   - 
   - 
   - 
