@@ -8,13 +8,11 @@ public class Bat : Monster
 
     public enum State
     {
-        Idle,
+        idle,
         move,
         attack
     };
-    public State currentState = State.Idle;
-
-    public Transform[] wallCheck;
+    public State currentState = State.idle;
     public Transform genPoint;  //genPoint: 총알 생성 위치
     public GameObject Bullet;   //총알 프리팹
 
@@ -43,9 +41,9 @@ public class Bat : Monster
         }
     }
 
-    IEnumerator Idle()
+    IEnumerator idle()
     {
-        MyAnimSetTrigger("Idle");
+        MyAnimSetTrigger("idle");
 
         if (Random.value > 0.5f)    //50퍼센트 확률로 Flip
         {
@@ -65,15 +63,25 @@ public class Bat : Monster
             MyAnimSetTrigger("move");
             if (!isHit)
             {
-                rb.velocity = new Vector3(-transform.localScale.x * moveSpeed, rb.velocity.y, 0);
+                rb.velocity = new Vector3(-transform.localScale.x * moveSpeed, rb.velocity.y, 0);  //플레이어에게 안맞았다면 바라보는 방향으로 계속 움직인다.
+                Vector3 frontVec = transform.position + transform.right * moveSpeed * 1.5f;
 
                 bool isWallCheck0Colliding = Physics.OverlapSphere(WallCheck[0].position, 0.01f, layerMask).Length > 0;
                 bool isWallCheck1Colliding = Physics.OverlapSphere(WallCheck[1].position, 0.01f, layerMask).Length > 0;
 
-                if (isWallCheck0Colliding)
+
+                if (isWallCheck0Colliding && !isWallCheck1Colliding &&      //0번(아래쪽 벽)은 TRUE, 1번(위쪽 벽)은 FALSE라면 점프!
+                !Physics.Raycast(transform.position, -transform.localScale.x * transform.right, 2f, layerMask))
+                {
+                    Debug.Log("점프!");
+                    //rb.velocity = new Vector3(rb.velocity.x, jumpPower, 0);
+                }
+                else if (isWallCheck0Colliding)
                 {
                     MonsterFlip();
                 }
+
+
                 if (canAtk && IsPlayerDir())
                 {
                     //걷는중에 플레이어가 사거리 안에 있고, 몬스터가 플레이어를 향하고 있으면 공격상태로 
@@ -94,7 +102,7 @@ public class Bat : Monster
             }
             else
             {
-                currentState = State.Idle;  //Idle 상태로 변경 
+                currentState = State.idle;  //Idle 상태로 변경 
             }
         }
     }
@@ -107,14 +115,43 @@ public class Bat : Monster
         MyAnimSetTrigger("attack");
 
         yield return Delay1000;
-        currentState = State.Idle;
+        currentState = State.idle;
     }
 
     void Fire()     //Attack 애니메이션 재생중에 원거리 공격을 하기 위해 총알을 생성
     {
         GameObject bulletClone = Instantiate(Bullet, genPoint.position, transform.rotation);    //총알 생성
         bulletClone.GetComponent<Rigidbody>().velocity = transform.right * -transform.localScale.x * 10f;   //총알 속도
-        bulletClone.transform.localScale = new Vector3(transform.localScale.x, 1f); //총알 방향
+        bulletClone.transform.localScale = new Vector3(transform.localScale.x, 1f,0); //총알 방향
     }
+
+
+    void FixedUpdate()
+    {
+        //몬스터가 낭떨어지에 있을 때 방향 전환
+        rb.velocity = new Vector3(-transform.localScale.x * moveSpeed, rb.velocity.y, 0);
+        Vector3 frontVec;
+        if (moveDirection == false)
+        {
+            frontVec = (transform.position + transform.right * moveSpeed * 1f);
+        }
+        else
+        {
+            frontVec = (transform.position - transform.right * moveSpeed * 1f) * 1;
+        }
+        Debug.DrawRay(frontVec, Vector3.down * 3, new Color(0, 1, 0));      // Ray그려준다. (시작위치, 쏘는 방향, 컬러값)
+        RaycastHit hit;     //hit: 충돌한 물체의 정보를 저장하는 변수. out을 이용하면 저장이 된다
+        bool isGrounded = Physics.Raycast(frontVec, Vector3.down * 3, out hit, 3, LayerMask.GetMask("Platform"));   //RaycastHit: Ray에 닿은 오브젝트, (시작위치, 쏘는방향, 거리)
+        //Debug.Log(!Physics.Raycast(frontVec, Vector3.down * 3, out hit, 3, LayerMask.GetMask("Platform")));
+
+        if (!isGrounded)
+        {
+            Debug.Log("낭떠러지 입니다!");
+            MonsterFlip();
+        }
+
+
+    }
+
 
 }
