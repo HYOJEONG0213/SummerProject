@@ -6,12 +6,15 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public float speed = 1;
+    float speed = 50;
 
     public Vector2 center;
     public Vector2 size;
 
     float height, width;
+
+    public bool seeMap = false;
+
 
     private void Start() {
         height = Camera.main.orthographicSize;
@@ -24,6 +27,13 @@ public class CameraController : MonoBehaviour
     }
 
     public void LateUpdate() {
+        if (seeMap) {
+
+            return;
+        }
+
+        if (target == null) return;
+
         transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 
         float lx = size.x * 0.5f - width;
