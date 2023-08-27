@@ -16,6 +16,7 @@ TagManager:
   - MonsterHitBox
   - Platform
   - PlayerHitBox
+  - Projectile
   - Slot
   layers:
   - Default
@@ -28,7 +29,7 @@ TagManager:
   - MonsterHitBox
   - PlayerHitBox
   - Platform
-  - 
+  - Projectile
   - 
   - 
   - 
