@@ -5499,6 +5499,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681392452}
   m_CullTransparentMesh: 1
+--- !u!1 &1702794154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1702794156}
+  - component: {fileID: 1702794155}
+  m_Layer: 0
+  m_Name: ItemDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1702794155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702794154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c1f931e49a17e4e8a586b0a92ca37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDB:
+  - itemType: 0
+    itemName: water_element
+    itemImage: {fileID: 0}
+  - itemType: 0
+    itemName: 
+    itemImage: {fileID: 0}
+  - itemType: 0
+    itemName: fire_element
+    itemImage: {fileID: 0}
+  - itemType: 0
+    itemName: holy_element
+    itemImage: {fileID: 0}
+  - itemType: 0
+    itemName: darkness_element
+    itemImage: {fileID: 0}
+  - itemType: 1
+    itemName: panacea
+    itemImage: {fileID: 21300000, guid: f6c8338ac999bc94e9a7d79c7262d443, type: 3}
+  - itemType: 1
+    itemName: hp_potion
+    itemImage: {fileID: 21300000, guid: dc98641484cb3724f9161856d6b33124, type: 3}
+  - itemType: 2
+    itemName: grenade
+    itemImage: {fileID: 0}
+  - itemType: 2
+    itemName: bait
+    itemImage: {fileID: 0}
+  - itemType: 1
+    itemName: solid_potion
+    itemImage: {fileID: 21300000, guid: d8ef600d59c84444c9013fc5e0278f08, type: 3}
+  - itemType: 1
+    itemName: speed_potion
+    itemImage: {fileID: 21300000, guid: 0290adc8f4725394d915c8e99c784df0, type: 3}
+  - itemType: 2
+    itemName: stop
+    itemImage: {fileID: 0}
+  - itemType: 0
+    itemName: flypaper_bomb
+    itemImage: {fileID: 0}
+  - itemType: 2
+    itemName: break_bomb
+    itemImage: {fileID: 0}
+  fieldItemPrefab: {fileID: 5271185269728684786, guid: 95c0cde368974ba4fbdb4093424340ca, type: 3}
+  pos:
+  - {x: 100, y: 0, z: 0}
+  - {x: 200, y: 0, z: 0}
+  - {x: 300, y: 100, z: 0}
+  - {x: 499, y: 0, z: 0}
+  - {x: 600, y: 0, z: 0}
+  - {x: 0, y: 300, z: 0}
+--- !u!4 &1702794156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702794154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 824.71533, y: 541.5376, z: -12.008142}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1707171606
 GameObject:
   m_ObjectHideFlags: 0

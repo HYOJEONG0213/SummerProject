@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Scene_change : MonoBehaviour
 {
-    public void OnClick()
+    public void Change_to_Setting()
     {
-        SceneManager.LoadScene("Scene_Lobby");
+        SceneManager.LoadScene("Scene_Lobby"); 
+    }
+    public void Change_to_Ingame()
+    {
+        SceneManager.LoadScene("InGame");
     }
 }

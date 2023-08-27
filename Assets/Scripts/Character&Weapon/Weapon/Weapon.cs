@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
@@ -52,7 +53,9 @@ public class Weapon : MonoBehaviour
         hitbox = Instantiate(hitboxPrefab);
         hitbox.transform.SetParent(gameObject.transform, false);
         hitbox.SetActive(false);
-        
+        gameObject.GetComponent<WeaponDragDrop>().enabled = false;
+        enableWeaponDragDrop();//일시적으로 여기다 둠. 시작하자마자 드래그 드랍을 바로 켜서 테스트하기 위함.
+
         //for(int i = 0; i < 4; i++)
         //{
         //    debuff[i] = false;
@@ -73,6 +76,7 @@ public class Weapon : MonoBehaviour
 
     protected void OnEnable() // 이 무기가 활성화될때마다 curAttackSpeed를 0으로 초기화 => 바로 공격
     {
+
         curAttackSpeed = 0;
         curAttackNum = attackNum;
         isAttackSuccess = "null";
@@ -158,6 +162,13 @@ public class Weapon : MonoBehaviour
 
     }
 
+    public void enableWeaponDragDrop() // 인벤토리 UI로 들어갈 때 호출해야하는 함수
+    {
+        gameObject.GetComponent<WeaponDragDrop>().enabled = true;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+        enabled = false;
+
+    }
     //----------------------------------------------------------------------//
 
     public void setStatPercent(string stat, int percent)
