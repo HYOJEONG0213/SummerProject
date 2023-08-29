@@ -29,9 +29,9 @@ public class Goast : Monster
             bool isWallCheck0Colliding = Physics.OverlapSphere(WallCheck[0].position, 0.01f, layerMask).Length > 0;
             bool isWallCheck1Colliding = Physics.OverlapSphere(WallCheck[1].position, 0.01f, layerMask).Length > 0;
 
-            Debug.Log(isWallCheck0Colliding);
-            Debug.Log(isWallCheck1Colliding);
-            Debug.Log(Physics.Raycast(transform.position, -transform.localScale.x * transform.right, 2f, layerMask));
+            //Debug.Log(isWallCheck0Colliding);
+            //Debug.Log(isWallCheck1Colliding);
+            //Debug.Log(Physics.Raycast(transform.position, -transform.localScale.x * transform.right, 2f, layerMask));
 
             //점프 부분
             if (isWallCheck0Colliding && !isWallCheck1Colliding &&      //0번(아래쪽 벽)은 TRUE, 1번(위쪽 벽)은 FALSE라면 점프!
@@ -43,20 +43,20 @@ public class Goast : Monster
 
             else if (isWallCheck0Colliding)     //0번 벽이 TRUE라면 방향 전환!
             {
-                Debug.Log("벽 발견! 방향 바꿉니다!");
+                Debug.Log("Goast가 벽 발견! 방향 바꿉니다!");
                 MonsterFlip();
             }
         }
     }
 
 
-    protected void OnTriggerEnter(Collider collision)   //플레이어랑 부딪치면 돌아가도록
+    /*protected void OnTriggerEnter(Collider collision)   //플레이어랑 부딪치면 돌아가도록
     {
         base.OnTriggerEnter(collision);
         if (collision.transform.CompareTag("PlayerHitBox"))
         {
             MonsterFlip();
-            Debug.Log("몬스터가 플레이어와 부딪쳤습니다!");
+            Debug.Log("Goast가 플레이어와 부딪쳤습니다!");
         }
         if (collision.transform.CompareTag("Monster"))
         {
@@ -67,7 +67,7 @@ public class Goast : Monster
                 Debug.Log("몬스터끼리 부딪쳤습니다!");
             }
         }
-    }
+    }*/
 
     void FixedUpdate()
     {
@@ -89,7 +89,7 @@ public class Goast : Monster
 
         if (!isGrounded)
         {
-            Debug.Log("낭떠러지 입니다!");
+            Debug.Log("Goast: 낭떠러지 입니다!");
             MonsterFlip();
         }
 

@@ -18,6 +18,7 @@ TagManager:
   - PlayerHitBox
   - Projectile
   - Slot
+  - PlayerWeapon
   layers:
   - Default
   - TransparentFX
