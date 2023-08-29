@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276807, g: 0.21589197, b: 0.29782572, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276795, g: 0.2158916, b: 0.2978253, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5533,9 +5533,6 @@ MonoBehaviour:
     itemName: water_element
     itemImage: {fileID: 0}
   - itemType: 0
-    itemName: 
-    itemImage: {fileID: 0}
-  - itemType: 0
     itemName: fire_element
     itemImage: {fileID: 0}
   - itemType: 0
@@ -5571,14 +5568,68 @@ MonoBehaviour:
   - itemType: 2
     itemName: break_bomb
     itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: dagger
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: long_sword
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: hatchet
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: battleaxe
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: two_handed_sword
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: spear
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: katar
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: battering
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: rapier
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: pile_bunker
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: slug_shotgun
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: derringer
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: shortbow
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: fire_ball
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: magic_missile
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: longbow
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: crossbow
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: thunderbolt
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: buddha's_hand
+    itemImage: {fileID: 0}
+  - itemType: 3
+    itemName: halberd
+    itemImage: {fileID: 0}
   fieldItemPrefab: {fileID: 5271185269728684786, guid: 95c0cde368974ba4fbdb4093424340ca, type: 3}
-  pos:
-  - {x: 100, y: 0, z: 0}
-  - {x: 200, y: 0, z: 0}
-  - {x: 300, y: 100, z: 0}
-  - {x: 499, y: 0, z: 0}
-  - {x: 600, y: 0, z: 0}
-  - {x: 0, y: 300, z: 0}
+  pos: []
 --- !u!4 &1702794156
 Transform:
   m_ObjectHideFlags: 0
@@ -7041,7 +7092,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1945919089}
         m_TargetAssemblyTypeName: Scene_change, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: Change_to_Setting
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7113,6 +7164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7edf4a7c8448534888f4f251d0e25aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Lobby: {fileID: 0}
+  SavedFile: {fileID: 0}
+  Settings: {fileID: 0}
+  Canvas: {fileID: 0}
 --- !u!1 &1953238012
 GameObject:
   m_ObjectHideFlags: 0
