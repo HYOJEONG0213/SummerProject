@@ -133,18 +133,52 @@ public class Monster : MonoBehaviour
     }
 
 
-    public void TakeDamage(int dam)     //플레이어가 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
+    public void TakeDamage(int dam)     //플레이어한테서 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
     {
-        currentHp -= dam;
+        currentHp -= dam;   //데미지 주고
         isHit = true;
+
+        if (currentHp <= 0) //죽음
+        {
+            Debug.Log("Monster Dead");
+            Destroy(gameObject);
+        }
+        else    //넉백 시키기
+        {
+            MyAnimSetTrigger("idle");
+            rb.velocity = Vector3.zero;
+            if(transform.position.x > PlayerData.Instance.Player.transform.position.x)
+            {
+                rb.velocity = new Vector3(10f, 0, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector3(-10f, 0, 0);
+            }
+        }
         hitBoxCollider.SetActive(false);    // 몬스터가 플레이어에게 히트될 때 히트박스를 off시키기
     }
 
     protected void OnTriggerEnter(Collider collision)
     {
-        if ( collision.transform.CompareTag ("PlayerHitBox"))
+        if ( collision.transform.CompareTag ("PlayerWeapon"))
         {
-        TakeDamage ( 10 );
+            Debug.Log("으앙 무기 맞음");
+            TakeDamage ( 10 );
+        }
+        if (collision.transform.CompareTag("PlayerHitBox"))
+        {
+            MonsterFlip();
+            Debug.Log("몬스터가 플레이어와 부딪쳤습니다!");
+        }
+        if (collision.transform.CompareTag("Monster"))
+        {
+            Monster monsterComponent = collision.GetComponent<Monster>();
+            if (monsterComponent != null)
+            {
+                MonsterFlip();
+                Debug.Log("몬스터끼리 부딪쳤습니다!");
+            }
         }
     }
 }

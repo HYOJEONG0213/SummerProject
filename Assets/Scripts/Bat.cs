@@ -61,37 +61,20 @@ public class Bat : Monster
         {
             runTime -= Time.deltaTime;
             MyAnimSetTrigger("move");
+
             if (!isHit)
             {
-                rb.velocity = new Vector3(-transform.localScale.x * moveSpeed, rb.velocity.y, 0);  //플레이어에게 안맞았다면 바라보는 방향으로 계속 움직인다.
-                Vector3 frontVec = transform.position + transform.right * moveSpeed * 1.5f;
-
-                bool isWallCheck0Colliding = Physics.OverlapSphere(WallCheck[0].position, 0.01f, layerMask).Length > 0;
-                bool isWallCheck1Colliding = Physics.OverlapSphere(WallCheck[1].position, 0.01f, layerMask).Length > 0;
-
-
-                if (isWallCheck0Colliding && !isWallCheck1Colliding &&      //0번(아래쪽 벽)은 TRUE, 1번(위쪽 벽)은 FALSE라면 점프!
-                !Physics.Raycast(transform.position, -transform.localScale.x * transform.right, 2f, layerMask))
-                {
-                    Debug.Log("점프!");
-                    //rb.velocity = new Vector3(rb.velocity.x, jumpPower, 0);
-                }
-                else if (isWallCheck0Colliding)
-                {
-                    MonsterFlip();
-                }
-
-
                 if (canAtk && IsPlayerDir())
                 {
                     //걷는중에 플레이어가 사거리 안에 있고, 몬스터가 플레이어를 향하고 있으면 공격상태로 
-                    if (Vector2.Distance(transform.position, PlayerData.Instance.Player.transform.position) < 15f)
+                    if (Vector3.Distance(transform.position, PlayerData.Instance.Player.transform.position) < 15f)
                     {
                         currentState = State.attack;
                         break;
                     }
                 }
             }
+
             yield return null;
         }
         if (currentState != State.attack)   //걷는동안 공격상태로 변경이 안되었다면
@@ -111,9 +94,9 @@ public class Bat : Monster
     {
         yield return null;
         canAtk = false;
-        rb.velocity = new Vector3(0, jumpPower, 0);     //Attack상태가 되면 살짝 점프했다가 공격 애니메이션 ㄱㄱ
-        MyAnimSetTrigger("attack");
+        //rb.velocity = new Vector3(0, jumpPower, 0);     //Attack상태가 되면 살짝 점프했다가 공격 애니메이션 ㄱㄱ
 
+        MyAnimSetTrigger("attack");
         yield return Delay1000;
         currentState = State.idle;
     }
@@ -121,16 +104,46 @@ public class Bat : Monster
     void Fire()     //Attack 애니메이션 재생중에 원거리 공격을 하기 위해 총알을 생성
     {
         GameObject bulletClone = Instantiate(Bullet, genPoint.position, transform.rotation);    //총알 생성
-        bulletClone.GetComponent<Rigidbody>().velocity = transform.right * -transform.localScale.x * 10f;   //총알 속도
-        bulletClone.transform.localScale = new Vector3(transform.localScale.x, 1f,0); //총알 방향
+        if (bulletClone != null)
+        {
+            Rigidbody bulletRb = bulletClone.GetComponent<Rigidbody>();
+            if (bulletRb != null)   //아직 총알 클론이 남아있다면 
+            {
+                bulletRb.velocity = transform.right * -transform.localScale.x * 10f;   //총알 속도
+                bulletClone.transform.localScale = new Vector3(transform.localScale.x, 1f, 0); //총알 방향
+            }
+            bulletClone.AddComponent<BulletController>();
+            //Destroy(bulletClone, 3f);   //3초뒤에 파괴
+        }
     }
 
 
     void FixedUpdate()
     {
+        Vector3 frontVec = transform.position + transform.right * moveSpeed * 1.5f;
+        if (!isHit)
+        {
+            rb.velocity = new Vector3(-transform.localScale.x * moveSpeed, rb.velocity.y, 0);  //플레이어에게 안맞았다면 바라보는 방향으로 계속 움직인다.
+            bool isWallCheck0Colliding = Physics.OverlapSphere(WallCheck[0].position, 0.01f, layerMask).Length > 0;
+            bool isWallCheck1Colliding = Physics.OverlapSphere(WallCheck[1].position, 0.01f, layerMask).Length > 0;
+
+
+            if (isWallCheck0Colliding && !isWallCheck1Colliding &&      //0번(아래쪽 벽)은 TRUE, 1번(위쪽 벽)은 FALSE라면 점프!
+            !Physics.Raycast(transform.position, -transform.localScale.x * transform.right, 2f, layerMask))
+            {
+                //Debug.Log("점프!");
+                //rb.velocity = new Vector3(rb.velocity.x, jumpPower, 0);
+            }
+            else if (isWallCheck0Colliding)
+            {
+                MonsterFlip();
+            }
+        }
+
+
+
         //몬스터가 낭떨어지에 있을 때 방향 전환
         rb.velocity = new Vector3(-transform.localScale.x * moveSpeed, rb.velocity.y, 0);
-        Vector3 frontVec;
         if (moveDirection == false)
         {
             frontVec = (transform.position + transform.right * moveSpeed * 1f);
@@ -146,11 +159,53 @@ public class Bat : Monster
 
         if (!isGrounded)
         {
-            Debug.Log("낭떠러지 입니다!");
+            Debug.Log("Bat: 낭떠러지 입니다!");
             MonsterFlip();
         }
 
 
+    }
+
+    /*protected void OnTriggerEnter(Collider collision)   //플레이어랑 부딪치면 돌아가도록
+    {
+        base.OnTriggerEnter(collision);
+        if (collision.transform.CompareTag("PlayerHitBox"))
+        {
+            MonsterFlip();
+            Debug.Log("Bat가 플레이어와 부딪쳤습니다!");
+        }
+        if (collision.transform.CompareTag("Monster"))
+        {
+            Bat monsterComponent = collision.GetComponent<Bat>();
+            if (monsterComponent != null)
+            {
+                MonsterFlip();
+                Debug.Log("몬스터끼리 부딪쳤습니다!");
+            }
+        }
+    }*/
+
+
+}
+
+
+
+
+public class BulletController : MonoBehaviour
+{
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.CompareTag("PlayerHitBox"))
+        {
+            Debug.Log("탄환이 플레이어와 부딪쳤습니다!");
+            Destroy(gameObject); // 현재 bulletClone를 제거
+        }
+
+        if (collision.CompareTag("Platform"))
+        {
+            Debug.Log("탄환이 땅바닥과 부딪쳤습니다!");
+            Destroy(gameObject); // 현재 bulletClone를 제거
+        }
     }
 
 
