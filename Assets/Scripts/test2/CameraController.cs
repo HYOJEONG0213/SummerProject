@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    float speed = 50;
+    float speed = 10;
 
     public Vector2 center;
     public Vector2 size;
