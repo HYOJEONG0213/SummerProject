@@ -13,10 +13,10 @@ public class Hitbox : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Monster")
+        if(other.gameObject.tag == "Monster") // 히트박스에 맞은 오브젝트의 태그가 몬스터면
         {
             Debug.Log(other.gameObject.name);
-            monsterCollider = other;
+            monsterCollider = other; // 변수에 몬스터 오브젝트 저장
         }
     
 
@@ -25,7 +25,7 @@ public class Hitbox : MonoBehaviour
 
     public Collider getMonsterCollider()
     {
-        return monsterCollider;
+        return monsterCollider; // 변수에 저장된 몬스터 오브젝트 리턴
     }
 
    
