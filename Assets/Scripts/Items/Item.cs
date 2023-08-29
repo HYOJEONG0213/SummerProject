@@ -6,7 +6,9 @@ public enum ItemType
 {
     Element,
     Potion,
-    Bomb
+    Bomb,
+
+    Weapon
 
 }
 
