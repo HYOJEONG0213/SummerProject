@@ -84,7 +84,8 @@ public class CharacterMoveset : MonoBehaviour
         }
 
         // 캐릭터의 속도를 inputX로 정하고 그 속도를 캐릭터에게 적용 
-        controller.Move(new Vector3(velocityX * Time.deltaTime, 0, transform.position.z));
+        //controller.Move(new Vector3(velocityX * Time.deltaTime, 0, transform.position.z));
+        controller.Move(new Vector3(velocityX * Time.deltaTime, 0, 0));
 
         if (Mathf.Abs(velocityX) > 0.2) // x축으로 속도의 절대값이 0.2보다 클 때 => 달리고 있을 때
         {
@@ -137,7 +138,7 @@ public class CharacterMoveset : MonoBehaviour
             velocityY = 0;
         }
 
-        controller.Move(new Vector3(0, velocityY, transform.position.z));
+        controller.Move(new Vector3(0, velocityY, 0));
     }
 
 

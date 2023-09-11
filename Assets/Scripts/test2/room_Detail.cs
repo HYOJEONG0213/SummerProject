@@ -17,6 +17,10 @@ public class room_Detail : MonoBehaviour
     public List<GameObject> Enemies = new List<GameObject>();
 
     public void Start() {
+        GetStartPos();
+    }
+
+    public void GetStartPos() {
         startPos = GetComponentsInChildren<Transform>().Where(x => x.CompareTag("characterspawnpoint"))?.First().transform;
     }
 
@@ -25,16 +29,17 @@ public class room_Detail : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
 
+    //몬스터 스폰
     public void SpawnMonster() {
         foreach (var p in GetComponentsInChildren<Transform>().Where(x => x.CompareTag("enemyspawnpoint"))) {
             EnemyPos.Add(p.transform);
         }
 
         Debug.LogWarning("레벨 별 몬스터 생성 미구현");
-        foreach(var t in EnemyPos) {
-            GameObject enemy = Instantiate(MonsterPrefabContainer.instance.GetMonster(), transform);
-            enemy.transform.position = t.transform.position;
-            Enemies.Add(enemy);
-        }
+        //foreach(var t in EnemyPos) {
+        //    GameObject enemy = Instantiate(MonsterPrefabContainer.instance.GetMonster(), transform);
+        //    enemy.transform.position = t.transform.position;
+        //    Enemies.Add(enemy);
+        //}
     }
 }
