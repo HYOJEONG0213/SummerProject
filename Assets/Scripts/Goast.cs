@@ -10,6 +10,7 @@ public class Goast : Monster
     {
         base.Awake();
         moveSpeed = 2f;
+        power = 10;
         jumpPower = 30f;
         WallCheck = new Transform[2];
         moveDirection = true;
@@ -94,6 +95,11 @@ public class Goast : Monster
         }
 
 
+    }
+
+    public float getAttackPower() // 캐릭터의 공격력을 리턴하는 함수
+    {
+        return power;
     }
 }
 

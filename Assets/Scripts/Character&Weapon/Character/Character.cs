@@ -14,9 +14,11 @@ public class Character : MonoBehaviour
 
     protected string characterName;
 
-    protected float healthPoint;
+    public float healthPoint = 100;
     protected float defensivePower;
     protected float attackPower;
+    //public MonsterData monsterData;     //몬스터 데이터 할당하는 배열
+    //private float monsterAttackPower;    //몬스터 공격력
 
     protected List<GameObject> usingWeapons = new List<GameObject>(); // 장착하고 있는 무기들. 최대 3개
     protected int usingWeapon; // 현재 쓰고 있는 무기의 인덱스
@@ -49,7 +51,20 @@ public class Character : MonoBehaviour
         hand = gameObject.transform.Find("Skeletal/bone_1/bone_2/bone_3/bone_7/bone_8/bone_20"); // 캐릭터 손위치 입력 | 다른캐릭터 추가되면 바꿔야 할듯
         usingWeapon = 0;
         isTrigger = false;
-     
+
+        //MonsterData MonsterData = MonsterData.Instance;
+        /*MonsterData monsterData;
+        monsterData = MonsterData.Instance;
+        foreach (GameObject monsterObject in monsterData.Monster)
+        {
+            Monster monsterComponent = monsterObject.GetComponent<Monster>();
+            if (monsterComponent != null)
+            {
+                int monsterIndex = getMonsterIndex(monsterObject);
+                monsterAttackPower = monsterComponent.getAttackPower(monsterIndex);    //몬스터 공격력 가져오기
+            }
+        }*/
+        
 
     }
 
@@ -65,10 +80,75 @@ public class Character : MonoBehaviour
 
     }
 
+    int getMonsterIndex(GameObject monsterObject)
+    {
+        string monsterName = monsterObject.name;
+        // "Monster" 뒤에 오는 숫자를 추출하여 인덱스로 사용 (예: "Monster1" -> 인덱스 1)
+        string indexString = monsterName.Replace("Monster", "");
+        int monsterIndex;
+        if (int.TryParse(indexString, out monsterIndex))
+        {
+            return monsterIndex;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+            public bool IsPlayingAnim(string AnimName)      //애니메이션 관련 함수
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimName))
+        {
+            return true;
+        }
+        return false;
+    }
+    public void MyAnimSetTrigger(string AnimName)
+    {
+        if (!IsPlayingAnim(AnimName))
+        {
+            animator.SetTrigger(AnimName);
+        }
+    }
+    /*public void TakeDamage(float dam)     //플레이어한테서 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
+    {
+        healthPoint -= dam;   //데미지 주고
+
+        if (healthPoint <= 0) //죽음
+        {
+            Debug.Log("Player Dead");
+            Destroy(gameObject);
+        }
+    }*/
+
+    IEnumerator HurtState()
+    {
+        animator.SetBool("hurt", true);
+
+        //healthPoint -= dam;   //데미지 주고
+        Debug.Log("플레이어 체력: " + healthPoint);
+
+        if (healthPoint <= 0) //죽음
+        {
+            Debug.Log("Player Dead");
+            Destroy(gameObject);
+        }
+
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("hurt", false);
+    }
     protected void OnTriggerEnter(Collider other)
     {
         Debug.Log("trigger in");
-        
+
+        if (other.transform.CompareTag("MonsterHitBox") || other.transform.CompareTag("Projectile"))
+        {
+            Debug.Log("으앙 몬스터한테 맞음");
+            StartCoroutine(HurtState());    //애니메이션 hurt 상태로
+            //TakeDamage(monsterAttackPower);
+        }
+
         isTrigger = true; 
         activatedCollider = other; // 캐릭터와 닿고 isTrigger가 있는 오브젝트를 activatedCollider에 저장
     }
@@ -83,8 +163,9 @@ public class Character : MonoBehaviour
 
 
 
- 
-    public void getConsumable(GameObject consumable) //소모품 먹는 함수 - interaction()에서 콜함
+
+
+            public void getConsumable(GameObject consumable) //소모품 먹는 함수 - interaction()에서 콜함
     {
         if (consumables.Count < 3) // 최대 3개까지 소모품을 먹을 수 있음
         {
@@ -283,6 +364,11 @@ public class Character : MonoBehaviour
     public float getAttackPower() // 캐릭터의 공격력을 리턴하는 함수
     {
         return attackPower;
+    }
+
+    public float getHealthPoint()   //캐릭터의 hp를 리턴하는 함수
+    {
+        return healthPoint;
     }
 
     // 아래 두 함수는 애니메이션 Attack에서 콜된다.
