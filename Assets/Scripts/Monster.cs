@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public int currentHp = 1;
+    public float currentHp = 1;
     public float moveSpeed = 5f;    //몬스터 이동 속도
     public bool moveDirection = true;
     public float jumpPower = 10;
@@ -16,6 +16,8 @@ public class Monster : MonoBehaviour
     public int sheild = 40;   //몬스터 방어력
     public int exp = 1;
     public int power = 1;   //몬스터 공격력
+    private float playerAttackPower;    //플레이어 공격력
+    private float playerHealthPoint;    //플레이어 hp
 
     public bool isHit = false;  //isHit: 플레이어에게 히트 되었는가
     public bool isGround = true;
@@ -28,6 +30,8 @@ public class Monster : MonoBehaviour
     public Animator Anim;
     public LayerMask layerMask;     //플랫폼을 감지할 레이어마스크
 
+    private SpriteRenderer[] sprites;
+
     protected void Awake()  // 필요한 컨포넌트 가져오고
     {
         rb = GetComponent<Rigidbody>();
@@ -36,8 +40,10 @@ public class Monster : MonoBehaviour
 
         StartCoroutine(CalcCoolTime());
         StartCoroutine(ResetCollider());
+        sprites = GetComponentsInChildren<SpriteRenderer>();
 
-
+        PlayerData playerData = PlayerData.Instance;
+        playerAttackPower = playerData.Player.GetComponent<Character>().getAttackPower();
     }
 
     IEnumerator ResetCollider()         // 콜라이더 리셋
@@ -109,11 +115,18 @@ public class Monster : MonoBehaviour
 
     protected bool IsPlayerDir()    //몬스터가 플레이어 방향으로 향하고 있는지 체크하는 함수
     {
-        if (transform.position.x < PlayerData.Instance.Player.transform.position.x ? MonsterDirRight : !MonsterDirRight)
+        if (PlayerData.Instance.Player != null)
         {
-            return true;    
+            if (transform.position.x < PlayerData.Instance.Player.transform.position.x ? MonsterDirRight : !MonsterDirRight)
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     protected void GroundCheck()    //플레이어가 바닥을 체크하는 함수
@@ -133,7 +146,7 @@ public class Monster : MonoBehaviour
     }
 
 
-    public void TakeDamage(int dam)     //플레이어한테서 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
+    public void TakeDamage(float dam)     //플레이어한테서 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
     {
         currentHp -= dam;   //데미지 주고
         isHit = true;
@@ -164,13 +177,16 @@ public class Monster : MonoBehaviour
         if ( collision.transform.CompareTag ("PlayerWeapon"))
         {
             Debug.Log("으앙 무기 맞음");
-            TakeDamage ( 10 );
+            TakeDamage (playerAttackPower);
+            //StartCoroutine(FlashSprites()); //몬스터 깜빡거리는 효과
         }
+
         if (collision.transform.CompareTag("PlayerHitBox"))
         {
             MonsterFlip();
             Debug.Log("몬스터가 플레이어와 부딪쳤습니다!");
         }
+
         if (collision.transform.CompareTag("Monster"))
         {
             Monster monsterComponent = collision.GetComponent<Monster>();
@@ -180,5 +196,36 @@ public class Monster : MonoBehaviour
                 Debug.Log("몬스터끼리 부딪쳤습니다!");
             }
         }
+        if (collision.transform.CompareTag("Player"))
+        {
+            PlayerData playerData = PlayerData.Instance;
+            playerHealthPoint = playerData.Player.GetComponent<Character>().getHealthPoint();   //플레이어 hp 가져온뒤
+
+            playerHealthPoint -= power;     //체력 몬스터 힘만큼 깎기
+            playerData.Player.GetComponent<Character>().healthPoint = playerHealthPoint;
+            Debug.Log("몬스터 내 플레이어 hp: "+ playerHealthPoint);
+        }
+
+
+        }
+
+    private IEnumerator FlashSprites()
+    {
+        foreach (SpriteRenderer SR in sprites)
+        {
+            SR.color = new Color(1f, 1f, 1f, 0.4f); //무기 맞으면 한동안 깜빡거리게
+        }
+        yield return new WaitForSeconds(1f);
+
+        foreach (SpriteRenderer SR in sprites)
+        {
+            SR.color = new Color(1f, 1f, 1f, 1f);
+        }
+    }
+
+        public float getAttackPower(int monsterIndex) // 캐릭터의 공격력을 리턴하는 함수
+    {
+        return power;
     }
 }
+

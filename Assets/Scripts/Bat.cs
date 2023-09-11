@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Bat : Monster
 {
     public Transform[] WallCheck;
@@ -22,6 +23,7 @@ public class Bat : Monster
     {
         base.Awake();
         moveSpeed = 1f;
+        power = 5;
         jumpPower = 15f;
         currentHp = 4;
         atkCoolTime = 3f;
@@ -113,6 +115,7 @@ public class Bat : Monster
                 bulletClone.transform.localScale = new Vector3(transform.localScale.x, 1f, 0); //총알 방향
             }
             bulletClone.AddComponent<BulletController>();
+
             //Destroy(bulletClone, 3f);   //3초뒤에 파괴
         }
     }
@@ -185,6 +188,10 @@ public class Bat : Monster
         }
     }*/
 
+    public float getAttackPower() // 캐릭터의 공격력을 리턴하는 함수
+    {
+        return power;
+    }
 
 }
 
@@ -197,8 +204,20 @@ public class BulletController : MonoBehaviour
     {
         if (collision.CompareTag("PlayerHitBox"))
         {
+            GameObject batComponet = GameObject.Find("Bat");
+            float power = batComponet.GetComponent<Bat>().getAttackPower();
+            //Bat batComponent = GetComponent<Bat>();
+            //float power = batComponent.getAttackPower();
+            Debug.Log("탄환 power: "+power);
             Debug.Log("탄환이 플레이어와 부딪쳤습니다!");
             Destroy(gameObject); // 현재 bulletClone를 제거
+
+            PlayerData playerData = PlayerData.Instance;
+            float playerHealthPoint = playerData.Player.GetComponent<Character>().getHealthPoint();   //플레이어 hp 가져온뒤
+
+            playerHealthPoint -= power;     //체력 몬스터 힘만큼 깎기
+            playerData.Player.GetComponent<Character>().healthPoint = playerHealthPoint;
+            Debug.Log("몬스터 내 플레이어 hp: " + playerHealthPoint);
         }
 
         if (collision.CompareTag("Platform"))
