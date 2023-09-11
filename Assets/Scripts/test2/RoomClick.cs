@@ -34,6 +34,7 @@ public class RoomClick : MonoBehaviour
                         hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.boss) {
                         print("To Next Stage");
                         GameDataContainer.instance.stage++;
+                        Debug.LogWarning("캐릭터 저장 구현");
                         SceneManager.LoadScene("InGame");
                     }
                     //방 클리어 시 맵을 보여줌
@@ -56,9 +57,12 @@ public class RoomClick : MonoBehaviour
                     lastRoom = Room.transform.GetChild(0);
                     MoveCam(Room.transform.GetChild(0));
                     maincamera.GetComponent<CameraController>().seeMap = false;
-                    //캐릭터 위치 지정
-                    maincamera.GetComponent<CameraController>().target = Room.GetComponent<room_Detail>().startPos;
+                    Debug.LogWarning("캐릭터 위치 지정");
+                    GameDataContainer.instance.Character.transform.SetParent(Room.GetComponent<room_Detail>().startPos);
+                    GameDataContainer.instance.Character.SetActive(true);
+                    maincamera.GetComponent<CameraController>().target = GameDataContainer.instance.Character.transform;
                     GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().size = Room.GetComponent<room_Detail>().size;
+                    Room.GetComponent<room_Detail>().SpawnMonster();
                     break;
             }
         }

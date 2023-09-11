@@ -1418,6 +1418,8 @@ GameObject:
   - component: {fileID: 443977672}
   - component: {fileID: 443977671}
   - component: {fileID: 443977673}
+  - component: {fileID: 443977676}
+  - component: {fileID: 443977675}
   - component: {fileID: 443977674}
   m_Layer: 0
   m_Name: Controller
@@ -1497,6 +1499,34 @@ MonoBehaviour:
   clickBlocker: {fileID: 1577332233}
   lastRoom: {fileID: 0}
 --- !u!114 &443977674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443977670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2f88a1e8bb3cc4189f61a52a32bcf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestMonster1: {fileID: 0}
+  TestMonster2: {fileID: 0}
+  TestMonster3: {fileID: 0}
+--- !u!114 &443977675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443977670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dfeb86289d0db47a34bf8ef8627e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestPlayer: {fileID: 1859147670251535847, guid: 9fa2e4bf4787ad44b91bfa81220154d3, type: 3}
+--- !u!114 &443977676
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
