@@ -73,11 +73,11 @@ public class Character : MonoBehaviour
     {
         characterMoveset.jumpWithGravity();
         characterMoveset.move();
-        // 위 두 함수는 CharacterMoveset의 함수. 
+        //위 두 함수는 CharacterMoveset의 함수.
         interaction(); // 상호작용 
         weaponAttack(); // 무기 공격
         weaponPosition(); // 사용하는 무기의 위치를 손(hand 트랜스폼 위치)에 두도록 하는 함수
-       
+
     }
 
     int getMonsterIndex(GameObject monsterObject)

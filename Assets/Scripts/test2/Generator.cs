@@ -88,18 +88,27 @@ public class Generator : MonoBehaviour {
             
         }
 
-
-
         //start방으로 이동
-        GameDataContainer.instance.Character.transform.SetParent(Details[0].transform);
-        //GameDataContainer.instance.Character.transform.position = Details[0].;
+        SetCharacterPos(Details[0].transform);
+    }
+
+    public void DisablePlayer() {
+        GameDataContainer.instance.Character.SetActive(false);
+    }
+
+    //지정한 방으로 캐릭터 이동
+    public void SetCharacterPos(Transform pos) {
+        //방에 자식으로 넣음
+        GameDataContainer.instance.Character.transform.SetParent(pos.transform);
+        pos.GetComponent<room_Detail>().GetStartPos();
+        GameDataContainer.instance.Character.transform.position = pos.GetComponent<room_Detail>().startPos.transform.position;
         GameDataContainer.instance.Character.SetActive(true);
         GetComponent<RoomClick>().MoveCam(GameDataContainer.instance.Character.transform); //캐릭터를 해당 위치로 이동으로 구현
         GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().seeMap = false;
-        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().target = Details[0].GetComponentsInChildren<Transform>().Where(x => x.CompareTag("characterspawnpoint"))?.First().transform;
-        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().size = Details[0].GetComponent<room_Detail>().size;
-        GetComponent<RoomClick>().lastRoom = Details[0].transform.GetChild(0);
-        Details[0].GetComponent<room_Detail>().SpawnMonster();
+        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().target = pos.GetComponentsInChildren<Transform>().Where(x => x.CompareTag("characterspawnpoint"))?.First().transform;
+        GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().size = pos.GetComponent<room_Detail>().size;
+        GetComponent<RoomClick>().lastRoom = pos.transform.GetChild(0);
+        pos.GetComponent<room_Detail>().SpawnMonster();
     }
 
     public void ShowConnect(GameObject target) {
