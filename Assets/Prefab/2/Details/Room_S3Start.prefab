@@ -2072,6 +2072,8 @@ MonoBehaviour:
   startPos: {fileID: 0}
   center: {x: 0, y: 2}
   size: {x: 102, y: 56}
+  EnemyPos: []
+  Enemies: []
 --- !u!1 &4865644940474314926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,8 +2492,9 @@ GameObject:
   - component: {fileID: 4865644941355755291}
   - component: {fileID: 4865644941355755288}
   - component: {fileID: 4865644941355755289}
+  - component: {fileID: 1834056996440284512}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: portal
   m_TagString: clearpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2570,11 +2573,23 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4865644941355755295}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1834056996440284512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865644941355755295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7cf2e7f11e2a9e45ad81346644e65c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6376597725584985510
 GameObject:
   m_ObjectHideFlags: 0

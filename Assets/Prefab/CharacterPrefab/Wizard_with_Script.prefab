@@ -504,6 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825d6c5d10264974aa5a21ecde80a2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPoint: 100
 --- !u!114 &2392582578404147397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,7 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 8
-  jumpForce: 0.3
+  jumpForce: 0.6
   dashSpeed: 32
   dashCooltime: 2
   dashDuration: 0.5
