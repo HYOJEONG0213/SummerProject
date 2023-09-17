@@ -140,7 +140,7 @@ public class Character : MonoBehaviour
     }
     protected void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger in");
+        //Debug.Log("trigger in");
 
         if (other.transform.CompareTag("MonsterHitBox") || other.transform.CompareTag("Projectile"))
         {
@@ -155,7 +155,7 @@ public class Character : MonoBehaviour
 
     protected void OnTriggerExit(Collider other)
     {
-        Debug.Log("trigger out");
+        //Debug.Log("trigger out");
 
         isTrigger = false;
 
@@ -165,7 +165,7 @@ public class Character : MonoBehaviour
 
 
 
-            public void getConsumable(GameObject consumable) //소모품 먹는 함수 - interaction()에서 콜함
+    public void getConsumable(GameObject consumable) //소모품 먹는 함수 - interaction()에서 콜함
     {
         if (consumables.Count < 3) // 최대 3개까지 소모품을 먹을 수 있음
         {
@@ -190,21 +190,21 @@ public class Character : MonoBehaviour
         //사용한 소모품 제거
     }
 
-    
+
     public void getWeapon(GameObject weapon) // 무기 얻는 함수 - interaction()에서 콜함
     {
-        
-              
-          inventory.Add(weapon); // 무기를 인벤토리에 추가
-          weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
-          weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
-          weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
-          weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
-          Debug.Log(inventory[0].name);
-             
+        inventory.Add(weapon); // 무기를 인벤토리에 추가
+        weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+        weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+        weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
+        weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
+        Debug.Log(inventory[0].name);
 
-    
-        
+        //장착한 무기가 없다면
+        if(transform.GetChild(0).childCount == 0 ) {
+            changeWeapon(null, weapon, 0);
+            weapon.SetActive(true);
+        }
     }
 
     // 무기 바꾸는 함수. usingWeaponObject를 인벤토리에 넣고 inventoryObject를 착용한다. usingWeaponSlot번째에 있는 무기를 빼고 그 곳에 무기를 착용한다.
@@ -273,7 +273,8 @@ public class Character : MonoBehaviour
 
     protected void weaponAttack() // 공격 함수
     {
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼클릭 입력을 받았을 때
+        if(Input.GetKeyDown(KeyCode.F))
+        //if (Input.GetMouseButtonDown(0)) // 마우스 왼클릭 입력을 받았을 때
         {
             if (usingWeapons.Count != 0) // 적어도 착용하는 무기가 하나라도 있을 때  
             {

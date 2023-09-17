@@ -155,7 +155,10 @@ public class CharacterMoveset : MonoBehaviour
             return 100f;
         }
         //충돌한 콜라이더가 consumable 또는 weapon 이면 => 점프로 인식, 얘네를 밟고 올라가면 안되기 때문이다.
-        else if ( hit.collider.gameObject.tag == "consumable" || hit.collider.gameObject.tag == "weapon") 
+        else if ( hit.collider.gameObject.tag == "consumable" 
+            || hit.collider.gameObject.tag == "weapon"
+            || hit.collider.gameObject.tag == "clearpoint"
+            || hit.collider.gameObject.tag == "MonsterHitBox") 
         {
             return 100f;
         }

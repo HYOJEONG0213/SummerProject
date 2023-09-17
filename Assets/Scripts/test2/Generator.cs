@@ -77,7 +77,7 @@ public class Generator : MonoBehaviour {
         }
 
         //캐릭터 생성
-        Debug.LogWarning("캐릭터 생성 미구현");
+        //Debug.LogWarning("캐릭터 생성 미구현");
         if(GameDataContainer.instance.Character == null) {
             print("초기 캐릭터 생성");
             GameObject Player = Instantiate(PlayerPrefabContainer.instance.TestPlayer);
