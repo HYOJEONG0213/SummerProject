@@ -20,8 +20,11 @@ public class Character : MonoBehaviour
     //public MonsterData monsterData;     //몬스터 데이터 할당하는 배열
     //private float monsterAttackPower;    //몬스터 공격력
 
+    [SerializeField]
     protected List<GameObject> usingWeapons = new List<GameObject>(); // 장착하고 있는 무기들. 최대 3개
+    [SerializeField]
     protected int usingWeapon; // 현재 쓰고 있는 무기의 인덱스
+    [SerializeField]
     protected List<GameObject> inventory = new List<GameObject>(); // 장착하지 않고 있는 무기들. 이것들은 갈아서 무기조각으로 만들거나, 장착할 수 있다.
 
     protected List<GameObject> consumables = new List<GameObject>(); // 가지고 있는 소모품. 최대 3개
@@ -96,7 +99,7 @@ public class Character : MonoBehaviour
         }
     }
 
-            public bool IsPlayingAnim(string AnimName)      //애니메이션 관련 함수
+    public bool IsPlayingAnim(string AnimName)      //애니메이션 관련 함수
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimName))
         {
@@ -193,17 +196,21 @@ public class Character : MonoBehaviour
 
     public void getWeapon(GameObject weapon) // 무기 얻는 함수 - interaction()에서 콜함
     {
-        inventory.Add(weapon); // 무기를 인벤토리에 추가
-        weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
-        weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
-        weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
-        weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
-        Debug.Log(inventory[0].name);
-
         //장착한 무기가 없다면
         if(transform.GetChild(0).childCount == 0 ) {
-            changeWeapon(null, weapon, 0);
-            weapon.SetActive(true);
+            usingWeapons.Add(weapon);
+            weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+            weapon.transform.SetParent(gameObject.transform.GetChild(0), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+            Debug.Log($"착용한 무기 {weapon.name}");
+        }
+        //장착한 무기가 있다면
+        else {
+            inventory.Add(weapon); // 무기를 인벤토리에 추가
+            weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+            weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+            weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
+            weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
+            Debug.Log($"인벤토리로 이동 : {inventory[0].name}");
         }
     }
 
@@ -316,8 +323,6 @@ public class Character : MonoBehaviour
 
                 }
             }
-
-
 
         }
     }
