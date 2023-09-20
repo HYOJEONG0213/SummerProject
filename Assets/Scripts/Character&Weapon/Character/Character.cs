@@ -14,12 +14,17 @@ public class Character : MonoBehaviour
 
     protected string characterName;
 
-    protected float healthPoint;
+    public float healthPoint = 100;
     protected float defensivePower;
     protected float attackPower;
+    //public MonsterData monsterData;     //몬스터 데이터 할당하는 배열
+    //private float monsterAttackPower;    //몬스터 공격력
 
+    [SerializeField]
     protected List<GameObject> usingWeapons = new List<GameObject>(); // 장착하고 있는 무기들. 최대 3개
+    [SerializeField]
     protected int usingWeapon; // 현재 쓰고 있는 무기의 인덱스
+    [SerializeField]
     protected List<GameObject> inventory = new List<GameObject>(); // 장착하지 않고 있는 무기들. 이것들은 갈아서 무기조각으로 만들거나, 장착할 수 있다.
 
     protected List<GameObject> consumables = new List<GameObject>(); // 가지고 있는 소모품. 최대 3개
@@ -49,7 +54,20 @@ public class Character : MonoBehaviour
         hand = gameObject.transform.Find("Skeletal/bone_1/bone_2/bone_3/bone_7/bone_8/bone_20"); // 캐릭터 손위치 입력 | 다른캐릭터 추가되면 바꿔야 할듯
         usingWeapon = 0;
         isTrigger = false;
-     
+
+        //MonsterData MonsterData = MonsterData.Instance;
+        /*MonsterData monsterData;
+        monsterData = MonsterData.Instance;
+        foreach (GameObject monsterObject in monsterData.Monster)
+        {
+            Monster monsterComponent = monsterObject.GetComponent<Monster>();
+            if (monsterComponent != null)
+            {
+                int monsterIndex = getMonsterIndex(monsterObject);
+                monsterAttackPower = monsterComponent.getAttackPower(monsterIndex);    //몬스터 공격력 가져오기
+            }
+        }*/
+        
 
     }
 
@@ -58,24 +76,89 @@ public class Character : MonoBehaviour
     {
         characterMoveset.jumpWithGravity();
         characterMoveset.move();
-        // 위 두 함수는 CharacterMoveset의 함수. 
+        //위 두 함수는 CharacterMoveset의 함수.
         interaction(); // 상호작용 
         weaponAttack(); // 무기 공격
         weaponPosition(); // 사용하는 무기의 위치를 손(hand 트랜스폼 위치)에 두도록 하는 함수
-       
+
     }
 
+    int getMonsterIndex(GameObject monsterObject)
+    {
+        string monsterName = monsterObject.name;
+        // "Monster" 뒤에 오는 숫자를 추출하여 인덱스로 사용 (예: "Monster1" -> 인덱스 1)
+        string indexString = monsterName.Replace("Monster", "");
+        int monsterIndex;
+        if (int.TryParse(indexString, out monsterIndex))
+        {
+            return monsterIndex;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    public bool IsPlayingAnim(string AnimName)      //애니메이션 관련 함수
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimName))
+        {
+            return true;
+        }
+        return false;
+    }
+    public void MyAnimSetTrigger(string AnimName)
+    {
+        if (!IsPlayingAnim(AnimName))
+        {
+            animator.SetTrigger(AnimName);
+        }
+    }
+    /*public void TakeDamage(float dam)     //플레이어한테서 데미지를 입었을때 hp 깎고 어떤 애니메이션을?
+    {
+        healthPoint -= dam;   //데미지 주고
+
+        if (healthPoint <= 0) //죽음
+        {
+            Debug.Log("Player Dead");
+            Destroy(gameObject);
+        }
+    }*/
+
+    IEnumerator HurtState()
+    {
+        animator.SetBool("hurt", true);
+
+        //healthPoint -= dam;   //데미지 주고
+        Debug.Log("플레이어 체력: " + healthPoint);
+
+        if (healthPoint <= 0) //죽음
+        {
+            Debug.Log("Player Dead");
+            Destroy(gameObject);
+        }
+
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("hurt", false);
+    }
     protected void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger in");
-        
+        //Debug.Log("trigger in");
+
+        if (other.transform.CompareTag("MonsterHitBox") || other.transform.CompareTag("Projectile"))
+        {
+            Debug.Log("으앙 몬스터한테 맞음");
+            StartCoroutine(HurtState());    //애니메이션 hurt 상태로
+            //TakeDamage(monsterAttackPower);
+        }
+
         isTrigger = true; 
         activatedCollider = other; // 캐릭터와 닿고 isTrigger가 있는 오브젝트를 activatedCollider에 저장
     }
 
     protected void OnTriggerExit(Collider other)
     {
-        Debug.Log("trigger out");
+        //Debug.Log("trigger out");
 
         isTrigger = false;
 
@@ -83,7 +166,8 @@ public class Character : MonoBehaviour
 
 
 
- 
+
+
     public void getConsumable(GameObject consumable) //소모품 먹는 함수 - interaction()에서 콜함
     {
         if (consumables.Count < 3) // 최대 3개까지 소모품을 먹을 수 있음
@@ -109,21 +193,25 @@ public class Character : MonoBehaviour
         //사용한 소모품 제거
     }
 
-    
+
     public void getWeapon(GameObject weapon) // 무기 얻는 함수 - interaction()에서 콜함
     {
-        
-              
-          inventory.Add(weapon); // 무기를 인벤토리에 추가
-          weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
-          weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
-          weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
-          weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
-          Debug.Log(inventory[0].name);
-             
-
-    
-        
+        //장착한 무기가 없다면
+        if(transform.GetChild(0).childCount == 0 ) {
+            usingWeapons.Add(weapon);
+            weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+            weapon.transform.SetParent(gameObject.transform.GetChild(0), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+            Debug.Log($"착용한 무기 {weapon.name}");
+        }
+        //장착한 무기가 있다면
+        else {
+            inventory.Add(weapon); // 무기를 인벤토리에 추가
+            weapon.GetComponent<Weapon>().setCharacter(gameObject.GetComponent<Character>()); //무기에게 Character 스크립트를 주었다. 이유는 Character 관련 변수를 가져올 수 있게 하려고
+            weapon.transform.SetParent(gameObject.transform.GetChild(1), false); // 무기를 캐릭터의 하위 오브젝트인 inventory(이 스크립트의 inventory 리스트가 아님)의 자식으로 만듦
+            weapon.GetComponent<BoxCollider>().enabled = false; // 충돌 콜라이더 없애서 상호작용이 안되게 만듦
+            weapon.SetActive(false); // 인벤토리에 들어갔으니 안보이게 만듦
+            Debug.Log($"인벤토리로 이동 : {inventory[0].name}");
+        }
     }
 
     // 무기 바꾸는 함수. usingWeaponObject를 인벤토리에 넣고 inventoryObject를 착용한다. usingWeaponSlot번째에 있는 무기를 빼고 그 곳에 무기를 착용한다.
@@ -192,7 +280,8 @@ public class Character : MonoBehaviour
 
     protected void weaponAttack() // 공격 함수
     {
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼클릭 입력을 받았을 때
+        if(Input.GetKeyDown(KeyCode.F))
+        //if (Input.GetMouseButtonDown(0)) // 마우스 왼클릭 입력을 받았을 때
         {
             if (usingWeapons.Count != 0) // 적어도 착용하는 무기가 하나라도 있을 때  
             {
@@ -234,8 +323,6 @@ public class Character : MonoBehaviour
 
                 }
             }
-
-
 
         }
     }
@@ -283,6 +370,11 @@ public class Character : MonoBehaviour
     public float getAttackPower() // 캐릭터의 공격력을 리턴하는 함수
     {
         return attackPower;
+    }
+
+    public float getHealthPoint()   //캐릭터의 hp를 리턴하는 함수
+    {
+        return healthPoint;
     }
 
     // 아래 두 함수는 애니메이션 Attack에서 콜된다.

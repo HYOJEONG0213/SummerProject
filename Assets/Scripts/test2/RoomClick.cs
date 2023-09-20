@@ -19,6 +19,17 @@ public class RoomClick : MonoBehaviour
     [HideInInspector]
     public Transform lastRoom;
 
+    public static RoomClick instance;
+
+    private void Awake() {
+        if(instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(this);
+        }
+    }
+
     void Update()
     {
         GetMapCamPos();
@@ -26,41 +37,29 @@ public class RoomClick : MonoBehaviour
             RaycastHit hit;
             if (!Physics.Raycast(maincamera.ScreenPointToRay(Input.mousePosition), out hit)) return;
 
-            switch (hit.transform.tag) {
-                case "clearpoint":
-                    print($"Click Clear Point : {hit.transform.parent.GetComponent<room_Detail>().room.name}");
-                    //마지막 방 클리어 시 다음 레벨로 넘어감
-                    if (hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.end ||
-                        hit.transform.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.boss) {
-                        print("To Next Stage");
-                        GameDataContainer.instance.stage++;
-                        SceneManager.LoadScene("InGame");
-                    }
-                    //방 클리어 시 맵을 보여줌
-                    else {
-                        hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().clear = true;
-                        foreach (var i in hit.transform.GetComponentInParent<room_Detail>().room.GetComponent<room>().connected) {
-                            GetComponent<Generator>().ShowConnect(i);
-                        }
-                        MoveCam(Map);
-                        maincamera.GetComponent<CameraController>().seeMap = true;
-                    }
-                    break;
-                //이동할 방 선택 시 해당 방으로 이동
-                default:
-                    if (hit.transform.GetComponent<room>() == null) return;
-                    print($"{hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
-                    if (hit.transform.GetComponent<room>().roomType == RoomType.wall) return;
-                    Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
-                    player_icon.transform.position = hit.transform.position;
-                    lastRoom = Room.transform.GetChild(0);
-                    MoveCam(Room.transform.GetChild(0));
-                    maincamera.GetComponent<CameraController>().seeMap = false;
-                    //캐릭터 위치 지정
-                    maincamera.GetComponent<CameraController>().target = Room.GetComponent<room_Detail>().startPos;
-                    GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().size = Room.GetComponent<room_Detail>().size;
-                    break;
+            //Debug 클리어 지점 클릭 시
+            if (hit.transform.CompareTag("clearpoint")) {
+                TouchPotal(hit.transform);
             }
+            //이동할 방 클릭 시
+            else {
+                if (hit.transform.GetComponent<room>() == null) return;
+                print($"click {hit.transform.name} : {hit.transform.GetComponent<room>().roomType}");
+                if (hit.transform.GetComponent<room>().roomType == RoomType.wall) return;
+                Room = GetComponent<Generator>().Details[GetComponent<Generator>().generatedrooms.IndexOf(hit.transform.gameObject)];
+                player_icon.transform.position = hit.transform.position;
+                lastRoom = Room.transform.GetChild(0);
+                MoveCam(Room.transform.GetChild(0));
+                maincamera.GetComponent<CameraController>().seeMap = false;
+                Debug.LogWarning("캐릭터 위치 지정");
+                Generator.Instance.SetCharacterPos(Room.transform);
+                //GameDataContainer.instance.Character.transform.SetParent(Room.GetComponent<room_Detail>().startPos);
+                //GameDataContainer.instance.Character.SetActive(true);
+                //maincamera.GetComponent<CameraController>().target = GameDataContainer.instance.Character.transform;
+                //GetComponent<RoomClick>().maincamera.GetComponent<CameraController>().size = Room.GetComponent<room_Detail>().size;
+                //Room.GetComponent<room_Detail>().SpawnMonster();
+            }
+
         }
         if(Input.GetKeyDown(KeyCode.Tab)) {
             if(clickBlocker.activeSelf) {
@@ -78,6 +77,28 @@ public class RoomClick : MonoBehaviour
             foreach (GameObject r in Generator.Instance.generatedrooms) {
                 r.SetActive(true);
             }
+        }
+    }
+
+    public void TouchPotal(Transform target) {
+        print($"Clear Point : {target.parent.GetComponent<room_Detail>().room.name}");
+        Generator.Instance.DisablePlayer();
+        //마지막 방 클리어 시 다음 레벨로 넘어감
+        if (target.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.end ||
+            target.parent.GetComponent<room_Detail>().room.GetComponent<room>().roomType == RoomType.boss) {
+            print("To Next Stage");
+            GameDataContainer.instance.stage++;
+            Debug.LogWarning("캐릭터 저장 구현");
+            SceneManager.LoadScene("InGame");
+        }
+        //방 클리어 시 맵을 보여줌
+        else {
+            target.GetComponentInParent<room_Detail>().room.GetComponent<room>().clear = true;
+            foreach (var i in target.GetComponentInParent<room_Detail>().room.GetComponent<room>().connected) {
+                GetComponent<Generator>().ShowConnect(i);
+            }
+            MoveCam(Map);
+            maincamera.GetComponent<CameraController>().seeMap = true;
         }
     }
 
