@@ -8,7 +8,7 @@ public class Scene_change : MonoBehaviour
     public GameObject Lobby;
     public GameObject SavedFile;
     public GameObject Settings;
-    public GameObject Canvas;
+    public GameObject Canvas;   
     public void Change_to_Setting()
     {
 
