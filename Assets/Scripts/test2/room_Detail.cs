@@ -16,12 +16,15 @@ public class room_Detail : MonoBehaviour
     public List<Transform> EnemyPos = new List<Transform>();
     public List<GameObject> Enemies = new List<GameObject>();
 
+    public ClearCheck clearCheck;
+
     public void Start() {
         GetStartPos();
     }
 
     public void GetStartPos() {
         startPos = GetComponentsInChildren<Transform>().Where(x => x.CompareTag("characterspawnpoint"))?.First().transform;
+        clearCheck = GetComponentInChildren<ClearCheck>();
     }
 
     public void OnDrawGizmos() {
@@ -36,10 +39,10 @@ public class room_Detail : MonoBehaviour
         }
 
         Debug.LogWarning("레벨 별 몬스터 생성 미구현");
-        //foreach(var t in EnemyPos) {
-        //    GameObject enemy = Instantiate(MonsterPrefabContainer.instance.GetMonster(), transform);
-        //    enemy.transform.position = t.transform.position;
-        //    Enemies.Add(enemy);
-        //}
+        foreach(var t in EnemyPos) {
+            GameObject enemy = Instantiate(MonsterPrefabContainer.instance.GetMonster(), transform);
+            enemy.transform.position = t.transform.position;
+            Enemies.Add(enemy);
+        }
     }
 }

@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 4932482508689233535}
   m_Layer: 0
   m_Name: CharacterPos
-  m_TagString: Untagged
+  m_TagString: characterspawnpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2500,7 +2500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomType: 4
   room: {fileID: 0}
-  startPos: {fileID: 0}
+  startPos: {fileID: 4932482508689233535}
   center: {x: 0, y: 2}
   size: {x: 102, y: 56}
   EnemyPos: []
